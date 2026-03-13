@@ -123,22 +123,22 @@ function buildEpisodes(data) {
     }
   });
 
-  data.episodes.forEach(ep => {
+  // Most recent episode first
+  const episodes = [...data.episodes].sort((a, b) => b.number - a.number);
+
+  episodes.forEach(ep => {
     const block = document.createElement('div');
     block.className = 'episode-block';
 
-    // Find best score this episode
-    const scores = Object.values(ep.scores);
-    const bestScore = Math.max(...scores);
-
-    // Sort by score descending
-    const sortedPlayers = Object.entries(ep.scores)
-      .sort(([, a], [, b]) => b - a);
-
     const votedOut = elimByEp[ep.number] || [];
     const votedOutText = votedOut.length
-      ? `🪦 Voted out: ${votedOut.join(', ')}`
+      ? `🪔 Snuffed: ${votedOut.join(', ')}`
       : '';
+
+    // Castaway scores sorted descending
+    const castawayRows = Object.entries(ep.castawayScores || {})
+      .sort(([, a], [, b]) => b - a);
+    const bestScore = castawayRows.length ? castawayRows[0][1] : 0;
 
     block.innerHTML = `
       <div class="episode-header">
@@ -146,7 +146,7 @@ function buildEpisodes(data) {
         ${votedOutText ? `<span class="episode-voted-out">${votedOutText}</span>` : ''}
       </div>
       <div class="episode-scores">
-        ${sortedPlayers.map(([name, pts]) => `
+        ${castawayRows.map(([name, pts]) => `
           <div class="ep-score-cell">
             <span class="ep-player-name">${name}</span>
             <span class="ep-score-val${pts === bestScore ? ' best' : ''}">${pts}</span>
