@@ -35,6 +35,7 @@ function buildStandings(data) {
   epNums.forEach((ep, idx) => {
     const th = document.createElement('th');
     th.textContent = idx === 0 ? `This Week (Ep ${ep})` : `Ep ${ep}`;
+    if (idx > 0) th.classList.add('ep-col-old');
     thead.appendChild(th);
   });
 
@@ -46,7 +47,6 @@ function buildStandings(data) {
     const tr = document.createElement('tr');
     if (rank === 1) tr.classList.add('row-1');
 
-    // Rank badge
     let rankHtml;
     if (rank <= 3) {
       rankHtml = `<span class="rank-badge rank-${rank}">${rank}</span>`;
@@ -54,11 +54,11 @@ function buildStandings(data) {
       rankHtml = `<span class="rank-other">${rank}</span>`;
     }
 
-    // Episode score cells
-    const epCells = epNums.map(ep => {
+    const epCells = epNums.map((ep, idx) => {
       const epData = data.episodes.find(e => e.number === ep);
       const pts = epData ? (epData.scores[player.name] || 0) : 0;
-      return `<td class="ep-pts">${pts}</td>`;
+      const cls = idx > 0 ? 'ep-pts ep-col-old' : 'ep-pts';
+      return `<td class="${cls}">${pts}</td>`;
     }).join('');
 
     tr.innerHTML = `
@@ -69,6 +69,22 @@ function buildStandings(data) {
     `;
     tbody.appendChild(tr);
   });
+
+  // Mobile toggle for older episode columns
+  const tableWrap = document.querySelector('.table-wrap');
+  const toggleBtn = document.createElement('button');
+  toggleBtn.className = 'toggle-ep-btn';
+  toggleBtn.textContent = `Show all ${epNums.length} episodes`;
+  let expanded = false;
+  tableWrap.classList.add('ep-cols-hidden');
+  toggleBtn.addEventListener('click', () => {
+    expanded = !expanded;
+    tableWrap.classList.toggle('ep-cols-hidden', !expanded);
+    toggleBtn.textContent = expanded
+      ? 'Hide older episodes'
+      : `Show all ${epNums.length} episodes`;
+  });
+  tableWrap.after(toggleBtn);
 }
 
 // ===== ROSTERS =====
@@ -140,9 +156,15 @@ function buildEpisodes(data) {
       .sort(([, a], [, b]) => b - a);
     const bestScore = castawayRows.length ? castawayRows[0][1] : 0;
 
+    const isFirst = ep.number === episodes[0].number;
+    if (!isFirst) block.classList.add('collapsed');
+
     block.innerHTML = `
       <div class="episode-header">
-        <span class="episode-title">Episode ${ep.number}</span>
+        <span class="episode-title">
+          <span class="ep-chevron">▼</span>
+          Episode ${ep.number}
+        </span>
         ${votedOutText ? `<span class="episode-voted-out">${votedOutText}</span>` : ''}
       </div>
       <div class="episode-scores">
@@ -154,6 +176,11 @@ function buildEpisodes(data) {
         `).join('')}
       </div>
     `;
+
+    block.querySelector('.episode-header').addEventListener('click', () => {
+      block.classList.toggle('collapsed');
+    });
+
     container.appendChild(block);
   });
 }
