@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Survivor 50 Fantasy Pool</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="torch torch-left">🔥</div>
+      <div class="header-text">
+        <h1 class="title">SURVIVOR 50</h1>
+        <p class="subtitle">Fantasy Tribe · Season Pool</p>
+      </div>
+      <div class="torch torch-right">🔥</div>
+    </div>
+    <nav>
+      <button class="tab-btn active" data-tab="standings">Standings</button>
+      <button class="tab-btn" data-tab="rosters">Rosters</button>
+      <button class="tab-btn" data-tab="episodes">Episodes</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- STANDINGS TAB -->
+    <section id="standings" class="tab-section active">
+      <div class="section-header">
+        <h2>⚔️ Tribal Council Standings</h2>
+        <p class="last-updated" id="last-updated"></p>
+      </div>
+      <div class="table-wrap">
+        <table id="standings-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Player</th>
+              <th>Total</th>
+              <th id="ep-headers"></th>
+            </tr>
+          </thead>
+          <tbody id="standings-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ROSTERS TAB -->
+    <section id="rosters" class="tab-section">
+      <div class="section-header">
+        <h2>🏝️ Player Rosters</h2>
+        <p class="section-note">⭐ = MVP · <span class="elim-legend">Strikethrough = Eliminated</span></p>
+      </div>
+      <div id="rosters-grid" class="rosters-grid"></div>
+    </section>
+
+    <!-- EPISODES TAB -->
+    <section id="episodes" class="tab-section">
+      <div class="section-header">
+        <h2>📺 Episode Breakdown</h2>
+      </div>
+      <div id="episodes-container"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Survivor 50 Fantasy Pool · Updated after each episode · <a href="https://www.cbs.com/shows/survivor/" target="_blank">Watch Survivor</a></p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
