@@ -29,12 +29,12 @@ function buildStandings(data) {
     data.totals[b.name] - data.totals[a.name]
   );
 
-  // Build episode column headers
-  const epNums = data.episodes.map(e => e.number);
+  // Build episode column headers (most recent first)
+  const epNums = [...data.episodes].sort((a, b) => b.number - a.number).map(e => e.number);
   const thead = document.querySelector('#standings-table thead tr');
-  epNums.forEach(ep => {
+  epNums.forEach((ep, idx) => {
     const th = document.createElement('th');
-    th.textContent = `Ep ${ep}`;
+    th.textContent = idx === 0 ? `This Week (Ep ${ep})` : `Ep ${ep}`;
     thead.appendChild(th);
   });
 
