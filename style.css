@@ -262,6 +262,7 @@ tr.row-1 { background: rgba(255,215,0,0.04); }
 }
 
 .ep-pts { color: var(--text-dim); font-size: 0.9rem; }
+.ep-pts:not(.ep-col-old) { color: var(--text); font-weight: 600; }
 
 /* ===== ROSTERS GRID ===== */
 .rosters-grid {
