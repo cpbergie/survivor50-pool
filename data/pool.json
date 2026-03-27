@@ -1,7 +1,7 @@
 {
   "season": "Survivor 50",
-  "lastUpdated": "2026-03-19",
-  "lastEpisode": 4,
+  "lastUpdated": "2026-03-26",
+  "lastEpisode": 5,
   "sheetId": "1edbTrp6f6NL4KCTU8x92L7H8_tHEsd-hEG2cKz2u6-0",
   "sheetGids": {
     "2": "1109687114",
@@ -19,10 +19,10 @@
     "14": "1775442877"
   },
   "castaways": [
-    { "name": "Angelina", "status": "active" },
+    { "name": "Angelina", "status": "eliminated", "eliminatedEp": 5 },
     { "name": "Aubry", "status": "active" },
     { "name": "Benjamin \"Coach\"", "status": "active" },
-    { "name": "Charlie", "status": "active" },
+    { "name": "Charlie", "status": "eliminated", "eliminatedEp": 5 },
     { "name": "Christian", "status": "active" },
     { "name": "Chrissy", "status": "active" },
     { "name": "Cirie", "status": "active" },
@@ -155,11 +155,25 @@
         "Genevieve": 36, "Joe": 11, "Jonathan": 6, "Kamilla": 6, "Mike": 10,
         "Ozzy": 16, "Rick": 6, "Rizo": 21, "Stephanie": 6, "Tiffany": 11
       }
+    },
+    {
+      "number": 5,
+      "scores": {
+        "Clay": 31, "Amy": 51, "Dan": 48, "Chris": 58, "Bryany": 53,
+        "Julie": 35, "Mark": 39, "Kogi-pops": 47, "Sandy - Kogi": 51,
+        "Lynne": 63, "Brenden": 33, "Woody": 33, "Claude": 48
+      },
+      "castawayScores": {
+        "Aubry": 6, "Benjamin \"Coach\"": 6, "Charlie": 15, "Christian": 6,
+        "Chrissy": 6, "Cirie": 1, "Colby": 11, "Dee": 1, "Emily": 1,
+        "Genevieve": 6, "Joe": 6, "Jonathan": 1, "Kamilla": 1,
+        "Ozzy": 16, "Rick": 1, "Rizo": 6, "Stephanie": 1, "Tiffany": 6
+      }
     }
   ],
   "totals": {
-    "Clay": 299, "Amy": 277, "Dan": 281, "Chris": 292, "Bryany": 327,
-    "Julie": 281, "Mark": 382, "Kogi-pops": 318, "Sandy - Kogi": 306,
-    "Lynne": 297, "Brenden": 361, "Woody": 266, "Claude": 321
+    "Clay": 330, "Amy": 328, "Dan": 329, "Chris": 350, "Bryany": 380,
+    "Julie": 316, "Mark": 421, "Kogi-pops": 365, "Sandy - Kogi": 357,
+    "Lynne": 360, "Brenden": 394, "Woody": 299, "Claude": 369
   }
 }
