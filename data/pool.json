@@ -1,7 +1,7 @@
 {
   "season": "Survivor 50",
-  "lastUpdated": "2026-03-26",
-  "lastEpisode": 5,
+  "lastUpdated": "2026-04-03",
+  "lastEpisode": 6,
   "sheetId": "1edbTrp6f6NL4KCTU8x92L7H8_tHEsd-hEG2cKz2u6-0",
   "sheetGids": {
     "2": "1109687114",
@@ -26,14 +26,14 @@
     { "name": "Christian", "status": "active" },
     { "name": "Chrissy", "status": "active" },
     { "name": "Cirie", "status": "active" },
-    { "name": "Colby", "status": "active" },
+    { "name": "Colby", "status": "eliminated", "eliminatedEp": 6 },
     { "name": "Dee", "status": "active" },
     { "name": "Emily", "status": "active" },
-    { "name": "Genevieve", "status": "active" },
+    { "name": "Genevieve", "status": "eliminated", "eliminatedEp": 6 },
     { "name": "Jenna", "status": "eliminated", "eliminatedEp": 2 },
     { "name": "Joe", "status": "active" },
     { "name": "Jonathan", "status": "active" },
-    { "name": "Kamilla", "status": "active" },
+    { "name": "Kamilla", "status": "eliminated", "eliminatedEp": 6 },
     { "name": "Kyle", "status": "eliminated", "eliminatedEp": 2 },
     { "name": "Mike", "status": "eliminated", "eliminatedEp": 4 },
     { "name": "Ozzy", "status": "active" },
@@ -169,11 +169,25 @@
         "Genevieve": 6, "Joe": 6, "Jonathan": 1, "Kamilla": 1,
         "Ozzy": 16, "Rick": 1, "Rizo": 6, "Stephanie": 1, "Tiffany": 6
       }
+    },
+    {
+      "number": 6,
+      "scores": {
+        "Clay": 73, "Amy": 87, "Dan": 86, "Chris": 96, "Bryany": 91,
+        "Julie": 67, "Mark": 123, "Kogi-pops": 97, "Sandy - Kogi": 50,
+        "Lynne": 111, "Brenden": 96, "Woody": 96, "Claude": 133
+      },
+      "castawayScores": {
+        "Aubry": 8, "Benjamin \"Coach\"": 8, "Christian": 23, "Chrissy": 8,
+        "Cirie": 8, "Colby": 15, "Dee": 23, "Emily": 8, "Genevieve": 25,
+        "Joe": 3, "Jonathan": 8, "Kamilla": 15, "Ozzy": 8, "Rick": 3,
+        "Rizo": 8, "Stephanie": 23, "Tiffany": 8
+      }
     }
   ],
   "totals": {
-    "Clay": 330, "Amy": 328, "Dan": 329, "Chris": 350, "Bryany": 380,
-    "Julie": 316, "Mark": 421, "Kogi-pops": 365, "Sandy - Kogi": 357,
-    "Lynne": 360, "Brenden": 394, "Woody": 299, "Claude": 369
+    "Clay": 403, "Amy": 415, "Dan": 415, "Chris": 446, "Bryany": 471,
+    "Julie": 383, "Mark": 544, "Kogi-pops": 462, "Sandy - Kogi": 407,
+    "Lynne": 471, "Brenden": 490, "Woody": 395, "Claude": 502
   }
 }
