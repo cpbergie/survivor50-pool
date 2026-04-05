@@ -89,9 +89,25 @@ function buildStandings(data) {
 
 // ===== ROSTERS =====
 function buildRosters(data) {
+  const activeCastaways = data.castaways
+    .filter(c => c.status === 'active')
+    .map(c => c.name)
+    .sort((a, b) => a.localeCompare(b));
+
   const eliminatedNames = data.castaways
     .filter(c => c.status === 'eliminated')
     .map(c => c.name);
+
+  const activeCastawaysEl = document.getElementById('active-castaways');
+  activeCastawaysEl.innerHTML = `
+    <div class="active-castaways-header">
+      <span class="active-castaways-title">Still in the game</span>
+      <span class="active-castaways-count">${activeCastaways.length} left</span>
+    </div>
+    <div class="active-castaways-list">
+      ${activeCastaways.map(name => `<span class="active-castaway-pill">${name}</span>`).join('')}
+    </div>
+  `;
 
   // Sort players by total for consistency
   const sorted = [...data.players].sort((a, b) =>

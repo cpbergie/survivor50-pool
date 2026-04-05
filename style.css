@@ -265,6 +265,52 @@ tr.row-1 { background: rgba(255,215,0,0.04); }
 .ep-pts:not(.ep-col-old) { color: var(--text); font-weight: 600; }
 
 /* ===== ROSTERS GRID ===== */
+.active-castaways-card {
+  background: linear-gradient(135deg, #2a1400, #1c0e00);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.active-castaways-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.85rem;
+}
+
+.active-castaways-title {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.04em;
+}
+
+.active-castaways-count {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+}
+
+.active-castaways-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.active-castaway-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid rgba(255, 215, 0, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 107, 0, 0.08);
+  color: var(--text);
+  font-size: 0.86rem;
+  white-space: nowrap;
+}
+
 .rosters-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
