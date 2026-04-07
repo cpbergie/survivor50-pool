@@ -39,11 +39,18 @@ function buildStandings(data) {
     thead.appendChild(th);
   });
 
+  const winningsByRank = {
+    1: '$80',
+    2: '$30',
+    3: '$10'
+  };
+
   // Build rows
   const tbody = document.getElementById('standings-body');
   sorted.forEach((player, idx) => {
     const rank = idx + 1;
     const total = data.totals[player.name];
+    const winning = winningsByRank[rank] || '—';
     const tr = document.createElement('tr');
     if (rank === 1) tr.classList.add('row-1');
 
@@ -65,6 +72,7 @@ function buildStandings(data) {
       <td>${rankHtml}</td>
       <td>${player.name}</td>
       <td class="total-pts">${total}</td>
+      <td class="winning-pts">${winning}</td>
       ${epCells}
     `;
     tbody.appendChild(tr);
