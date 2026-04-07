@@ -100,7 +100,8 @@
     {
       "name": "Lynne",
       "mvp": "Charlie",
-      "picks": ["Charlie", "Christian", "Colby", "Dee", "Joe", "Jonathan", "Ozzy", "Rizo", "Stephanie"]
+      "picks": ["Charlie", "Christian", "Colby", "Dee", "Joe", "Jonathan", "Ozzy", "Rizo", "Stephanie"],
+      "addedPicks": ["Aubry"]
     },
     {
       "name": "Brenden",
