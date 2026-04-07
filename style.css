@@ -150,6 +150,11 @@ main {
   color: var(--text-dim);
 }
 
+.added-legend {
+  color: #7dd3fc;
+  font-weight: 700;
+}
+
 .elim-legend {
   text-decoration: line-through;
   color: var(--elim-text);
@@ -386,6 +391,12 @@ tr.row-1 { background: rgba(255,215,0,0.04); }
   font-weight: 600;
 }
 
+.roster-picks li.added-pick {
+  background: rgba(125, 211, 252, 0.12);
+  color: #7dd3fc;
+  font-weight: 700;
+}
+
 .roster-picks li.eliminated {
   color: var(--elim-text);
   text-decoration: line-through;
@@ -394,6 +405,21 @@ tr.row-1 { background: rgba(255,215,0,0.04); }
 .roster-picks li.mvp.eliminated {
   color: var(--elim-text);
   text-decoration: line-through;
+}
+
+.roster-picks li.added-pick.eliminated {
+  color: var(--elim-text);
+  text-decoration: line-through;
+}
+
+.added-badge {
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #7dd3fc;
+  border: 1px solid rgba(125, 211, 252, 0.45);
+  border-radius: 999px;
+  padding: 0.15rem 0.38rem;
 }
 
 .mvp-star { font-size: 0.8rem; }

@@ -137,20 +137,25 @@ function buildRosters(data) {
     const card = document.createElement('div');
     card.className = 'roster-card';
 
-    const activeCount = player.picks.filter(p => !eliminatedNames.includes(p)).length;
+    const basePicks = player.picks || [];
+    const addedPicks = player.addedPicks || [];
+    const allPicks = [...basePicks, ...addedPicks];
+    const activeCount = allPicks.filter(p => !eliminatedNames.includes(p)).length;
 
     card.innerHTML = `
       <div class="roster-card-header">
         <span class="roster-player-name">${player.name}</span>
-        <span class="roster-total"><span>${total}</span> pts · ${activeCount}/9 alive</span>
+        <span class="roster-total"><span>${total}</span> pts · ${activeCount}/${allPicks.length} alive</span>
       </div>
       <ul class="roster-picks">
-        ${player.picks.map(castaway => {
+        ${allPicks.map(castaway => {
           const isMvp = castaway === player.mvp;
           const isElim = eliminatedNames.includes(castaway);
-          const classes = [isMvp ? 'mvp' : '', isElim ? 'eliminated' : ''].filter(Boolean).join(' ');
+          const isAdded = addedPicks.includes(castaway);
+          const classes = [isMvp ? 'mvp' : '', isAdded ? 'added-pick' : '', isElim ? 'eliminated' : ''].filter(Boolean).join(' ');
           const star = isMvp ? '<span class="mvp-star">⭐</span>' : '<span class="mvp-star" style="opacity:0">⭐</span>';
-          return `<li class="${classes}">${star}<span class="castaway-name">${castaway}</span></li>`;
+          const badge = isAdded ? '<span class="added-badge">NEW</span>' : '';
+          return `<li class="${classes}">${star}<span class="castaway-name">${castaway}</span>${badge}</li>`;
         }).join('')}
       </ul>
     `;
