@@ -39,18 +39,26 @@ function buildStandings(data) {
     thead.appendChild(th);
   });
 
-  const winningsByRank = {
-    1: '$80',
-    2: '$30',
-    3: '$10'
-  };
+  const payoutSlots = ['$80', '$30', '$10'];
+  const payoutByPlayer = {};
+  let payoutIndex = 0;
+
+  sorted.forEach(player => {
+    if (player.name === 'Claude') {
+      payoutByPlayer[player.name] = '—';
+      return;
+    }
+
+    payoutByPlayer[player.name] = payoutSlots[payoutIndex] || '—';
+    if (payoutIndex < payoutSlots.length) payoutIndex += 1;
+  });
 
   // Build rows
   const tbody = document.getElementById('standings-body');
   sorted.forEach((player, idx) => {
     const rank = idx + 1;
     const total = data.totals[player.name];
-    const winning = winningsByRank[rank] || '—';
+    const winning = payoutByPlayer[player.name] || '—';
     const tr = document.createElement('tr');
     if (rank === 1) tr.classList.add('row-1');
 
