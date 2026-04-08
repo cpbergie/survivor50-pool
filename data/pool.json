@@ -60,7 +60,8 @@
     {
       "name": "Dan",
       "mvp": "Benjamin \"Coach\"",
-      "picks": ["Aubry", "Benjamin \"Coach\"", "Cirie", "Colby", "Dee", "Emily", "Mike", "Ozzy", "Rizo"]
+      "picks": ["Aubry", "Benjamin \"Coach\"", "Cirie", "Colby", "Dee", "Emily", "Mike", "Ozzy", "Rizo"],
+      "addedPicks": ["Christian"]
     },
     {
       "name": "Chris",
