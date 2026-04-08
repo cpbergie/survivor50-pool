@@ -54,7 +54,8 @@
     {
       "name": "Amy",
       "mvp": "Colby",
-      "picks": ["Charlie", "Colby", "Dee", "Joe", "Kamilla", "Ozzy", "Quintavius \"Q\"", "Savannah", "Stephanie"]
+      "picks": ["Charlie", "Colby", "Dee", "Joe", "Kamilla", "Ozzy", "Quintavius \"Q\"", "Savannah", "Stephanie"],
+      "addedPicks": ["Rizo"]
     },
     {
       "name": "Dan",
