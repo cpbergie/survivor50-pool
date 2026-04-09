@@ -1,7 +1,7 @@
 {
   "season": "Survivor 50",
-  "lastUpdated": "2026-04-03",
-  "lastEpisode": 6,
+  "lastUpdated": "2026-04-09",
+  "lastEpisode": 7,
   "sheetId": "1edbTrp6f6NL4KCTU8x92L7H8_tHEsd-hEG2cKz2u6-0",
   "sheetGids": {
     "2": "1109687114",
@@ -19,188 +19,594 @@
     "14": "1775442877"
   },
   "castaways": [
-    { "name": "Angelina", "status": "eliminated", "eliminatedEp": 5 },
-    { "name": "Aubry", "status": "active" },
-    { "name": "Benjamin \"Coach\"", "status": "active" },
-    { "name": "Charlie", "status": "eliminated", "eliminatedEp": 5 },
-    { "name": "Christian", "status": "active" },
-    { "name": "Chrissy", "status": "active" },
-    { "name": "Cirie", "status": "active" },
-    { "name": "Colby", "status": "eliminated", "eliminatedEp": 6 },
-    { "name": "Dee", "status": "active" },
-    { "name": "Emily", "status": "active" },
-    { "name": "Genevieve", "status": "eliminated", "eliminatedEp": 6 },
-    { "name": "Jenna", "status": "eliminated", "eliminatedEp": 2 },
-    { "name": "Joe", "status": "active" },
-    { "name": "Jonathan", "status": "active" },
-    { "name": "Kamilla", "status": "eliminated", "eliminatedEp": 6 },
-    { "name": "Kyle", "status": "eliminated", "eliminatedEp": 2 },
-    { "name": "Mike", "status": "eliminated", "eliminatedEp": 4 },
-    { "name": "Ozzy", "status": "active" },
-    { "name": "Quintavius \"Q\"", "status": "eliminated", "eliminatedEp": 3 },
-    { "name": "Rick", "status": "active" },
-    { "name": "Rizo", "status": "active" },
-    { "name": "Savannah", "status": "eliminated", "eliminatedEp": 2 },
-    { "name": "Stephanie", "status": "active" },
-    { "name": "Tiffany", "status": "active" }
+    {
+      "name": "Angelina",
+      "status": "eliminated",
+      "eliminatedEp": 5
+    },
+    {
+      "name": "Aubry",
+      "status": "active"
+    },
+    {
+      "name": "Benjamin \"Coach\"",
+      "status": "active"
+    },
+    {
+      "name": "Charlie",
+      "status": "eliminated",
+      "eliminatedEp": 5
+    },
+    {
+      "name": "Christian",
+      "status": "active"
+    },
+    {
+      "name": "Chrissy",
+      "status": "active"
+    },
+    {
+      "name": "Cirie",
+      "status": "active"
+    },
+    {
+      "name": "Colby",
+      "status": "eliminated",
+      "eliminatedEp": 6
+    },
+    {
+      "name": "Dee",
+      "status": "eliminated",
+      "eliminatedEp": 7
+    },
+    {
+      "name": "Emily",
+      "status": "active"
+    },
+    {
+      "name": "Genevieve",
+      "status": "eliminated",
+      "eliminatedEp": 6
+    },
+    {
+      "name": "Jenna",
+      "status": "eliminated",
+      "eliminatedEp": 2
+    },
+    {
+      "name": "Joe",
+      "status": "active"
+    },
+    {
+      "name": "Jonathan",
+      "status": "active"
+    },
+    {
+      "name": "Kamilla",
+      "status": "eliminated",
+      "eliminatedEp": 6
+    },
+    {
+      "name": "Kyle",
+      "status": "eliminated",
+      "eliminatedEp": 2
+    },
+    {
+      "name": "Mike",
+      "status": "eliminated",
+      "eliminatedEp": 4
+    },
+    {
+      "name": "Ozzy",
+      "status": "active"
+    },
+    {
+      "name": "Quintavius \"Q\"",
+      "status": "eliminated",
+      "eliminatedEp": 3
+    },
+    {
+      "name": "Rick",
+      "status": "active"
+    },
+    {
+      "name": "Rizo",
+      "status": "active"
+    },
+    {
+      "name": "Savannah",
+      "status": "eliminated",
+      "eliminatedEp": 2
+    },
+    {
+      "name": "Stephanie",
+      "status": "active"
+    },
+    {
+      "name": "Tiffany",
+      "status": "active"
+    }
   ],
   "players": [
     {
       "name": "Clay",
       "mvp": "Christian",
-      "picks": ["Aubry", "Charlie", "Christian", "Emily", "Jonathan", "Mike", "Quintavius \"Q\"", "Rick", "Stephanie"],
-      "addedPicks": ["Benjamin \"Coach\""]
+      "picks": [
+        "Aubry",
+        "Charlie",
+        "Christian",
+        "Emily",
+        "Jonathan",
+        "Mike",
+        "Quintavius \"Q\"",
+        "Rick",
+        "Stephanie"
+      ],
+      "addedPicks": [
+        "Benjamin \"Coach\""
+      ]
     },
     {
       "name": "Amy",
       "mvp": "Colby",
-      "picks": ["Charlie", "Colby", "Dee", "Joe", "Kamilla", "Ozzy", "Quintavius \"Q\"", "Savannah", "Stephanie"],
-      "addedPicks": ["Rizo"]
+      "picks": [
+        "Charlie",
+        "Colby",
+        "Dee",
+        "Joe",
+        "Kamilla",
+        "Ozzy",
+        "Quintavius \"Q\"",
+        "Savannah",
+        "Stephanie"
+      ],
+      "addedPicks": [
+        "Rizo"
+      ]
     },
     {
       "name": "Dan",
       "mvp": "Benjamin \"Coach\"",
-      "picks": ["Aubry", "Benjamin \"Coach\"", "Cirie", "Colby", "Dee", "Emily", "Mike", "Ozzy", "Rizo"],
-      "addedPicks": ["Christian"]
+      "picks": [
+        "Aubry",
+        "Benjamin \"Coach\"",
+        "Cirie",
+        "Colby",
+        "Dee",
+        "Emily",
+        "Mike",
+        "Ozzy",
+        "Rizo"
+      ],
+      "addedPicks": [
+        "Christian"
+      ]
     },
     {
       "name": "Chris",
       "mvp": "Cirie",
-      "picks": ["Aubry", "Benjamin \"Coach\"", "Charlie", "Cirie", "Colby", "Dee", "Ozzy", "Rick", "Stephanie"],
-      "addedPicks": ["Christian"]
+      "picks": [
+        "Aubry",
+        "Benjamin \"Coach\"",
+        "Charlie",
+        "Cirie",
+        "Colby",
+        "Dee",
+        "Ozzy",
+        "Rick",
+        "Stephanie"
+      ],
+      "addedPicks": [
+        "Christian"
+      ]
     },
     {
       "name": "Bryany",
       "mvp": "Christian",
-      "picks": ["Charlie", "Christian", "Chrissy", "Colby", "Joe", "Jonathan", "Rick", "Rizo", "Stephanie"],
-      "addedPicks": ["Dee"]
+      "picks": [
+        "Charlie",
+        "Christian",
+        "Chrissy",
+        "Colby",
+        "Joe",
+        "Jonathan",
+        "Rick",
+        "Rizo",
+        "Stephanie"
+      ],
+      "addedPicks": [
+        "Dee"
+      ]
     },
     {
       "name": "Julie",
       "mvp": "Joe",
-      "picks": ["Charlie", "Colby", "Dee", "Joe", "Mike", "Quintavius \"Q\"", "Rick", "Savannah", "Stephanie"],
-      "addedPicks": ["Aubry"]
+      "picks": [
+        "Charlie",
+        "Colby",
+        "Dee",
+        "Joe",
+        "Mike",
+        "Quintavius \"Q\"",
+        "Rick",
+        "Savannah",
+        "Stephanie"
+      ],
+      "addedPicks": [
+        "Aubry"
+      ]
     },
     {
       "name": "Mark",
       "mvp": "Colby",
-      "picks": ["Christian", "Colby", "Dee", "Genevieve", "Joe", "Jonathan", "Kamilla", "Rick", "Rizo"],
-      "addedPicks": ["Stephanie"]
+      "picks": [
+        "Christian",
+        "Colby",
+        "Dee",
+        "Genevieve",
+        "Joe",
+        "Jonathan",
+        "Kamilla",
+        "Rick",
+        "Rizo"
+      ],
+      "addedPicks": [
+        "Stephanie"
+      ]
     },
     {
       "name": "Kogi-pops",
       "mvp": "Joe",
-      "picks": ["Benjamin \"Coach\"", "Colby", "Genevieve", "Joe", "Kamilla", "Mike", "Ozzy", "Savannah", "Stephanie"],
-      "addedPicks": ["Emily"]
+      "picks": [
+        "Benjamin \"Coach\"",
+        "Colby",
+        "Genevieve",
+        "Joe",
+        "Kamilla",
+        "Mike",
+        "Ozzy",
+        "Savannah",
+        "Stephanie"
+      ],
+      "addedPicks": [
+        "Emily"
+      ]
     },
     {
       "name": "Sandy - Kogi",
       "mvp": "Joe",
-      "picks": ["Benjamin \"Coach\"", "Colby", "Joe", "Mike", "Ozzy", "Quintavius \"Q\"", "Rizo", "Savannah", "Tiffany"],
-      "addedPicks": ["Cirie"]
+      "picks": [
+        "Benjamin \"Coach\"",
+        "Colby",
+        "Joe",
+        "Mike",
+        "Ozzy",
+        "Quintavius \"Q\"",
+        "Rizo",
+        "Savannah",
+        "Tiffany"
+      ],
+      "addedPicks": [
+        "Cirie"
+      ]
     },
     {
       "name": "Lynne",
       "mvp": "Charlie",
-      "picks": ["Charlie", "Christian", "Colby", "Dee", "Joe", "Jonathan", "Ozzy", "Rizo", "Stephanie"],
-      "addedPicks": ["Aubry"]
+      "picks": [
+        "Charlie",
+        "Christian",
+        "Colby",
+        "Dee",
+        "Joe",
+        "Jonathan",
+        "Ozzy",
+        "Rizo",
+        "Stephanie"
+      ],
+      "addedPicks": [
+        "Aubry"
+      ]
     },
     {
       "name": "Brenden",
       "mvp": "Aubry",
-      "picks": ["Aubry", "Benjamin \"Coach\"", "Christian", "Cirie", "Emily", "Genevieve", "Jonathan", "Mike", "Rizo"],
-      "addedPicks": ["Joe"]
+      "picks": [
+        "Aubry",
+        "Benjamin \"Coach\"",
+        "Christian",
+        "Cirie",
+        "Emily",
+        "Genevieve",
+        "Jonathan",
+        "Mike",
+        "Rizo"
+      ],
+      "addedPicks": [
+        "Joe"
+      ]
     },
     {
       "name": "Woody",
       "mvp": "Colby",
-      "picks": ["Chrissy", "Colby", "Dee", "Emily", "Joe", "Jonathan", "Mike", "Rizo", "Stephanie"],
-      "addedPicks": ["Cirie"]
+      "picks": [
+        "Chrissy",
+        "Colby",
+        "Dee",
+        "Emily",
+        "Joe",
+        "Jonathan",
+        "Mike",
+        "Rizo",
+        "Stephanie"
+      ],
+      "addedPicks": [
+        "Cirie"
+      ]
     },
     {
       "name": "Claude",
       "mvp": "Cirie",
-      "picks": ["Benjamin \"Coach\"", "Christian", "Cirie", "Colby", "Dee", "Genevieve", "Mike", "Ozzy", "Stephanie"],
-      "addedPicks": ["Aubry"]
+      "picks": [
+        "Benjamin \"Coach\"",
+        "Christian",
+        "Cirie",
+        "Colby",
+        "Dee",
+        "Genevieve",
+        "Mike",
+        "Ozzy",
+        "Stephanie"
+      ],
+      "addedPicks": [
+        "Aubry"
+      ]
     }
   ],
   "episodes": [
     {
       "number": 2,
       "scores": {
-        "Clay": 164, "Amy": 128, "Dan": 94, "Chris": 114, "Bryany": 139,
-        "Julie": 143, "Mark": 159, "Kogi-pops": 133, "Sandy - Kogi": 128,
-        "Lynne": 119, "Brenden": 154, "Woody": 89, "Claude": 129
+        "Clay": 164,
+        "Amy": 128,
+        "Dan": 94,
+        "Chris": 114,
+        "Bryany": 139,
+        "Julie": 143,
+        "Mark": 159,
+        "Kogi-pops": 133,
+        "Sandy - Kogi": 128,
+        "Lynne": 119,
+        "Brenden": 154,
+        "Woody": 89,
+        "Claude": 129
       },
       "castawayScores": {
-        "Aubry": 21, "Benjamin \"Coach\"": 16, "Charlie": 11, "Christian": 41,
-        "Chrissy": 11, "Cirie": 11, "Colby": 6, "Dee": 11, "Emily": 6,
-        "Genevieve": 21, "Joe": 11, "Jonathan": 21, "Kamilla": 16, "Mike": 11,
-        "Ozzy": 6, "Quintavius \"Q\"": 21, "Rick": 26, "Rizo": 6,
-        "Savannah": 40, "Stephanie": 6, "Tiffany": 11
+        "Aubry": 21,
+        "Benjamin \"Coach\"": 16,
+        "Charlie": 11,
+        "Christian": 41,
+        "Chrissy": 11,
+        "Cirie": 11,
+        "Colby": 6,
+        "Dee": 11,
+        "Emily": 6,
+        "Genevieve": 21,
+        "Joe": 11,
+        "Jonathan": 21,
+        "Kamilla": 16,
+        "Mike": 11,
+        "Ozzy": 6,
+        "Quintavius \"Q\"": 21,
+        "Rick": 26,
+        "Rizo": 6,
+        "Savannah": 40,
+        "Stephanie": 6,
+        "Tiffany": 11
       }
     },
     {
       "number": 3,
       "scores": {
-        "Clay": 78, "Amy": 82, "Dan": 84, "Chris": 89, "Bryany": 94,
-        "Julie": 77, "Mark": 104, "Kogi-pops": 73, "Sandy - Kogi": 82,
-        "Lynne": 79, "Brenden": 89, "Woody": 84, "Claude": 69
+        "Clay": 78,
+        "Amy": 82,
+        "Dan": 84,
+        "Chris": 89,
+        "Bryany": 94,
+        "Julie": 77,
+        "Mark": 104,
+        "Kogi-pops": 73,
+        "Sandy - Kogi": 82,
+        "Lynne": 79,
+        "Brenden": 89,
+        "Woody": 84,
+        "Claude": 69
       },
       "castawayScores": {
-        "Aubry": 16, "Benjamin \"Coach\"": 16, "Charlie": 11, "Christian": 6,
-        "Chrissy": 16, "Cirie": 11, "Colby": 11, "Dee": 11, "Emily": 6,
-        "Genevieve": 11, "Joe": 16, "Jonathan": 11, "Kamilla": 16, "Mike": 1,
-        "Ozzy": 1, "Quintavius \"Q\"": 15, "Rick": 11, "Rizo": 11,
-        "Stephanie": 1, "Tiffany": 11
+        "Aubry": 16,
+        "Benjamin \"Coach\"": 16,
+        "Charlie": 11,
+        "Christian": 6,
+        "Chrissy": 16,
+        "Cirie": 11,
+        "Colby": 11,
+        "Dee": 11,
+        "Emily": 6,
+        "Genevieve": 11,
+        "Joe": 16,
+        "Jonathan": 11,
+        "Kamilla": 16,
+        "Mike": 1,
+        "Ozzy": 1,
+        "Quintavius \"Q\"": 15,
+        "Rick": 11,
+        "Rizo": 11,
+        "Stephanie": 1,
+        "Tiffany": 11
       }
     },
     {
       "number": 4,
       "scores": {
-        "Clay": 57, "Amy": 67, "Dan": 103, "Chris": 89, "Bryany": 94,
-        "Julie": 61, "Mark": 119, "Kogi-pops": 112, "Sandy - Kogi": 96,
-        "Lynne": 99, "Brenden": 118, "Woody": 93, "Claude": 123
+        "Clay": 57,
+        "Amy": 67,
+        "Dan": 103,
+        "Chris": 89,
+        "Bryany": 94,
+        "Julie": 61,
+        "Mark": 119,
+        "Kogi-pops": 112,
+        "Sandy - Kogi": 96,
+        "Lynne": 99,
+        "Brenden": 118,
+        "Woody": 93,
+        "Claude": 123
       },
       "castawayScores": {
-        "Aubry": 11, "Benjamin \"Coach\"": 16, "Charlie": 6, "Christian": 11,
-        "Chrissy": 16, "Cirie": 6, "Colby": 11, "Dee": 11, "Emily": 1,
-        "Genevieve": 36, "Joe": 11, "Jonathan": 6, "Kamilla": 6, "Mike": 10,
-        "Ozzy": 16, "Rick": 6, "Rizo": 21, "Stephanie": 6, "Tiffany": 11
+        "Aubry": 11,
+        "Benjamin \"Coach\"": 16,
+        "Charlie": 6,
+        "Christian": 11,
+        "Chrissy": 16,
+        "Cirie": 6,
+        "Colby": 11,
+        "Dee": 11,
+        "Emily": 1,
+        "Genevieve": 36,
+        "Joe": 11,
+        "Jonathan": 6,
+        "Kamilla": 6,
+        "Mike": 10,
+        "Ozzy": 16,
+        "Rick": 6,
+        "Rizo": 21,
+        "Stephanie": 6,
+        "Tiffany": 11
       }
     },
     {
       "number": 5,
       "scores": {
-        "Clay": 31, "Amy": 51, "Dan": 48, "Chris": 58, "Bryany": 53,
-        "Julie": 35, "Mark": 39, "Kogi-pops": 47, "Sandy - Kogi": 51,
-        "Lynne": 63, "Brenden": 33, "Woody": 33, "Claude": 48
+        "Clay": 31,
+        "Amy": 51,
+        "Dan": 48,
+        "Chris": 58,
+        "Bryany": 53,
+        "Julie": 35,
+        "Mark": 39,
+        "Kogi-pops": 47,
+        "Sandy - Kogi": 51,
+        "Lynne": 63,
+        "Brenden": 33,
+        "Woody": 33,
+        "Claude": 48
       },
       "castawayScores": {
-        "Aubry": 6, "Benjamin \"Coach\"": 6, "Charlie": 15, "Christian": 6,
-        "Chrissy": 6, "Cirie": 1, "Colby": 11, "Dee": 1, "Emily": 1,
-        "Genevieve": 6, "Joe": 6, "Jonathan": 1, "Kamilla": 1,
-        "Ozzy": 16, "Rick": 1, "Rizo": 6, "Stephanie": 1, "Tiffany": 6
+        "Aubry": 6,
+        "Benjamin \"Coach\"": 6,
+        "Charlie": 15,
+        "Christian": 6,
+        "Chrissy": 6,
+        "Cirie": 1,
+        "Colby": 11,
+        "Dee": 1,
+        "Emily": 1,
+        "Genevieve": 6,
+        "Joe": 6,
+        "Jonathan": 1,
+        "Kamilla": 1,
+        "Ozzy": 16,
+        "Rick": 1,
+        "Rizo": 6,
+        "Stephanie": 1,
+        "Tiffany": 6
       }
     },
     {
       "number": 6,
       "scores": {
-        "Clay": 73, "Amy": 87, "Dan": 86, "Chris": 96, "Bryany": 91,
-        "Julie": 67, "Mark": 123, "Kogi-pops": 97, "Sandy - Kogi": 50,
-        "Lynne": 111, "Brenden": 96, "Woody": 96, "Claude": 133
+        "Clay": 73,
+        "Amy": 87,
+        "Dan": 86,
+        "Chris": 96,
+        "Bryany": 91,
+        "Julie": 67,
+        "Mark": 123,
+        "Kogi-pops": 97,
+        "Sandy - Kogi": 50,
+        "Lynne": 111,
+        "Brenden": 96,
+        "Woody": 96,
+        "Claude": 133
       },
       "castawayScores": {
-        "Aubry": 8, "Benjamin \"Coach\"": 8, "Christian": 23, "Chrissy": 8,
-        "Cirie": 8, "Colby": 15, "Dee": 23, "Emily": 8, "Genevieve": 25,
-        "Joe": 3, "Jonathan": 8, "Kamilla": 15, "Ozzy": 8, "Rick": 3,
-        "Rizo": 8, "Stephanie": 23, "Tiffany": 8
+        "Aubry": 8,
+        "Benjamin \"Coach\"": 8,
+        "Christian": 23,
+        "Chrissy": 8,
+        "Cirie": 8,
+        "Colby": 15,
+        "Dee": 23,
+        "Emily": 8,
+        "Genevieve": 25,
+        "Joe": 3,
+        "Jonathan": 8,
+        "Kamilla": 15,
+        "Ozzy": 8,
+        "Rick": 3,
+        "Rizo": 8,
+        "Stephanie": 23,
+        "Tiffany": 8
+      }
+    },
+    {
+      "number": 7,
+      "scores": {
+        "Clay": 76,
+        "Amy": 77,
+        "Dan": 86,
+        "Chris": 106,
+        "Bryany": 81,
+        "Julie": 72,
+        "Mark": 78,
+        "Kogi-pops": 75,
+        "Sandy - Kogi": 53,
+        "Lynne": 96,
+        "Brenden": 54,
+        "Woody": 76,
+        "Claude": 93
+      },
+      "castawayScores": {
+        "Aubry": 8,
+        "Benjamin \"Coach\"": 8,
+        "Christian": 8,
+        "Chrissy": 3,
+        "Cirie": 3,
+        "Dee": 20,
+        "Emily": 13,
+        "Joe": 8,
+        "Jonathan": 3,
+        "Ozzy": 23,
+        "Rick": 13,
+        "Rizo": 3,
+        "Stephanie": 23,
+        "Tiffany": 8
       }
     }
   ],
   "totals": {
-    "Clay": 403, "Amy": 415, "Dan": 415, "Chris": 446, "Bryany": 471,
-    "Julie": 383, "Mark": 544, "Kogi-pops": 462, "Sandy - Kogi": 407,
-    "Lynne": 471, "Brenden": 490, "Woody": 395, "Claude": 502
+    "Clay": 479,
+    "Amy": 492,
+    "Dan": 501,
+    "Chris": 552,
+    "Bryany": 552,
+    "Julie": 455,
+    "Mark": 622,
+    "Kogi-pops": 537,
+    "Sandy - Kogi": 460,
+    "Lynne": 567,
+    "Brenden": 544,
+    "Woody": 471,
+    "Claude": 595
   }
 }
