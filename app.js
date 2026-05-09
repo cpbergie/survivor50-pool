@@ -14,7 +14,6 @@ fetch('data/pool.json')
   .then(data => {
     buildStandings(data);
     buildRosters(data);
-    buildEpisodes(data);
   })
   .catch(err => console.error('Failed to load pool data:', err));
 
@@ -163,61 +162,3 @@ function buildRosters(data) {
   });
 }
 
-// ===== EPISODES =====
-function buildEpisodes(data) {
-  const container = document.getElementById('episodes-container');
-
-  // Build eliminated map: which castaways were eliminated each episode
-  const elimByEp = {};
-  data.castaways.forEach(c => {
-    if (c.status === 'eliminated') {
-      if (!elimByEp[c.eliminatedEp]) elimByEp[c.eliminatedEp] = [];
-      elimByEp[c.eliminatedEp].push(c.name);
-    }
-  });
-
-  // Most recent episode first
-  const episodes = [...data.episodes].sort((a, b) => b.number - a.number);
-
-  episodes.forEach(ep => {
-    const block = document.createElement('div');
-    block.className = 'episode-block';
-
-    const votedOut = elimByEp[ep.number] || [];
-    const votedOutText = votedOut.length
-      ? `🪔 Snuffed: ${votedOut.join(', ')}`
-      : '';
-
-    // Castaway scores sorted descending
-    const castawayRows = Object.entries(ep.castawayScores || {})
-      .sort(([, a], [, b]) => b - a);
-    const bestScore = castawayRows.length ? castawayRows[0][1] : 0;
-
-    const isFirst = ep.number === episodes[0].number;
-    if (!isFirst) block.classList.add('collapsed');
-
-    block.innerHTML = `
-      <div class="episode-header">
-        <span class="episode-title">
-          <span class="ep-chevron">▼</span>
-          Episode ${ep.number}
-        </span>
-        ${votedOutText ? `<span class="episode-voted-out">${votedOutText}</span>` : ''}
-      </div>
-      <div class="episode-scores">
-        ${castawayRows.map(([name, pts]) => `
-          <div class="ep-score-cell">
-            <span class="ep-player-name">${name}</span>
-            <span class="ep-score-val${pts === bestScore ? ' best' : ''}">${pts}</span>
-          </div>
-        `).join('')}
-      </div>
-    `;
-
-    block.querySelector('.episode-header').addEventListener('click', () => {
-      block.classList.toggle('collapsed');
-    });
-
-    container.appendChild(block);
-  });
-}

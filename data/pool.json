@@ -10,7 +10,7 @@
     { "name": "Cirie", "status": "active" },
     { "name": "Colby", "status": "eliminated" },
     { "name": "Dee", "status": "eliminated" },
-    { "name": "Emily", "status": "active" },
+    { "name": "Emily", "status": "eliminated" },
     { "name": "Genevieve", "status": "eliminated" },
     { "name": "Jenna", "status": "eliminated" },
     { "name": "Joe", "status": "active" },
@@ -18,7 +18,7 @@
     { "name": "Kamilla", "status": "eliminated" },
     { "name": "Kyle", "status": "eliminated" },
     { "name": "Mike", "status": "eliminated" },
-    { "name": "Ozzy", "status": "active" },
+    { "name": "Ozzy", "status": "eliminated" },
     { "name": "Quintavius \"Q\"", "status": "eliminated" },
     { "name": "Rick", "status": "active" },
     { "name": "Rizo", "status": "active" },
@@ -28,71 +28,240 @@
     { "name": "Stephanie", "status": "eliminated" },
     { "name": "Tiffany", "status": "active" }
   ],
-  "players": [
+    "players": [
     {
       "name": "Clay",
-      "picks": ["Aubry", "Benjamin \"Coach\"", "Charlie", "Christian", "Emily", "Jonathan", "Rick", "Rizo", "Stephanie"],
-      "mvp": "Rick"
+      "mvp": "Christian",
+      "picks": [
+        "Aubry",
+        "Charlie",
+        "Christian",
+        "Emily",
+        "Jonathan",
+        "Mike",
+        "Quintavius \"Q\"",
+        "Rick",
+        "Stephanie"
+      ],
+      "addedPicks": [
+        "Benjamin \"Coach\""
+      ]
     },
     {
       "name": "Amy",
-      "picks": ["Colby", "Dee", "Joe", "Kamilla", "Ozzy", "Quintavius \"Q\"", "Rizo", "Savannah", "Stephanie"],
-      "mvp": "Savannah"
+      "mvp": "Colby",
+      "picks": [
+        "Charlie",
+        "Colby",
+        "Dee",
+        "Joe",
+        "Kamilla",
+        "Ozzy",
+        "Quintavius \"Q\"",
+        "Savannah",
+        "Stephanie"
+      ],
+      "addedPicks": [
+        "Rizo"
+      ]
     },
     {
       "name": "Dan",
-      "picks": ["Aubry", "Benjamin \"Coach\"", "Cirie", "Colby", "Dee", "Emily", "Joe", "Mike", "Ozzy", "Rizo", "Stephanie"],
-      "mvp": "Ozzy"
+      "mvp": "Benjamin \"Coach\"",
+      "picks": [
+        "Aubry",
+        "Benjamin \"Coach\"",
+        "Cirie",
+        "Colby",
+        "Dee",
+        "Emily",
+        "Mike",
+        "Ozzy",
+        "Rizo"
+      ],
+      "addedPicks": [
+        "Christian"
+      ]
     },
     {
       "name": "Chris",
-      "picks": ["Aubry", "Benjamin \"Coach\"", "Charlie", "Christian", "Cirie", "Colby", "Dee", "Joe", "Mike", "Ozzy", "Rick", "Rizo", "Stephanie"],
-      "mvp": "Rick"
+      "mvp": "Cirie",
+      "picks": [
+        "Aubry",
+        "Benjamin \"Coach\"",
+        "Charlie",
+        "Cirie",
+        "Colby",
+        "Dee",
+        "Ozzy",
+        "Rick",
+        "Stephanie"
+      ],
+      "addedPicks": [
+        "Christian"
+      ]
     },
     {
       "name": "Bryany",
-      "picks": ["Aubry", "Charlie", "Christian", "Chrissy", "Cirie", "Colby", "Emily", "Joe", "Jonathan", "Ozzy", "Rick", "Rizo", "Stephanie"],
-      "mvp": "Rick"
+      "mvp": "Christian",
+      "picks": [
+        "Charlie",
+        "Christian",
+        "Chrissy",
+        "Colby",
+        "Joe",
+        "Jonathan",
+        "Rick",
+        "Rizo",
+        "Stephanie"
+      ],
+      "addedPicks": [
+        "Dee"
+      ]
     },
     {
       "name": "Julie",
-      "picks": ["Aubry", "Colby", "Dee", "Joe", "Jonathan", "Mike", "Quintavius \"Q\"", "Rick", "Rizo", "Savannah", "Stephanie"],
-      "mvp": "Savannah"
+      "mvp": "Joe",
+      "picks": [
+        "Charlie",
+        "Colby",
+        "Dee",
+        "Joe",
+        "Mike",
+        "Quintavius \"Q\"",
+        "Rick",
+        "Savannah",
+        "Stephanie"
+      ],
+      "addedPicks": [
+        "Aubry"
+      ]
     },
     {
       "name": "Mark",
-      "picks": ["Aubry", "Christian", "Colby", "Dee", "Genevieve", "Joe", "Jonathan", "Kamilla", "Mike", "Rick", "Rizo", "Stephanie"],
-      "mvp": "Rick"
+      "mvp": "Colby",
+      "picks": [
+        "Christian",
+        "Colby",
+        "Dee",
+        "Genevieve",
+        "Joe",
+        "Jonathan",
+        "Kamilla",
+        "Rick",
+        "Rizo"
+      ],
+      "addedPicks": [
+        "Stephanie"
+      ]
     },
     {
       "name": "Kogi-pops",
-      "picks": ["Benjamin \"Coach\"", "Colby", "Emily", "Genevieve", "Joe", "Kamilla", "Mike", "Ozzy", "Rizo", "Stephanie"],
-      "mvp": "Stephanie"
+      "mvp": "Joe",
+      "picks": [
+        "Benjamin \"Coach\"",
+        "Colby",
+        "Genevieve",
+        "Joe",
+        "Kamilla",
+        "Mike",
+        "Ozzy",
+        "Savannah",
+        "Stephanie"
+      ],
+      "addedPicks": [
+        "Emily"
+      ]
     },
     {
       "name": "Sandy - Kogi",
-      "picks": ["Benjamin \"Coach\"", "Cirie", "Colby", "Joe", "Ozzy", "Rizo", "Tiffany"],
-      "mvp": "Tiffany"
+      "mvp": "Joe",
+      "picks": [
+        "Benjamin \"Coach\"",
+        "Colby",
+        "Joe",
+        "Mike",
+        "Ozzy",
+        "Quintavius \"Q\"",
+        "Rizo",
+        "Savannah",
+        "Tiffany"
+      ],
+      "addedPicks": [
+        "Cirie"
+      ]
     },
     {
       "name": "Lynne",
-      "picks": ["Aubry", "Benjamin \"Coach\"", "Charlie", "Christian", "Cirie", "Dee", "Emily", "Joe", "Jonathan", "Mike", "Ozzy", "Rizo", "Stephanie"],
-      "mvp": "Stephanie"
+      "mvp": "Charlie",
+      "picks": [
+        "Charlie",
+        "Christian",
+        "Colby",
+        "Dee",
+        "Joe",
+        "Jonathan",
+        "Ozzy",
+        "Rizo",
+        "Stephanie"
+      ],
+      "addedPicks": [
+        "Aubry"
+      ]
     },
     {
       "name": "Brenden",
-      "picks": ["Aubry", "Benjamin \"Coach\"", "Charlie", "Chrissy", "Cirie", "Emily", "Genevieve", "Joe", "Jonathan", "Mike", "Ozzy", "Rizo", "Stephanie"],
-      "mvp": "Stephanie"
+      "mvp": "Aubry",
+      "picks": [
+        "Aubry",
+        "Benjamin \"Coach\"",
+        "Christian",
+        "Cirie",
+        "Emily",
+        "Genevieve",
+        "Jonathan",
+        "Mike",
+        "Rizo"
+      ],
+      "addedPicks": [
+        "Joe"
+      ]
     },
     {
       "name": "Woody",
-      "picks": ["Aubry", "Benjamin \"Coach\"", "Charlie", "Chrissy", "Cirie", "Colby", "Dee", "Emily", "Joe", "Jonathan", "Mike", "Ozzy", "Rizo", "Stephanie"],
-      "mvp": "Stephanie"
+      "mvp": "Colby",
+      "picks": [
+        "Chrissy",
+        "Colby",
+        "Dee",
+        "Emily",
+        "Joe",
+        "Jonathan",
+        "Mike",
+        "Rizo",
+        "Stephanie"
+      ],
+      "addedPicks": [
+        "Cirie"
+      ]
     },
     {
       "name": "Claude",
-      "picks": ["Aubry", "Benjamin \"Coach\"", "Christian", "Cirie", "Colby", "Dee", "Emily", "Joe", "Mike", "Ozzy", "Rizo", "Stephanie"],
-      "mvp": "Stephanie"
+      "mvp": "Cirie",
+      "picks": [
+        "Benjamin \"Coach\"",
+        "Christian",
+        "Cirie",
+        "Colby",
+        "Dee",
+        "Genevieve",
+        "Mike",
+        "Ozzy",
+        "Stephanie"
+      ],
+      "addedPicks": [
+        "Aubry"
+      ]
     }
   ],
   "episodes": [
