@@ -1,3 +1,18 @@
+# Survivor 50 Pool — Project Overview & Weekly Update Process
+
+## About the project
+A weekly fantasy pool tracking Survivor 50 (US). 13 players each picked 9 castaways + 1 MVP at the start of the season. Points are scored each episode based on castaway performance.
+
+## Links
+- Live site: https://survivor50-pool-gules.vercel.app/
+- GitHub: https://github.com/cpbergie/survivor50-pool
+- Google Sheet (source of truth): https://docs.google.com/spreadsheets/d/1edbTrp6f6NL4KCTU8x92L7H8_tHEsd-hEG2cKz2u6-0/edit
+
+## Stack
+Plain HTML/JS/CSS → GitHub → Vercel (auto-deploys on push). All scoring is calculated in the Google Sheet; the site reads `data/pool.json` and displays it.
+
+---
+
 # Weekly Update Process
 
 ## What you do each week
