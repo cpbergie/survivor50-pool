@@ -29,7 +29,7 @@ function buildStandings(data) {
   );
 
   // Build episode column headers (most recent first)
-  const epNums = [...data.episodes].sort((a, b) => b.number - a.number).map(e => e.number);
+  const epNums = [...data.episodes].sort((a, b) => b.episode - a.episode).map(e => e.episode);
   const thead = document.querySelector('#standings-table thead tr');
   epNums.forEach((ep, idx) => {
     const th = document.createElement('th');
@@ -69,7 +69,7 @@ function buildStandings(data) {
     }
 
     const epCells = epNums.map((ep, idx) => {
-      const epData = data.episodes.find(e => e.number === ep);
+      const epData = data.episodes.find(e => e.episode === ep);
       const pts = epData ? (epData.scores[player.name] || 0) : 0;
       const cls = idx > 0 ? 'ep-pts ep-col-old' : 'ep-pts';
       return `<td class="${cls}">${pts}</td>`;
