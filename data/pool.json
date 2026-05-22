@@ -1,5 +1,5 @@
 {
-  "lastEpisode": 12,
+  "lastEpisode": 13,
   "castaways": [
     { "name": "Angelina", "status": "eliminated" },
     { "name": "Aubry", "status": "active" },
@@ -21,12 +21,12 @@
     { "name": "Ozzy", "status": "eliminated" },
     { "name": "Quintavius \"Q\"", "status": "eliminated" },
     { "name": "Rick", "status": "eliminated" },
-    { "name": "Rizo", "status": "active" },
+    { "name": "Rizo", "status": "eliminated" },
     { "name": "Saiounia \"Sia\"", "status": "eliminated" },
     { "name": "Savannah", "status": "eliminated" },
     { "name": "Shauhin", "status": "eliminated" },
     { "name": "Stephanie", "status": "eliminated" },
-    { "name": "Tiffany", "status": "active" }
+    { "name": "Tiffany", "status": "eliminated" }
   ],
     "players": [
     {
@@ -480,21 +480,39 @@
         "Woody": 54,
         "Claude": 28
       }
+    },
+    {
+      "episode": 13,
+      "scores": {
+        "Clay": 111,
+        "Amy": 33,
+        "Dan": 68,
+        "Chris": 58,
+        "Bryany": 86,
+        "Julie": 81,
+        "Mark": 86,
+        "Kogi-pops": 23,
+        "Sandy - Kogi": 48,
+        "Lynne": 144,
+        "Brenden": 144,
+        "Woody": 86,
+        "Claude": 58
+      }
     }
   ],
   "totals": {
-    "Clay": 694,
-    "Amy": 682,
-    "Dan": 704,
-    "Chris": 814,
-    "Bryany": 813,
-    "Julie": 663,
-    "Mark": 865,
-    "Kogi-pops": 726,
-    "Sandy - Kogi": 746,
-    "Lynne": 835,
-    "Brenden": 798,
-    "Woody": 713,
-    "Claude": 780
+    "Clay": 805,
+    "Amy": 715,
+    "Dan": 772,
+    "Chris": 872,
+    "Bryany": 899,
+    "Julie": 744,
+    "Mark": 951,
+    "Kogi-pops": 749,
+    "Sandy - Kogi": 794,
+    "Lynne": 979,
+    "Brenden": 942,
+    "Woody": 799,
+    "Claude": 838
   }
 }
