@@ -8,6 +8,10 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='40' r='19' fill='%23ff8a3d'/><path d='M0 62h100v8H0z' fill='%237fdfff'/><path d='M0 76h100v6H0z' fill='%234bb8d8'/><path d='M0 88h100v5H0z' fill='%232f8fae'/></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Preload the display face (big "51", champion name). If Google bumps the
+       Anton version this 404s harmlessly and the stylesheet still loads it. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+        href="https://fonts.gstatic.com/s/anton/v27/1Ptgg87LROyAm3Kz-C8CSKlv.woff2" />
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600;700&family=Barlow+Semi+Condensed:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -33,13 +37,28 @@
         <path d="M0,24 C150,44 350,4 600,20 C850,36 1050,6 1200,22 L1200,48 L0,48 Z"></path>
       </svg>
     </div>
-
-    <nav>
-      <button class="tab-btn active" data-tab="standings">Standings</button>
-      <button class="tab-btn" data-tab="rosters">Rosters</button>
-      <button class="tab-btn" data-tab="past">Past Seasons</button>
-    </nav>
   </header>
+
+  <nav aria-label="Sections">
+    <button class="tab-btn active" data-tab="standings" aria-current="page">
+      <span class="tab-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19h4v-8H4zM10 19h4V5h-4zM16 19h4v-5h-4z"/></svg>
+      </span>
+      <span class="tab-label">Standings</span>
+    </button>
+    <button class="tab-btn" data-tab="rosters">
+      <span class="tab-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 5.5a3 3 0 0 1 0 5.8M18 20c0-3-1.5-5.2-3.5-6"/></svg>
+      </span>
+      <span class="tab-label">Rosters</span>
+    </button>
+    <button class="tab-btn" data-tab="past">
+      <span class="tab-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+      </span>
+      <span class="tab-label">Past Seasons</span>
+    </button>
+  </nav>
 
   <div id="claim-bar" class="claim-bar" hidden>
     <p class="claim-q">Which one are you?</p>
