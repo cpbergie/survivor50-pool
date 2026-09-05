@@ -69,6 +69,27 @@ function rankCell(rank, ranked) {
 }
 
 // ===== STANDINGS =====
+const TRIBE_FALLBACK = 'var(--foam-dim)';
+const FLAME_SVG =
+  '<svg viewBox="0 0 20 20" width="12" height="12" fill="currentColor" aria-hidden="true">' +
+  '<path d="M10 1c.6 3-1.8 4.6-1.8 7.2 0 1.4.9 2.4 2 2.6-.3-1.1.2-2.3 1-3 .2 1.4 1.1 2 1.9 3 ' +
+  '1.4 1.7 1 4.4-1 5.6 3.2-.4 5.4-2.9 5.4-6C17.5 8 13 5.5 12.6 1c-.7 1-1.9 1.7-2.6 0z"/></svg>';
+
+let openDetailId = null;
+
+function badgeFor(label, rank) {
+  return rank <= 3
+    ? `<span class="rank-badge rank-${rank}">${label}</span>`
+    : `<span class="rank-other">${label}</span>`;
+}
+
+function movementCell(m) {
+  if (m == null) return '';
+  if (m === 0) return '<span class="mv mv-flat">—</span>';
+  if (m > 0) return `<span class="mv mv-up">▲${m}</span>`;
+  return `<span class="mv mv-down">▼${Math.abs(m)}</span>`;
+}
+
 function buildStandings(data) {
   const totals = data.totals || {};
   const players = data.players || [];
@@ -80,77 +101,138 @@ function buildStandings(data) {
       (data.lastUpdated && data.lastUpdated !== 'Not started' ? ` · ${data.lastUpdated}` : '')
     : 'Season 51 · pre-season';
   document.getElementById('standings-empty').hidden = started;
+  document.getElementById('standings-hint').hidden = !started;
 
   const sorted = sortByTotal(players, totals);
-  const epNums = started
-    ? [...episodes].sort((a, b) => b.episode - a.episode).map(e => e.episode)
-    : [];
+  const ranks = started
+    ? Standings.rankByTotal(players.map(p => ({ key: p.id, total: totals[p.name] || 0 })))
+    : {};
+  const move = started ? Standings.movement(data, data.lastEpisode) : {};
   const payouts = started ? computePayouts(players, totals) : {};
 
-  // Header row
-  const thead = document.querySelector('#standings-table thead');
+  // Header
   const hr = document.createElement('tr');
-  hr.innerHTML =
-    `<th>#</th><th class="col-player">Player</th><th>Total</th>` +
-    (started ? `<th>Winning</th>` : ``);
-  epNums.forEach((ep, idx) => {
-    const th = document.createElement('th');
-    th.textContent = idx === 0 ? `This Week · Ep ${ep}` : `Ep ${ep}`;
-    if (idx > 0) th.classList.add('ep-col-old');
-    hr.appendChild(th);
-  });
-  thead.replaceChildren(hr);
+  hr.innerHTML = started
+    ? `<th class="c-rank">#</th>` +
+      `<th class="c-move"><span aria-hidden="true">▲▼</span><span class="sr-only">Rank change since last episode</span></th>` +
+      `<th class="col-player">Player</th>` +
+      `<th class="c-alive"><span class="flame-ico" title="Castaways still in the game">${FLAME_SVG}</span>` +
+        `<span class="sr-only">Castaways still in the game</span></th>` +
+      `<th class="c-total">Total</th>`
+    : `<th class="c-rank">#</th><th class="col-player">Player</th><th class="c-total">Total</th>`;
+  document.querySelector('#standings-table thead').replaceChildren(hr);
 
-  // Body rows
+  // Body
   meIndex = {};
+  openDetailId = null;
+  const colspan = started ? 5 : 3;
   const tbody = document.getElementById('standings-body');
   tbody.replaceChildren();
-  sorted.forEach((player, idx) => {
-    const rank = idx + 1;
-    const total = totals[player.name] || 0;
-    const tr = document.createElement('tr');
-    if (player.id) tr.dataset.playerId = player.id;
-    if (started && rank === 1) tr.classList.add('row-1');
 
-    // NOTE: tie handling (competition ranking + "T" prefix) lands with the
-    // movement/alive columns in Phase 2. Pre-season this is a stable list order.
+  sorted.forEach((player, idx) => {
+    const total = totals[player.name] || 0;
+    const info = started ? ranks[player.id] : null;
+    const rank = info ? info.rank : idx + 1;
+    const rankLabel = info ? info.rankLabel : String(idx + 1);
+    const m = started ? (move[player.id] || 0) : null;
+    const canExpand = started && Standings.roster(player).length > 0;
+
     if (player.id) {
-      meIndex[player.id] = { rank, rankLabel: String(rank), total, name: player.name, movement: null };
+      meIndex[player.id] = { rank, rankLabel, total, name: player.name, movement: m };
     }
 
-    const epCells = epNums.map((ep, i) => {
-      const epData = episodes.find(e => e.episode === ep);
-      const pts = epData ? (epData.scores[player.name] || 0) : 0;
-      return `<td class="ep-pts${i > 0 ? ' ep-col-old' : ''}">${pts}</td>`;
-    }).join('');
+    const tr = document.createElement('tr');
+    tr.className = 'st-row';
+    if (player.id) tr.dataset.playerId = player.id;
+    if (rank === 1) tr.classList.add('row-1');
+    if (canExpand) {
+      tr.setAttribute('role', 'button');
+      tr.setAttribute('tabindex', '0');
+      tr.setAttribute('aria-expanded', 'false');
+      tr.setAttribute('aria-controls', `st-detail-${player.id}`);
+    }
 
-    tr.innerHTML = `
-      <td>${rankCell(rank, started)}</td>
-      <td class="col-player">${player.name}</td>
-      <td class="total-pts">${total}</td>
-      ${started ? `<td class="winning-pts">${payouts[player.name] || '—'}</td>` : ``}
-      ${epCells}
-    `;
+    tr.innerHTML = started
+      ? `<td class="c-rank">${badgeFor(rankLabel, rank)}</td>
+         <td class="c-move">${movementCell(m)}</td>
+         <td class="col-player"><span class="st-name">${player.name}</span>${canExpand ? '<span class="st-caret" aria-hidden="true">›</span>' : ''}</td>
+         <td class="c-alive">${Standings.aliveCount(player, data)}</td>
+         <td class="c-total">${total}</td>`
+      : `<td class="c-rank"><span class="rank-other">${idx + 1}</span></td>
+         <td class="col-player"><span class="st-name">${player.name}</span></td>
+         <td class="c-total">${total}</td>`;
     tbody.appendChild(tr);
-  });
 
-  // Mobile toggle for older episode columns
-  if (epNums.length > 1) {
-    const tableWrap = document.querySelector('#standings .table-wrap');
-    const toggleBtn = document.createElement('button');
-    toggleBtn.className = 'toggle-ep-btn';
-    toggleBtn.textContent = `Show all ${epNums.length} episodes`;
-    let expanded = false;
-    tableWrap.classList.add('ep-cols-hidden');
-    toggleBtn.addEventListener('click', () => {
-      expanded = !expanded;
-      tableWrap.classList.toggle('ep-cols-hidden', !expanded);
-      toggleBtn.textContent = expanded
-        ? 'Hide older episodes'
-        : `Show all ${epNums.length} episodes`;
-    });
-    tableWrap.after(toggleBtn);
+    if (canExpand) {
+      const dr = document.createElement('tr');
+      dr.className = 'st-detail';
+      dr.id = `st-detail-${player.id}`;
+      dr.hidden = true;
+      dr.innerHTML = `<td colspan="${colspan}">${detailHtml(player, data, payouts)}</td>`;
+      tbody.appendChild(dr);
+
+      const toggle = () => toggleDetail(player.id);
+      tr.addEventListener('click', toggle);
+      tr.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+      });
+    }
+  });
+}
+
+function detailHtml(player, season, payouts) {
+  const lastEp = Standings.lastScoredEpisode(season);
+  const wk = Standings.lastEpisodePoints(season, player.name);
+  const roster = Standings.roster(player);
+  const elim = Standings.eliminatedNames(season);
+  const tribes = season.tribes || {};
+  const cInfo = {};
+  (season.castaways || []).forEach(c => { cInfo[c.name] = c; });
+  const alive = roster.filter(n => !elim.has(n)).length;
+  const pay = payouts[player.name];
+
+  const cast = roster.map(name => {
+    const c = cInfo[name] || {};
+    const isElim = elim.has(name);
+    const color = c.tribe && tribes[c.tribe] ? tribes[c.tribe] : TRIBE_FALLBACK;
+    const ep = isElim ? (c.eliminatedEp ? `Ep ${c.eliminatedEp}` : 'out') : '';
+    return `<li class="dcast${isElim ? ' is-elim' : ''}">
+      <span class="dcast-dot" style="background:${color}"></span>
+      <span class="dcast-name">${name}</span>
+      ${name === player.mvp ? '<span class="dcast-mvp">MVP</span>' : ''}
+      ${ep ? `<span class="dcast-ep">${ep}</span>` : ''}
+    </li>`;
+  }).join('');
+
+  return `
+    <div class="detail-head">
+      <span class="detail-week">${wk >= 0 ? '+' : ''}${wk} in Ep ${lastEp}</span>
+      <span class="detail-alive">${alive} of ${roster.length} still in</span>
+      ${pay && pay !== '—' ? `<span class="detail-pay">Winning ${pay}</span>` : ''}
+    </div>
+    <ul class="detail-cast">${cast}</ul>`;
+}
+
+function toggleDetail(id) {
+  const dr = document.getElementById(`st-detail-${id}`);
+  const row = document.querySelector(`.st-row[data-player-id="${id}"]`);
+  if (!dr || !row) return;
+  const willOpen = openDetailId !== id;
+
+  if (openDetailId && openDetailId !== id) {
+    const prevDr = document.getElementById(`st-detail-${openDetailId}`);
+    const prevRow = document.querySelector(`.st-row[data-player-id="${openDetailId}"]`);
+    if (prevDr) prevDr.hidden = true;
+    if (prevRow) {
+      prevRow.setAttribute('aria-expanded', 'false');
+      prevRow.classList.remove('is-open');
+    }
   }
+
+  dr.hidden = !willOpen;
+  row.setAttribute('aria-expanded', String(willOpen));
+  row.classList.toggle('is-open', willOpen);
+  openDetailId = willOpen ? id : null;
 }
 
 // ===== ROSTERS =====
@@ -376,7 +458,7 @@ function applyMe() {
   document.getElementById('me-status-name').textContent = playerName(me);
   status.hidden = false;
 
-  meRowEl = document.querySelector(`#standings-body tr[data-player-id="${me}"]`);
+  meRowEl = document.querySelector(`#standings-body tr.st-row[data-player-id="${me}"]`);
   if (meRowEl) meRowEl.classList.add('is-me');
 
   const rosterCard = document.querySelector(`#rosters-grid .roster-card[data-player-id="${me}"]`);

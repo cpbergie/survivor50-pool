@@ -37,7 +37,7 @@ That's it — Claude handles everything else.
 - **Rosters tab** — voted-off castaway gets strikethrough; "Still in the game" banner updates
 
 ## Google Sheet structure (for reference)
-- **Row 1**: Player names (Clay, Amy, Dan, Chris, Bryany, Julie, Mark, Kogi-pops, Sandy - Kogi, Lynne, Brenden, Woody, Claude)
+- **Row 1**: Player names (Clay, Amy, Dan, Chris, Bryany, Julie, Mark, Kogi-pops, Kogi - Sandy, Lynne, Brenden, Woody, Claude)
 - **Rows 2–25**: Per-castaway scores for the episode (filled in by you)
 - **"Points for Ep N" row**: Auto-calculated episode total per player ← Claude reads this
 - **"Points to date" row**: Cumulative season total per player ← Claude reads this

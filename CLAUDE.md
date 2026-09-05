@@ -55,7 +55,7 @@ Always stop and get explicit user confirmation before:
 ```
 
 ## Players (in order)
-Clay, Amy, Dan, Chris, Bryany, Julie, Mark, Kogi-pops, Sandy - Kogi, Lynne, Brenden, Woody, Claude
+Clay, Amy, Dan, Chris, Bryany, Julie, Mark, Kogi-pops, Kogi - Sandy, Lynne, Brenden, Woody, Claude
 
 ## Castaways
 Active (as of Ep 11): Aubry, Cirie, Joe, Jonathan, Rick, Rizo, Tiffany
