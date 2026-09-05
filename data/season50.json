@@ -1,0 +1,599 @@
+{
+  "season": 50,
+  "title": "Survivor 50: In the Hands of the Fans",
+  "champion": "Lynne",
+  "lastEpisode": 13,
+  "castaways": [
+    {
+      "name": "Angelina",
+      "status": "eliminated"
+    },
+    {
+      "name": "Aubry",
+      "status": "active"
+    },
+    {
+      "name": "Benjamin \"Coach\"",
+      "status": "eliminated"
+    },
+    {
+      "name": "Charlie",
+      "status": "eliminated"
+    },
+    {
+      "name": "Christian",
+      "status": "eliminated"
+    },
+    {
+      "name": "Chrissy",
+      "status": "eliminated"
+    },
+    {
+      "name": "Cirie",
+      "status": "eliminated"
+    },
+    {
+      "name": "Colby",
+      "status": "eliminated"
+    },
+    {
+      "name": "Dee",
+      "status": "eliminated"
+    },
+    {
+      "name": "Emily",
+      "status": "eliminated"
+    },
+    {
+      "name": "Genevieve",
+      "status": "eliminated"
+    },
+    {
+      "name": "Jenna",
+      "status": "eliminated"
+    },
+    {
+      "name": "Joe",
+      "status": "active"
+    },
+    {
+      "name": "Jonathan",
+      "status": "active"
+    },
+    {
+      "name": "Kamilla",
+      "status": "eliminated"
+    },
+    {
+      "name": "Kyle",
+      "status": "eliminated"
+    },
+    {
+      "name": "Mike",
+      "status": "eliminated"
+    },
+    {
+      "name": "Ozzy",
+      "status": "eliminated"
+    },
+    {
+      "name": "Quintavius \"Q\"",
+      "status": "eliminated"
+    },
+    {
+      "name": "Rick",
+      "status": "eliminated"
+    },
+    {
+      "name": "Rizo",
+      "status": "eliminated"
+    },
+    {
+      "name": "Saiounia \"Sia\"",
+      "status": "eliminated"
+    },
+    {
+      "name": "Savannah",
+      "status": "eliminated"
+    },
+    {
+      "name": "Shauhin",
+      "status": "eliminated"
+    },
+    {
+      "name": "Stephanie",
+      "status": "eliminated"
+    },
+    {
+      "name": "Tiffany",
+      "status": "eliminated"
+    }
+  ],
+  "players": [
+    {
+      "name": "Clay",
+      "mvp": "Christian",
+      "picks": [
+        "Aubry",
+        "Charlie",
+        "Christian",
+        "Emily",
+        "Jonathan",
+        "Mike",
+        "Quintavius \"Q\"",
+        "Rick",
+        "Stephanie"
+      ],
+      "addedPicks": [
+        "Benjamin \"Coach\""
+      ]
+    },
+    {
+      "name": "Amy",
+      "mvp": "Colby",
+      "picks": [
+        "Charlie",
+        "Colby",
+        "Dee",
+        "Joe",
+        "Kamilla",
+        "Ozzy",
+        "Quintavius \"Q\"",
+        "Savannah",
+        "Stephanie"
+      ],
+      "addedPicks": [
+        "Rizo"
+      ]
+    },
+    {
+      "name": "Dan",
+      "mvp": "Benjamin \"Coach\"",
+      "picks": [
+        "Aubry",
+        "Benjamin \"Coach\"",
+        "Cirie",
+        "Colby",
+        "Dee",
+        "Emily",
+        "Mike",
+        "Ozzy",
+        "Rizo"
+      ],
+      "addedPicks": [
+        "Christian"
+      ]
+    },
+    {
+      "name": "Chris",
+      "mvp": "Cirie",
+      "picks": [
+        "Aubry",
+        "Benjamin \"Coach\"",
+        "Charlie",
+        "Cirie",
+        "Colby",
+        "Dee",
+        "Ozzy",
+        "Rick",
+        "Stephanie"
+      ],
+      "addedPicks": [
+        "Christian"
+      ]
+    },
+    {
+      "name": "Bryany",
+      "mvp": "Christian",
+      "picks": [
+        "Charlie",
+        "Christian",
+        "Chrissy",
+        "Colby",
+        "Joe",
+        "Jonathan",
+        "Rick",
+        "Rizo",
+        "Stephanie"
+      ],
+      "addedPicks": [
+        "Dee"
+      ]
+    },
+    {
+      "name": "Julie",
+      "mvp": "Joe",
+      "picks": [
+        "Charlie",
+        "Colby",
+        "Dee",
+        "Joe",
+        "Mike",
+        "Quintavius \"Q\"",
+        "Rick",
+        "Savannah",
+        "Stephanie"
+      ],
+      "addedPicks": [
+        "Aubry"
+      ]
+    },
+    {
+      "name": "Mark",
+      "mvp": "Colby",
+      "picks": [
+        "Christian",
+        "Colby",
+        "Dee",
+        "Genevieve",
+        "Joe",
+        "Jonathan",
+        "Kamilla",
+        "Rick",
+        "Rizo"
+      ],
+      "addedPicks": [
+        "Stephanie"
+      ]
+    },
+    {
+      "name": "Kogi-pops",
+      "mvp": "Joe",
+      "picks": [
+        "Benjamin \"Coach\"",
+        "Colby",
+        "Genevieve",
+        "Joe",
+        "Kamilla",
+        "Mike",
+        "Ozzy",
+        "Savannah",
+        "Stephanie"
+      ],
+      "addedPicks": [
+        "Emily"
+      ]
+    },
+    {
+      "name": "Sandy - Kogi",
+      "mvp": "Joe",
+      "picks": [
+        "Benjamin \"Coach\"",
+        "Colby",
+        "Joe",
+        "Mike",
+        "Ozzy",
+        "Quintavius \"Q\"",
+        "Rizo",
+        "Savannah",
+        "Tiffany"
+      ],
+      "addedPicks": [
+        "Cirie"
+      ]
+    },
+    {
+      "name": "Lynne",
+      "mvp": "Charlie",
+      "picks": [
+        "Charlie",
+        "Christian",
+        "Colby",
+        "Dee",
+        "Joe",
+        "Jonathan",
+        "Ozzy",
+        "Rizo",
+        "Stephanie"
+      ],
+      "addedPicks": [
+        "Aubry"
+      ]
+    },
+    {
+      "name": "Brenden",
+      "mvp": "Aubry",
+      "picks": [
+        "Aubry",
+        "Benjamin \"Coach\"",
+        "Christian",
+        "Cirie",
+        "Emily",
+        "Genevieve",
+        "Jonathan",
+        "Mike",
+        "Rizo"
+      ],
+      "addedPicks": [
+        "Joe"
+      ]
+    },
+    {
+      "name": "Woody",
+      "mvp": "Colby",
+      "picks": [
+        "Chrissy",
+        "Colby",
+        "Dee",
+        "Emily",
+        "Joe",
+        "Jonathan",
+        "Mike",
+        "Rizo",
+        "Stephanie"
+      ],
+      "addedPicks": [
+        "Cirie"
+      ]
+    },
+    {
+      "name": "Claude",
+      "mvp": "Cirie",
+      "picks": [
+        "Benjamin \"Coach\"",
+        "Christian",
+        "Cirie",
+        "Colby",
+        "Dee",
+        "Genevieve",
+        "Mike",
+        "Ozzy",
+        "Stephanie"
+      ],
+      "addedPicks": [
+        "Aubry"
+      ]
+    }
+  ],
+  "episodes": [
+    {
+      "episode": 1,
+      "scores": {
+        "Clay": 0,
+        "Amy": 0,
+        "Dan": 0,
+        "Chris": 0,
+        "Bryany": 0,
+        "Julie": 0,
+        "Mark": 0,
+        "Kogi-pops": 0,
+        "Sandy - Kogi": 0,
+        "Lynne": 0,
+        "Brenden": 0,
+        "Woody": 0,
+        "Claude": 0
+      }
+    },
+    {
+      "episode": 2,
+      "scores": {
+        "Clay": 164,
+        "Amy": 128,
+        "Dan": 94,
+        "Chris": 114,
+        "Bryany": 139,
+        "Julie": 143,
+        "Mark": 159,
+        "Kogi-pops": 133,
+        "Sandy - Kogi": 128,
+        "Lynne": 119,
+        "Brenden": 154,
+        "Woody": 89,
+        "Claude": 129
+      }
+    },
+    {
+      "episode": 3,
+      "scores": {
+        "Clay": 78,
+        "Amy": 82,
+        "Dan": 84,
+        "Chris": 89,
+        "Bryany": 94,
+        "Julie": 77,
+        "Mark": 104,
+        "Kogi-pops": 73,
+        "Sandy - Kogi": 82,
+        "Lynne": 79,
+        "Brenden": 89,
+        "Woody": 84,
+        "Claude": 69
+      }
+    },
+    {
+      "episode": 4,
+      "scores": {
+        "Clay": 57,
+        "Amy": 67,
+        "Dan": 103,
+        "Chris": 89,
+        "Bryany": 94,
+        "Julie": 61,
+        "Mark": 119,
+        "Kogi-pops": 112,
+        "Sandy - Kogi": 96,
+        "Lynne": 99,
+        "Brenden": 118,
+        "Woody": 93,
+        "Claude": 123
+      }
+    },
+    {
+      "episode": 5,
+      "scores": {
+        "Clay": 31,
+        "Amy": 51,
+        "Dan": 48,
+        "Chris": 58,
+        "Bryany": 53,
+        "Julie": 35,
+        "Mark": 39,
+        "Kogi-pops": 47,
+        "Sandy - Kogi": 51,
+        "Lynne": 63,
+        "Brenden": 33,
+        "Woody": 33,
+        "Claude": 48
+      }
+    },
+    {
+      "episode": 6,
+      "scores": {
+        "Clay": 73,
+        "Amy": 87,
+        "Dan": 86,
+        "Chris": 96,
+        "Bryany": 91,
+        "Julie": 67,
+        "Mark": 123,
+        "Kogi-pops": 97,
+        "Sandy - Kogi": 50,
+        "Lynne": 111,
+        "Brenden": 96,
+        "Woody": 96,
+        "Claude": 133
+      }
+    },
+    {
+      "episode": 7,
+      "scores": {
+        "Clay": 76,
+        "Amy": 77,
+        "Dan": 86,
+        "Chris": 106,
+        "Bryany": 81,
+        "Julie": 72,
+        "Mark": 78,
+        "Kogi-pops": 75,
+        "Sandy - Kogi": 53,
+        "Lynne": 96,
+        "Brenden": 54,
+        "Woody": 76,
+        "Claude": 93
+      }
+    },
+    {
+      "episode": 8,
+      "scores": {
+        "Clay": 33,
+        "Amy": 27,
+        "Dan": 43,
+        "Chris": 43,
+        "Bryany": 43,
+        "Julie": 27,
+        "Mark": 25,
+        "Kogi-pops": 32,
+        "Sandy - Kogi": 65,
+        "Lynne": 36,
+        "Brenden": 56,
+        "Woody": 48,
+        "Claude": 35
+      }
+    },
+    {
+      "episode": 9,
+      "scores": {
+        "Clay": 25,
+        "Amy": 42,
+        "Dan": 25,
+        "Chris": 30,
+        "Bryany": 45,
+        "Julie": 37,
+        "Mark": 45,
+        "Kogi-pops": 42,
+        "Sandy - Kogi": 40,
+        "Lynne": 53,
+        "Brenden": 43,
+        "Woody": 43,
+        "Claude": 27
+      }
+    },
+    {
+      "episode": 10,
+      "scores": {
+        "Clay": 67,
+        "Amy": 39,
+        "Dan": 40,
+        "Chris": 72,
+        "Bryany": 62,
+        "Julie": 59,
+        "Mark": 62,
+        "Kogi-pops": 39,
+        "Sandy - Kogi": 50,
+        "Lynne": 50,
+        "Brenden": 38,
+        "Woody": 50,
+        "Claude": 44
+      }
+    },
+    {
+      "episode": 11,
+      "scores": {
+        "Clay": 49,
+        "Amy": 46,
+        "Dan": 59,
+        "Chris": 64,
+        "Bryany": 47,
+        "Julie": 19,
+        "Mark": 47,
+        "Kogi-pops": 48,
+        "Sandy - Kogi": 57,
+        "Lynne": 77,
+        "Brenden": 50,
+        "Woody": 47,
+        "Claude": 51
+      }
+    },
+    {
+      "episode": 12,
+      "scores": {
+        "Clay": 41,
+        "Amy": 36,
+        "Dan": 36,
+        "Chris": 53,
+        "Bryany": 64,
+        "Julie": 66,
+        "Mark": 64,
+        "Kogi-pops": 28,
+        "Sandy - Kogi": 74,
+        "Lynne": 52,
+        "Brenden": 67,
+        "Woody": 54,
+        "Claude": 28
+      }
+    },
+    {
+      "episode": 13,
+      "scores": {
+        "Clay": 111,
+        "Amy": 33,
+        "Dan": 68,
+        "Chris": 58,
+        "Bryany": 86,
+        "Julie": 81,
+        "Mark": 86,
+        "Kogi-pops": 23,
+        "Sandy - Kogi": 48,
+        "Lynne": 144,
+        "Brenden": 174,
+        "Woody": 86,
+        "Claude": 58
+      }
+    }
+  ],
+  "totals": {
+    "Clay": 805,
+    "Amy": 715,
+    "Dan": 772,
+    "Chris": 872,
+    "Bryany": 899,
+    "Julie": 744,
+    "Mark": 951,
+    "Kogi-pops": 749,
+    "Sandy - Kogi": 794,
+    "Lynne": 979,
+    "Brenden": 972,
+    "Woody": 799,
+    "Claude": 838
+  }
+}

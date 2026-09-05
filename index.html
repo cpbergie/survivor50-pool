@@ -3,26 +3,41 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Survivor 50 Fantasy Pool</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>" />
+  <title>Survivor 51 Fantasy Pool</title>
+  <meta name="theme-color" content="#04151f" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='40' r='19' fill='%23ff8a3d'/><path d='M0 62h100v8H0z' fill='%237fdfff'/><path d='M0 76h100v6H0z' fill='%234bb8d8'/><path d='M0 88h100v5H0z' fill='%232f8fae'/></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600;700&family=Barlow+Semi+Condensed:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
-    <div class="header-inner">
-      <div class="torch torch-left">🔥</div>
-      <div class="header-text">
-        <h1 class="title">SURVIVOR 50</h1>
-        <p class="subtitle">Fantasy Tribe · Season Pool</p>
-      </div>
-      <div class="torch torch-right">🔥</div>
+    <div class="header-scene" aria-hidden="true">
+      <div class="sun"></div>
+      <div class="sun-glow"></div>
+      <div class="water"></div>
     </div>
+
+    <div class="header-inner">
+      <p class="kicker">Survivor Fantasy Tribe</p>
+      <h1 class="title">
+        <span class="title-word">Survivor</span>
+        <span class="title-num">51</span>
+      </h1>
+      <p class="subtitle">Season Pool · 13 Players · One Sole Survivor</p>
+    </div>
+
+    <div class="wave-divider" aria-hidden="true">
+      <svg viewBox="0 0 1200 48" preserveAspectRatio="none">
+        <path d="M0,24 C150,44 350,4 600,20 C850,36 1050,6 1200,22 L1200,48 L0,48 Z"></path>
+      </svg>
+    </div>
+
     <nav>
       <button class="tab-btn active" data-tab="standings">Standings</button>
       <button class="tab-btn" data-tab="rosters">Rosters</button>
+      <button class="tab-btn" data-tab="past">Past Seasons</button>
     </nav>
   </header>
 
@@ -30,19 +45,19 @@
     <!-- STANDINGS TAB -->
     <section id="standings" class="tab-section active">
       <div class="section-header">
-        <h2>🔥 Tribal Council Standings</h2>
+        <h2>Tribal Council Standings</h2>
         <p class="last-updated" id="last-updated"></p>
       </div>
+
+      <div class="empty-note" id="standings-empty" hidden>
+        <strong>Season 51 hasn't started yet.</strong>
+        Castaways drop and the draft happens soon — once picks are locked and
+        Episode 1 airs, weekly scores and payouts show up here.
+      </div>
+
       <div class="table-wrap">
         <table id="standings-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Player</th>
-              <th>Total</th>
-              <th>Winning</th>
-            </tr>
-          </thead>
+          <thead></thead>
           <tbody id="standings-body"></tbody>
         </table>
       </div>
@@ -51,17 +66,61 @@
     <!-- ROSTERS TAB -->
     <section id="rosters" class="tab-section">
       <div class="section-header">
-        <h2>🏝️ Player Rosters</h2>
+        <h2>Player Rosters</h2>
         <p class="section-note">⭐ = MVP · <span class="added-legend">Added later</span> · <span class="elim-legend">Strikethrough = Eliminated</span></p>
       </div>
-      <div id="active-castaways" class="active-castaways-card"></div>
+
+      <div class="empty-note" id="rosters-empty" hidden>
+        <strong>The draft hasn't happened yet.</strong>
+        Every player keeps their team name from Season 50. Picks and MVPs will
+        appear here once the new castaways are announced and drafted.
+      </div>
+
+      <div id="active-castaways" class="active-castaways-card" hidden></div>
       <div id="rosters-grid" class="rosters-grid"></div>
     </section>
 
+    <!-- PAST SEASONS TAB -->
+    <section id="past" class="tab-section">
+      <div class="section-header">
+        <h2>Past Seasons</h2>
+        <p class="section-note">The record book — how every pool has finished.</p>
+      </div>
+
+      <div class="past-season-card">
+        <div class="past-season-head">
+          <div>
+            <p class="past-season-eyebrow">Season 50 · In the Hands of the Fans</p>
+            <h3 class="past-season-title">Final Standings</h3>
+          </div>
+          <div id="past-champion" class="past-champion"></div>
+        </div>
+
+        <div class="table-wrap">
+          <table id="past-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th class="col-player">Player</th>
+                <th>Total</th>
+                <th>Winning</th>
+              </tr>
+            </thead>
+            <tbody id="past-body"></tbody>
+          </table>
+        </div>
+
+        <p class="past-season-foot" id="past-foot"></p>
+      </div>
+    </section>
   </main>
 
   <footer>
-    <p>Survivor 50 Fantasy Pool · Updated after each episode · <a href="https://docs.google.com/spreadsheets/d/1edbTrp6f6NL4KCTU8x92L7H8_tHEsd-hEG2cKz2u6-0/edit" target="_blank">Scoring Spreadsheet</a> · <a href="https://www.globaltv.com/survivor-50-fantasy-tribe/#results" target="_blank">Official Results</a></p>
+    <p>
+      Survivor 51 Fantasy Pool · Updated after each episode ·
+      <a href="https://docs.google.com/spreadsheets/d/1edbTrp6f6NL4KCTU8x92L7H8_tHEsd-hEG2cKz2u6-0/edit" target="_blank" rel="noopener">Scoring Spreadsheet</a>
+      · <a href="https://www.globaltv.com/survivor-51-fantasy-tribe/#results" target="_blank" rel="noopener">Official Results</a>
+    </p>
   </footer>
 
   <script src="app.js"></script>
