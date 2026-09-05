@@ -16,6 +16,13 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="mini-header" id="mini-header" aria-hidden="true">
+    <span class="mini-logo">Survivor <b>51</b></span>
+    <span class="mini-live" id="mini-live" hidden></span>
+  </div>
+
   <header>
     <div class="header-scene" aria-hidden="true">
       <div class="sun"></div>
@@ -38,6 +45,8 @@
       </svg>
     </div>
   </header>
+
+  <div id="header-sentinel" aria-hidden="true"></div>
 
   <nav aria-label="Sections">
     <button class="tab-btn active" data-tab="standings" aria-current="page">

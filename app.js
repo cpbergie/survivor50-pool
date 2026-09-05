@@ -2,12 +2,14 @@
 let poolData = null;
 let meIndex = {};        // playerId -> { rank, rankLabel, total, name, movement }
 let meRowEl = null;
-let meCardRaf = 0;
+let scrollRaf = 0;
+let snuffChecked = false;
 
 const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const ME_KEY = 'sft.me';
 const DISMISS_KEY = 'sft.claimDismissed';
+const SEEN_ELIMS_KEY = 'sft.seenElims';
 
 // ===== STORAGE (defensive — private mode / blocked storage) =====
 function lsGet(k) { try { return localStorage.getItem(k); } catch { return null; } }
@@ -30,8 +32,36 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     document.getElementById(btn.dataset.tab).classList.add('active');
     window.scrollTo({ top: 0, behavior: REDUCED_MOTION ? 'auto' : 'smooth' });
     refreshMeCard();
+    if (btn.dataset.tab === 'rosters') maybePlaySnuffs();
   });
 });
+
+// ===== COLLAPSING HERO → MINI-HEADER =====
+function updateMiniHeader() {
+  const header = document.querySelector('header');
+  const show = window.scrollY > header.offsetHeight - 4;
+  document.getElementById('mini-header').classList.toggle('visible', show);
+}
+
+if ('IntersectionObserver' in window) {
+  const sentinel = document.getElementById('header-sentinel');
+  if (sentinel) {
+    new IntersectionObserver(([entry]) => {
+      document.getElementById('mini-header').classList.toggle('visible', !entry.isIntersecting);
+    }, { threshold: 0 }).observe(sentinel);
+  }
+}
+
+function onScrollFrame() {
+  if (scrollRaf) return;
+  scrollRaf = requestAnimationFrame(() => {
+    scrollRaf = 0;
+    refreshMeCard();
+    updateMiniHeader();
+  });
+}
+window.addEventListener('scroll', onScrollFrame, { passive: true });
+window.addEventListener('resize', onScrollFrame, { passive: true });
 
 // ===== LOAD DATA =====
 fetch('data/pool.json')
@@ -322,6 +352,43 @@ function buildRosters(data) {
   });
 
   applyMe();
+  maybePlaySnuffs();
+}
+
+// ===== ELIMINATION "SNUFF" =====
+// Play a one-time reveal on roster entries for castaways the viewer hasn't yet
+// seen eliminated. Fires when the Rosters tab is first shown.
+function getSeenElims() {
+  try { return new Set(JSON.parse(lsGet(SEEN_ELIMS_KEY) || '[]')); }
+  catch { return new Set(); }
+}
+
+function markElimsSeen(season) {
+  lsSet(SEEN_ELIMS_KEY, JSON.stringify([...Standings.eliminatedNames(season)]));
+}
+
+function maybePlaySnuffs() {
+  if (snuffChecked || !poolData) return;
+  if (!document.getElementById('rosters').classList.contains('active')) return;
+  snuffChecked = true;
+
+  const seen = getSeenElims();
+  const fresh = new Set([...Standings.eliminatedNames(poolData)].filter(n => !seen.has(n)));
+  markElimsSeen(poolData);
+
+  // Only animate a fresh result the viewer is "seeing happen" — a normal episode
+  // votes out one (occasionally two). A big backlog just renders in its final state.
+  if (fresh.size === 0 || fresh.size > 2 || REDUCED_MOTION) return;
+
+  let i = 0;
+  document.querySelectorAll('#rosters-grid .roster-picks li.eliminated').forEach(li => {
+    const name = li.querySelector('.castaway-name');
+    if (!name || !fresh.has(name.textContent)) return;
+    li.style.setProperty('--snuff-delay', Math.min(i++ * 0.06, 0.5).toFixed(2) + 's');
+    li.classList.remove('snuff');
+    void li.offsetWidth;               // restart the animation
+    li.classList.add('snuff');
+  });
 }
 
 // ===== PAST SEASONS =====
@@ -403,8 +470,6 @@ function initClaim() {
     document.querySelector('.tab-btn[data-tab="standings"]').click();
     meRowEl.scrollIntoView({ behavior: REDUCED_MOTION ? 'auto' : 'smooth', block: 'center' });
   });
-  window.addEventListener('scroll', scheduleMeCard, { passive: true });
-  window.addEventListener('resize', scheduleMeCard, { passive: true });
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden) refreshMeCard();
   });
@@ -470,11 +535,6 @@ function applyMe() {
   if (rosterCard) rosterCard.classList.add('is-me');
 
   refreshMeCard();
-}
-
-function scheduleMeCard() {
-  if (meCardRaf) return;
-  meCardRaf = requestAnimationFrame(() => { meCardRaf = 0; refreshMeCard(); });
 }
 
 // 1.3 — sticky mini-card, shown only when "my" row is scrolled out of the
