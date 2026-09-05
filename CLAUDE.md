@@ -1,7 +1,9 @@
-# Survivor 50 Fantasy Pool — Project Context
+# Survivor Fantasy Pool — Project Context
 
 ## What this is
-A weekly fantasy pool website tracking Survivor 50 (US). 13 players each picked 9 castaways + 1 MVP at the start of the season. Points are scored each episode based on castaway performance.
+A weekly fantasy pool website. 13 players each draft 9 castaways + 1 MVP at the start of a season; points are scored each episode based on castaway performance.
+
+**Currently: Season 51.** The site was rebranded from Season 50 on 2026-09-05 (ocean/broadcast theme — keep it). Season 50's final results live in the "Past Seasons" tab (`data/season50.json`). Season 51 rosters/scoring are cleared pending the new cast + draft. There's a phased mobile-first build spec in progress (Phase 1 "claim flow" is done). The Google Sheet is being retired as the scoring source — a weekly job will pull from the official site + a Reddit episode thread instead.
 
 ## Key links
 - **Live site:** https://survivor50-pool-gules.vercel.app/
@@ -31,14 +33,15 @@ When the user says "Episode N is done. [Castaway] was voted off.":
 5. Commit locally and show the user a summary
 6. **Wait for explicit approval before pushing**
 
+## Git
+Committing and pushing/merging to `main` is pre-authorized (2026-09-05) — do it on your own judgment once work is tested, and show a summary. Branch off `main` for feature work. Vercel auto-deploys `main`.
+
 ## Hard rules — no exceptions
 Always stop and get explicit user confirmation before:
-- Committing code
-- Pushing to GitHub
 - Sending any message (email, Slack, etc.)
 - Making any purchase
-- Touching any production system
-- Taking any irreversible action
+- Touching any production system beyond the normal `main` → Vercel deploy
+- Taking any other irreversible or outward-facing action
 
 ## Pool.json structure
 ```json

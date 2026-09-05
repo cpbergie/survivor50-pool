@@ -41,6 +41,12 @@
     </nav>
   </header>
 
+  <div id="claim-bar" class="claim-bar" hidden>
+    <p class="claim-q">Which one are you?</p>
+    <div class="claim-chips" id="claim-chips" role="group" aria-label="Choose your player"></div>
+    <button type="button" class="claim-dismiss" id="claim-dismiss" aria-label="Not now">✕</button>
+  </div>
+
   <main>
     <!-- STANDINGS TAB -->
     <section id="standings" class="tab-section active">
@@ -116,11 +122,25 @@
   </main>
 
   <footer>
+    <p id="me-status" hidden>
+      You're set as <strong id="me-status-name"></strong> ·
+      <button type="button" class="linklike" id="me-reset">not you?</button>
+    </p>
     <p>
       Survivor 51 Fantasy Pool · Updated after each episode ·
       <a href="https://www.globaltv.com/survivor-51-fantasy-tribe/#results" target="_blank" rel="noopener">Official Results</a>
     </p>
   </footer>
+
+  <div id="me-card" class="me-card" hidden>
+    <button type="button" class="me-card-btn" id="me-card-btn">
+      <span class="me-card-rank" id="me-card-rank"></span>
+      <span class="me-card-name" id="me-card-name"></span>
+      <span class="me-card-move" id="me-card-move"></span>
+      <span class="me-card-total" id="me-card-total"></span>
+      <span class="me-card-hint">tap to view</span>
+    </button>
+  </div>
 
   <script src="app.js"></script>
 </body>

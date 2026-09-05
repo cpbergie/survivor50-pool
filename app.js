@@ -1,3 +1,22 @@
+// ===== STATE =====
+let poolData = null;
+let meIndex = {};        // playerId -> { rank, rankLabel, total, name, movement }
+let meRowEl = null;
+let meCardRaf = 0;
+
+const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const ME_KEY = 'sft.me';
+const DISMISS_KEY = 'sft.claimDismissed';
+
+// ===== STORAGE (defensive — private mode / blocked storage) =====
+function lsGet(k) { try { return localStorage.getItem(k); } catch { return null; } }
+function lsSet(k, v) { try { localStorage.setItem(k, v); } catch { /* ignore */ } }
+function lsDel(k) { try { localStorage.removeItem(k); } catch { /* ignore */ } }
+function ssGet(k) { try { return sessionStorage.getItem(k); } catch { return null; } }
+function ssSet(k, v) { try { sessionStorage.setItem(k, v); } catch { /* ignore */ } }
+function ssDel(k) { try { sessionStorage.removeItem(k); } catch { /* ignore */ } }
+
 // ===== TAB NAVIGATION =====
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -5,6 +24,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
     btn.classList.add('active');
     document.getElementById(btn.dataset.tab).classList.add('active');
+    refreshMeCard();
   });
 });
 
@@ -12,8 +32,10 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 fetch('data/pool.json')
   .then(r => r.json())
   .then(data => {
+    poolData = data;
     buildStandings(data);
     buildRosters(data);
+    initClaim();
   })
   .catch(err => console.error('Failed to load pool data:', err));
 
@@ -80,12 +102,21 @@ function buildStandings(data) {
   thead.replaceChildren(hr);
 
   // Body rows
+  meIndex = {};
   const tbody = document.getElementById('standings-body');
   tbody.replaceChildren();
   sorted.forEach((player, idx) => {
     const rank = idx + 1;
+    const total = totals[player.name] || 0;
     const tr = document.createElement('tr');
+    if (player.id) tr.dataset.playerId = player.id;
     if (started && rank === 1) tr.classList.add('row-1');
+
+    // NOTE: tie handling (competition ranking + "T" prefix) lands with the
+    // movement/alive columns in Phase 2. Pre-season this is a stable list order.
+    if (player.id) {
+      meIndex[player.id] = { rank, rankLabel: String(rank), total, name: player.name, movement: null };
+    }
 
     const epCells = epNums.map((ep, i) => {
       const epData = episodes.find(e => e.episode === ep);
@@ -96,7 +127,7 @@ function buildStandings(data) {
     tr.innerHTML = `
       <td>${rankCell(rank, started)}</td>
       <td class="col-player">${player.name}</td>
-      <td class="total-pts">${totals[player.name] || 0}</td>
+      <td class="total-pts">${total}</td>
       ${started ? `<td class="winning-pts">${payouts[player.name] || '—'}</td>` : ``}
       ${epCells}
     `;
@@ -161,6 +192,7 @@ function buildRosters(data) {
   sortByTotal(players, totals).forEach(player => {
     const card = document.createElement('div');
     card.className = 'roster-card';
+    if (player.id) card.dataset.playerId = player.id;
 
     const basePicks = player.picks || [];
     const addedPicks = player.addedPicks || [];
@@ -201,6 +233,8 @@ function buildRosters(data) {
     `;
     grid.appendChild(card);
   });
+
+  applyMe();
 }
 
 // ===== PAST SEASONS =====
@@ -237,4 +271,156 @@ function buildPastSeason(data) {
 
   document.getElementById('past-foot').textContent =
     'Payouts: $80 / $30 / $10 to the top three eligible finishers. Claude (AI) plays for pride only.';
+}
+
+// ===== CLAIM FLOW ("this is me", no auth) =====
+function isValidId(id) {
+  return !!id && !!poolData && (poolData.players || []).some(p => p.id === id);
+}
+
+function getMe() {
+  const id = lsGet(ME_KEY);
+  return isValidId(id) ? id : null;
+}
+
+function playerName(id) {
+  const p = (poolData.players || []).find(x => x.id === id);
+  return p ? p.name : '';
+}
+
+function initClaim() {
+  // 1.2 — deep link: ?me=<id> sets identity, then strip the param
+  const params = new URLSearchParams(location.search);
+  if (params.has('me')) {
+    const candidate = params.get('me');
+    if (isValidId(candidate)) lsSet(ME_KEY, candidate);
+    params.delete('me');
+    const qs = params.toString();
+    history.replaceState(null, '', location.pathname + (qs ? `?${qs}` : '') + location.hash);
+  }
+
+  buildClaimChips();
+
+  document.getElementById('claim-dismiss').addEventListener('click', () => {
+    ssSet(DISMISS_KEY, '1');
+    setClaimBarOpen(false);
+  });
+  document.getElementById('me-reset').addEventListener('click', () => {
+    lsDel(ME_KEY);
+    ssDel(DISMISS_KEY);
+    applyMe();
+    setClaimBarOpen(true);
+  });
+  document.getElementById('me-card-btn').addEventListener('click', () => {
+    if (!meRowEl) return;
+    document.querySelector('.tab-btn[data-tab="standings"]').click();
+    meRowEl.scrollIntoView({ behavior: REDUCED_MOTION ? 'auto' : 'smooth', block: 'center' });
+  });
+  window.addEventListener('scroll', scheduleMeCard, { passive: true });
+  window.addEventListener('resize', scheduleMeCard, { passive: true });
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) refreshMeCard();
+  });
+
+  applyMe();
+
+  // 1.1 — offer the picker if they haven't chosen and haven't dismissed this session
+  setClaimBarOpen(!getMe() && ssGet(DISMISS_KEY) !== '1');
+}
+
+function buildClaimChips() {
+  const wrap = document.getElementById('claim-chips');
+  wrap.replaceChildren();
+  (poolData.players || []).forEach(player => {
+    const chip = document.createElement('button');
+    chip.type = 'button';
+    chip.className = 'claim-chip';
+    chip.dataset.id = player.id;
+    chip.textContent = player.name;
+    chip.addEventListener('click', () => {
+      lsSet(ME_KEY, player.id);
+      ssDel(DISMISS_KEY);
+      setClaimBarOpen(false);
+      applyMe();
+      if (meRowEl) meRowEl.scrollIntoView({ behavior: REDUCED_MOTION ? 'auto' : 'smooth', block: 'center' });
+    });
+    wrap.appendChild(chip);
+  });
+}
+
+function setClaimBarOpen(open) {
+  const bar = document.getElementById('claim-bar');
+  bar.hidden = !open;
+  if (open) {
+    const me = getMe();
+    bar.querySelectorAll('.claim-chip').forEach(c => {
+      c.setAttribute('aria-pressed', String(c.dataset.id === me));
+    });
+  }
+}
+
+// Highlight "my" row + roster card, footer status, and (re)wire the mini-card.
+function applyMe() {
+  const me = getMe();
+
+  document.querySelectorAll('.is-me').forEach(el => el.classList.remove('is-me'));
+
+  const status = document.getElementById('me-status');
+  if (!me) {
+    status.hidden = true;
+    meRowEl = null;
+    refreshMeCard();
+    return;
+  }
+
+  document.getElementById('me-status-name').textContent = playerName(me);
+  status.hidden = false;
+
+  meRowEl = document.querySelector(`#standings-body tr[data-player-id="${me}"]`);
+  if (meRowEl) meRowEl.classList.add('is-me');
+
+  const rosterCard = document.querySelector(`#rosters-grid .roster-card[data-player-id="${me}"]`);
+  if (rosterCard) rosterCard.classList.add('is-me');
+
+  refreshMeCard();
+}
+
+function scheduleMeCard() {
+  if (meCardRaf) return;
+  meCardRaf = requestAnimationFrame(() => { meCardRaf = 0; refreshMeCard(); });
+}
+
+// 1.3 — sticky mini-card, shown only when "my" row is scrolled out of the
+// standings view.
+function refreshMeCard() {
+  const card = document.getElementById('me-card');
+  const me = getMe();
+  const standingsActive = document.getElementById('standings').classList.contains('active');
+  const info = me ? meIndex[me] : null;
+
+  const rect = meRowEl ? meRowEl.getBoundingClientRect() : null;
+  const rowInView = rect ? (rect.bottom > 8 && rect.top < window.innerHeight - 8) : true;
+
+  if (!me || !standingsActive || !meRowEl || rowInView || !info) {
+    card.hidden = true;
+    return;
+  }
+
+  document.getElementById('me-card-rank').textContent = `#${info.rankLabel}`;
+  document.getElementById('me-card-name').textContent = info.name;
+  document.getElementById('me-card-total').textContent = `${info.total} pts`;
+
+  const moveEl = document.getElementById('me-card-move');
+  if (info.movement == null || info.movement === 0) {
+    moveEl.textContent = '';
+    moveEl.className = 'me-card-move';
+  } else if (info.movement > 0) {
+    moveEl.textContent = `▲${info.movement}`;
+    moveEl.className = 'me-card-move up';
+  } else {
+    moveEl.textContent = `▼${Math.abs(info.movement)}`;
+    moveEl.className = 'me-card-move down';
+  }
+
+  card.hidden = false;
 }
