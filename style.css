@@ -508,8 +508,16 @@ thead th.c-move { color: var(--text-faint); font-size: 0.6rem; letter-spacing: 0
   font-family: 'Barlow Semi Condensed', sans-serif;
   text-transform: uppercase;
 }
+.dcast-pts {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: var(--text);
+  min-width: 1.6rem;
+  text-align: right;
+}
 .dcast.is-elim .dcast-name { color: var(--elim-text); text-decoration: line-through; }
 .dcast.is-elim .dcast-dot { opacity: 0.35; }
+.dcast.is-elim .dcast-pts { color: var(--text-faint); }
 
 .tag-ai {
   font-family: 'Barlow Semi Condensed', sans-serif;

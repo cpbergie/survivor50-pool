@@ -126,14 +126,14 @@ function movementCell(m) {
 }
 
 function buildStandings(data) {
-  const totals = data.totals || {};
   const players = data.players || [];
-  const episodes = data.episodes || [];
-  const started = (data.lastEpisode || 0) > 0 && episodes.length > 0;
+  const totals = Standings.totalsByName(data);
+  const lastEp = Standings.lastScoredEpisode(data);
+  const started = lastEp > 0;
 
   document.getElementById('last-updated').textContent = started
-    ? `Updated after Episode ${data.lastEpisode}` +
-      (data.lastUpdated && data.lastUpdated !== 'Not started' ? ` · ${data.lastUpdated}` : '')
+    ? `Updated after Episode ${lastEp}` +
+      (data.lastUpdated && !/pre-?season|not started/i.test(data.lastUpdated) ? ` · ${data.lastUpdated}` : '')
     : 'Season 51 · pre-season';
   document.getElementById('standings-empty').hidden = started;
   document.getElementById('standings-hint').hidden = !started;
@@ -142,7 +142,7 @@ function buildStandings(data) {
   const ranks = started
     ? Standings.rankByTotal(players.map(p => ({ key: p.id, total: totals[p.name] || 0 })))
     : {};
-  const move = started ? Standings.movement(data, data.lastEpisode) : {};
+  const move = started ? Standings.movement(data, lastEp) : {};
   const payouts = started ? computePayouts(players, totals) : {};
 
   // Header
@@ -217,7 +217,7 @@ function buildStandings(data) {
 
 function detailHtml(player, season, payouts) {
   const lastEp = Standings.lastScoredEpisode(season);
-  const wk = Standings.lastEpisodePoints(season, player.name);
+  const wk = Standings.lastEpisodePoints(season, player);
   const roster = Standings.roster(player);
   const elim = Standings.eliminatedNames(season);
   const tribes = season.tribes || {};
@@ -230,12 +230,14 @@ function detailHtml(player, season, payouts) {
     const c = cInfo[name] || {};
     const isElim = elim.has(name);
     const color = c.tribe && tribes[c.tribe] ? tribes[c.tribe] : TRIBE_FALLBACK;
-    const ep = isElim ? (c.eliminatedEp ? `Ep ${c.eliminatedEp}` : 'out') : '';
+    const tag = isElim ? (c.eliminatedEp ? `Ep ${c.eliminatedEp}` : 'out') : '';
+    const pts = Standings.castawayContribution(season, player, name);
     return `<li class="dcast${isElim ? ' is-elim' : ''}">
       <span class="dcast-dot" style="background:${color}"></span>
       <span class="dcast-name">${name}</span>
       ${name === player.mvp ? '<span class="dcast-mvp">MVP</span>' : ''}
-      ${ep ? `<span class="dcast-ep">${ep}</span>` : ''}
+      ${tag ? `<span class="dcast-ep">${tag}</span>` : ''}
+      <span class="dcast-pts">${pts}</span>
     </li>`;
   }).join('');
 
@@ -274,15 +276,13 @@ function toggleDetail(id) {
 function buildRosters(data) {
   const castaways = data.castaways || [];
   const players = data.players || [];
-  const totals = data.totals || {};
+  const totals = Standings.totalsByName(data);
 
+  const elimSet = Standings.eliminatedNames(data);
   const activeCastaways = castaways
-    .filter(c => c.status === 'active')
+    .filter(c => !Standings.isEliminated(c))
     .map(c => c.name)
     .sort((a, b) => a.localeCompare(b));
-  const eliminatedNames = castaways
-    .filter(c => c.status === 'eliminated')
-    .map(c => c.name);
 
   const acEl = document.getElementById('active-castaways');
   if (castaways.length > 0) {
@@ -311,9 +311,8 @@ function buildRosters(data) {
     card.className = 'roster-card';
     if (player.id) card.dataset.playerId = player.id;
 
-    const basePicks = player.picks || [];
-    const addedPicks = player.addedPicks || [];
-    const allPicks = [...basePicks, ...addedPicks];
+    const addedPicks = (player.addedPicks || []).map(Standings.pickName);
+    const allPicks = Standings.roster(player);
 
     if (allPicks.length === 0) {
       card.innerHTML = `
@@ -327,7 +326,7 @@ function buildRosters(data) {
       return;
     }
 
-    const activeCount = allPicks.filter(p => !eliminatedNames.includes(p)).length;
+    const activeCount = allPicks.filter(p => !elimSet.has(p)).length;
 
     card.innerHTML = `
       <div class="roster-card-header">
@@ -337,7 +336,7 @@ function buildRosters(data) {
       <ul class="roster-picks">
         ${allPicks.map(castaway => {
           const isMvp = castaway === player.mvp;
-          const isElim = eliminatedNames.includes(castaway);
+          const isElim = elimSet.has(castaway);
           const isAdded = addedPicks.includes(castaway);
           const classes = [isMvp ? 'mvp' : '', isAdded ? 'added-pick' : '', isElim ? 'eliminated' : ''].filter(Boolean).join(' ');
           const star = isMvp

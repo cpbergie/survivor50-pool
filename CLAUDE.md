@@ -17,21 +17,25 @@ A weekly fantasy pool website. 13 players each draft 9 castaways + 1 MVP at the 
 Plain HTML/JS/CSS → GitHub → Vercel (auto-deploys on push). No build step.
 - `index.html` — structure and tabs (Standings, Rosters)
 - `app.js` — fetches `data/pool.json` and renders all tabs
-- `style.css` — dark Survivor theme
-- `data/pool.json` — single source of truth for the site (all scoring pre-calculated)
+- `style.css` — dark Survivor theme (ocean/broadcast)
+- `standings.js` — pure derived selectors (`window.Standings`); everything cumulative is computed from per-episode castaway points
+- `data/pool.json` — the season: cast, players, per-episode castaway points. Totals/ranks/movement are all derived at render time, never stored.
+- `data/season50.json` — frozen Season 50 archive (old per-player `scores` format), feeds the Past Seasons tab
+- `data/season51-cast.md` — cast reference
+
+## Scoring model
+Points are entered **once per castaway per episode** in `episodes[].castawayPoints`. A player's episode score = the sum of their active roster's castaway points (added picks only count from their `fromEp`; an eliminated castaway scores in their elimination episode but not after). `standings.js` derives cumulative totals, ranks, and movement.
+
+Base per-castaway numbers come from the official GlobalTV Survivor Fantasy Tribe results; house adjustments (kissing, cursing, etc. — rules TBD from the user) are applied on top. A weekly job will eventually produce `castawayPoints` from those two sources.
 
 ## Weekly update workflow
-When the user says "Episode N is done. [Castaway] was voted off.":
-1. Read the Google Sheet using the Google Drive connector (file ID: `1edbTrp6f6NL4KCTU8x92L7H8_tHEsd-hEG2cKz2u6-0`)
-2. Find the **"Points for Ep N"** row → per-player episode score
-3. Find the **"Points to date"** row for that episode → cumulative totals
-4. Update `data/pool.json`:
-   - Add new episode entry to `episodes` array
-   - Update `totals` with cumulative totals from the sheet
-   - Mark voted-off castaway as `"status": "eliminated"` in `castaways` array
-   - Update `lastEpisode` to the new episode number
-5. Commit locally and show the user a summary
-6. **Wait for explicit approval before pushing**
+When the user provides an episode's castaway scores and who left:
+1. Add an entry to `episodes[]`: `{ "episode": N, "castawayPoints": { "<castaway>": <pts>, ... } }`
+2. Set `"eliminatedEp": N` on the voted-out castaway(s) in `castaways[]`
+3. Update `"lastUpdated"` (free text, e.g. `"Episode 3 · Jenna out"`)
+4. Commit, push (pre-authorized), show the user a summary. Vercel auto-deploys.
+
+Do NOT add `totals`, `lastEpisode`, or per-player `scores` — those are derived.
 
 ## Git
 Committing and pushing/merging to `main` is pre-authorized (2026-09-05) — do it on your own judgment once work is tested, and show a summary. Branch off `main` for feature work. Vercel auto-deploys `main`.
@@ -43,14 +47,25 @@ Always stop and get explicit user confirmation before:
 - Touching any production system beyond the normal `main` → Vercel deploy
 - Taking any other irreversible or outward-facing action
 
-## Pool.json structure
+## Pool.json structure (Season 51)
 ```json
 {
-  "lastEpisode": 11,
-  "castaways": [{ "name": "...", "status": "active|eliminated" }],
-  "players": [{ "name": "...", "mvp": "...", "picks": [...], "addedPicks": [...] }],
-  "episodes": [{ "episode": 1, "scores": { "Clay": 0, ... } }],
-  "totals": { "Clay": 653, ... }
+  "season": 51,
+  "premiere": "2026-09-23",
+  "lastUpdated": "Pre-season",
+  "tribes": { "TribeName": "#hex" },
+  "castaways": [{ "name": "Aaliyah", "tribe": "TribeName|null", "eliminatedEp": null }],
+  "players": [{
+    "id": "clay", "name": "Clay",
+    "mvp": "<castaway>",            // MVP = pick for who wins it all (Sole Survivor); not a scoring multiplier
+    "picks": ["<castaway>", ...],   // 9 draft picks, active from episode 1
+    "addedPicks": [{ "name": "<castaway>", "fromEp": 6 }]  // replacements, active from that episode
+  }],
+  "episodes": [{
+    "episode": 1,
+    "scored": true,                 // optional; set false for a scheduled-but-unscored episode
+    "castawayPoints": { "Aaliyah": 12, "Brady": 8, ... }
+  }]
 }
 ```
 
@@ -58,5 +73,4 @@ Always stop and get explicit user confirmation before:
 Clay, Amy, Dan, Chris, Bryany, Julie, Mark, Kogi-pops, Kogi - Sandy, Lynne, Brenden, Woody, Claude
 
 ## Castaways
-Active (as of Ep 11): Aubry, Cirie, Joe, Jonathan, Rick, Rizo, Tiffany
-Eliminated: Angelina, Benjamin "Coach", Charlie, Christian, Chrissy, Colby, Dee, Emily, Genevieve, Jenna, Kamilla, Kyle, Mike, Ozzy, Quintavius "Q", Saiounia "Sia", Savannah, Shauhin, Stephanie
+Season 51 cast (21) is in `data/pool.json` and detailed in `data/season51-cast.md`. Tribes not yet announced. Draft (picks + MVPs) hasn't happened.

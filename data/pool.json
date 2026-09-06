@@ -1,8 +1,31 @@
 {
   "season": 51,
-  "lastEpisode": 0,
-  "lastUpdated": "Not started",
-  "castaways": [],
+  "premiere": "2026-09-23",
+  "lastUpdated": "Pre-season",
+  "tribes": {},
+  "castaways": [
+    { "name": "Aaliyah", "tribe": null, "eliminatedEp": null },
+    { "name": "Alexis", "tribe": null, "eliminatedEp": null },
+    { "name": "Thien An", "tribe": null, "eliminatedEp": null },
+    { "name": "Ana", "tribe": null, "eliminatedEp": null },
+    { "name": "Jelly", "tribe": null, "eliminatedEp": null },
+    { "name": "Brady", "tribe": null, "eliminatedEp": null },
+    { "name": "Carter", "tribe": null, "eliminatedEp": null },
+    { "name": "Cristian", "tribe": null, "eliminatedEp": null },
+    { "name": "Kilby", "tribe": null, "eliminatedEp": null },
+    { "name": "Devin", "tribe": null, "eliminatedEp": null },
+    { "name": "Eric", "tribe": null, "eliminatedEp": null },
+    { "name": "Jenna", "tribe": null, "eliminatedEp": null },
+    { "name": "Kristin", "tribe": null, "eliminatedEp": null },
+    { "name": "Lewis", "tribe": null, "eliminatedEp": null },
+    { "name": "Linnea", "tribe": null, "eliminatedEp": null },
+    { "name": "Maggie", "tribe": null, "eliminatedEp": null },
+    { "name": "Mike", "tribe": null, "eliminatedEp": null },
+    { "name": "Ori", "tribe": null, "eliminatedEp": null },
+    { "name": "Patt", "tribe": null, "eliminatedEp": null },
+    { "name": "Rob", "tribe": null, "eliminatedEp": null },
+    { "name": "Sharonda", "tribe": null, "eliminatedEp": null }
+  ],
   "players": [
     { "id": "clay", "name": "Clay", "mvp": null, "picks": [], "addedPicks": [] },
     { "id": "amy", "name": "Amy", "mvp": null, "picks": [], "addedPicks": [] },
@@ -18,20 +41,5 @@
     { "id": "woody", "name": "Woody", "mvp": null, "picks": [], "addedPicks": [] },
     { "id": "claude", "name": "Claude", "mvp": null, "picks": [], "addedPicks": [] }
   ],
-  "episodes": [],
-  "totals": {
-    "Clay": 0,
-    "Amy": 0,
-    "Dan": 0,
-    "Chris": 0,
-    "Bryany": 0,
-    "Julie": 0,
-    "Mark": 0,
-    "Kogi-pops": 0,
-    "Kogi - Sandy": 0,
-    "Lynne": 0,
-    "Brenden": 0,
-    "Woody": 0,
-    "Claude": 0
-  }
+  "episodes": []
 }
