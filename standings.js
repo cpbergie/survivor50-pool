@@ -1,13 +1,17 @@
 // ===== DERIVED SELECTORS =====
 // Pure functions over the season object (data/pool.json). No DOM, no side effects.
 //
-//   players[]   { id, name, mvp, picks: [name…], addedPicks: [{ name, fromEp }…] }
-//   episodes[]  { episode, scored?, castawayPoints: { castawayName: points } }
-//   castaways[] { name, tribe?, eliminatedEp? }
-//   tribes?     { tribeName: "#hex" }
+//   players[]    { id, name, mvp, picks: [name | {name,fromEp?,untilEp?}…], addedPicks: […] }
+//   episodes[]   { episode, scored?, castawayPoints: { castawayName: points } }
+//   castaways[]  { name, tribe?, eliminatedEp? }
+//   tribes?      { tribeName: "#hex" }
+//   mergeEp?     episode the tribes merged
+//   placements?  { "1": winnerName, "2": runnerUp, "3": third } — set after the finale
 //
-// Points are entered ONCE per castaway per episode (episodes[].castawayPoints).
-// A player's episode score = the sum of their active roster's castaway points.
+// Points are entered ONCE per castaway per episode (episodes[].castawayPoints) —
+// survival + every event bonus, per data/scoring-rules.md. A player's episode score
+// is the sum of their active roster's castaway points. End-of-season placement (+30/
+// +20/+10) and MVP (+30) bonuses are added once `placements` is filled in.
 // Everything cumulative (totals, ranks, movement) is derived here.
 
 (function (global) {
@@ -15,6 +19,7 @@
 
   function pickName(p) { return typeof p === 'string' ? p : p.name; }
   function pickFrom(p) { return typeof p === 'string' ? 1 : (p.fromEp || 1); }
+  function pickUntil(p) { return typeof p === 'string' ? Infinity : (p.untilEp || Infinity); }
 
   function scoredEpisodes(season) {
     return (season.episodes || []).filter(e => e.scored !== false && e.castawayPoints);
@@ -37,12 +42,12 @@
     ];
   }
 
-  // Picks active during episode `ep` — an added pick only counts from its fromEp.
+  // Picks active during episode `ep`. A pick (base or added) may carry `fromEp`
+  // (added at the merge) and/or `untilEp` (swapped out); a plain string is always active.
   function rosterAt(player, ep) {
-    return [
-      ...(player.picks || []).map(pickName),
-      ...(player.addedPicks || []).filter(p => pickFrom(p) <= ep).map(pickName),
-    ];
+    return [...(player.picks || []), ...(player.addedPicks || [])]
+      .filter(p => pickFrom(p) <= ep && ep <= pickUntil(p))
+      .map(pickName);
   }
 
   // Episode `ep` points for one castaway — ignored once they're gone (their
@@ -60,11 +65,36 @@
     return rosterAt(player, ep).reduce((s, name) => s + castawayEpisodePoints(season, row, name), 0);
   }
 
-  // Cumulative points through (and including) episode `throughEp`.
+  // End-of-season bonus for a castaway's final placement (set via season.placements).
+  function placementBonus(season, castawayName) {
+    const p = season.placements || {};
+    if (p['1'] === castawayName) return 30;
+    if (p['2'] === castawayName) return 20;
+    if (p['3'] === castawayName) return 10;
+    return 0;
+  }
+
+  // +30 if the player's MVP pick won the game.
+  function mvpBonus(season, player) {
+    const winner = (season.placements || {})['1'];
+    return winner && player.mvp === winner ? 30 : 0;
+  }
+
+  function seasonOver(season) {
+    return !!(season.placements && Object.keys(season.placements).length);
+  }
+
+  // Cumulative points through (and including) episode `throughEp`, plus any
+  // end-of-season placement / MVP bonuses once the finale has been recorded.
   function totalPoints(season, player, throughEp) {
-    return scoredEpisodes(season)
+    let sum = scoredEpisodes(season)
       .filter(e => e.episode <= throughEp)
       .reduce((s, e) => s + playerEpisodePoints(season, player, e.episode), 0);
+    if (seasonOver(season)) {
+      roster(player).forEach(name => { sum += placementBonus(season, name); });
+      sum += mvpBonus(season, player);
+    }
+    return sum;
   }
 
   // { playerName: cumulativeTotal } through the latest scored episode.
@@ -75,10 +105,13 @@
     return out;
   }
 
-  // Points one castaway has contributed to one player across the season so far.
+  // Points one castaway has contributed to one player across the season so far,
+  // including their final-placement bonus once the season is over.
   function castawayContribution(season, player, name) {
-    return scoredEpisodes(season).reduce((s, e) =>
+    let sum = scoredEpisodes(season).reduce((s, e) =>
       rosterAt(player, e.episode).includes(name) ? s + castawayEpisodePoints(season, e, name) : s, 0);
+    if (seasonOver(season) && roster(player).includes(name)) sum += placementBonus(season, name);
+    return sum;
   }
 
   // Standard competition ranking (1, 2, 2, 4) -> { key: { rank, rankLabel } };
@@ -151,6 +184,9 @@
     totalPoints,
     totalsByName,
     castawayContribution,
+    placementBonus,
+    mvpBonus,
+    seasonOver,
     rankByTotal,
     standingsAt,
     movement,

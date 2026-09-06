@@ -24,9 +24,9 @@ Plain HTML/JS/CSS → GitHub → Vercel (auto-deploys on push). No build step.
 - `data/season51-cast.md` — cast reference
 
 ## Scoring model
-Points are entered **once per castaway per episode** in `episodes[].castawayPoints`. A player's episode score = the sum of their active roster's castaway points (added picks only count from their `fromEp`; an eliminated castaway scores in their elimination episode but not after). `standings.js` derives cumulative totals, ranks, and movement.
+Full rules: `data/scoring-rules.md`. Points are entered **once per castaway per episode** in `episodes[].castawayPoints` — that number is the castaway's whole week (survival: +1 pre-merge / +3 post-merge, plus 5/10/15-pt event bonuses). A player's episode score = the sum of their active roster's castaway points. Added picks count from their `fromEp`; a swapped-out pick carries `untilEp`; an eliminated castaway scores in their elimination episode but not after. End-of-season placement (+30/+20/+10 for winner/2nd/3rd) and MVP (+30 if your MVP wins) bonuses are applied by `standings.js` once `placements` is set. Everything cumulative is derived — never stored.
 
-Base per-castaway numbers come from the official GlobalTV Survivor Fantasy Tribe results; house adjustments (kissing, cursing, etc. — rules TBD from the user) are applied on top. A weekly job will eventually produce `castawayPoints` from those two sources.
+Base per-castaway numbers come from the GlobalTV Survivor Fantasy Tribe weekly results; house adjustments (things GlobalTV missed, from the Reddit episode thread) are folded into the same number. A weekly job will eventually automate producing `castawayPoints`.
 
 ## Weekly update workflow
 When the user provides an episode's castaway scores and who left:
@@ -53,13 +53,15 @@ Always stop and get explicit user confirmation before:
   "season": 51,
   "premiere": "2026-09-23",
   "lastUpdated": "Pre-season",
+  "mergeEp": null,                  // episode the tribes merged
   "tribes": { "TribeName": "#hex" },
+  "placements": {},                 // after the finale: { "1": winner, "2": runnerUp, "3": third }
   "castaways": [{ "name": "Aaliyah", "tribe": "TribeName|null", "eliminatedEp": null }],
   "players": [{
     "id": "clay", "name": "Clay",
-    "mvp": "<castaway>",            // MVP = pick for who wins it all (Sole Survivor); not a scoring multiplier
-    "picks": ["<castaway>", ...],   // 9 draft picks, active from episode 1
-    "addedPicks": [{ "name": "<castaway>", "fromEp": 6 }]  // replacements, active from that episode
+    "mvp": "<castaway>",            // MVP = pick for who wins it all; +30 bonus if they win. Not a weekly multiplier.
+    "picks": ["<castaway>", ...],   // 9 draft picks, active from episode 1 (a swapped pick becomes { "name": "...", "untilEp": N })
+    "addedPicks": [{ "name": "<castaway>", "fromEp": 6 }]  // merge/replacement picks, active from that episode
   }],
   "episodes": [{
     "episode": 1,

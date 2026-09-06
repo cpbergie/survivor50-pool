@@ -241,10 +241,13 @@ function detailHtml(player, season, payouts) {
     </li>`;
   }).join('');
 
+  const mvpHit = Standings.mvpBonus(season, player);
+
   return `
     <div class="detail-head">
       <span class="detail-week">${wk >= 0 ? '+' : ''}${wk} in Ep ${lastEp}</span>
       <span class="detail-alive">${alive} of ${roster.length} still in</span>
+      ${mvpHit ? `<span class="detail-pay">MVP hit +${mvpHit}</span>` : ''}
       ${pay && pay !== '—' ? `<span class="detail-pay">Winning ${pay}</span>` : ''}
     </div>
     <ul class="detail-cast">${cast}</ul>`;
