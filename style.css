@@ -414,9 +414,6 @@ tr.row-1 { background: rgba(255,209,92,0.07); }
 .rank-3 { background: rgba(224,138,76,0.14); color: var(--rank3); border: 1px solid var(--rank3); }
 .rank-other { color: var(--text-faint); font-size: 0.9rem; }
 
-.total-pts { font-weight: 700; font-size: 1.05rem; color: var(--gold); }
-.winning-pts { font-weight: 700; color: var(--green); white-space: nowrap; }
-
 /* ===== STANDINGS TABLE ===== */
 .standings-wrap { overflow-x: hidden; overscroll-behavior: contain; }
 #standings-table { table-layout: fixed; }
@@ -519,18 +516,33 @@ thead th.c-move { color: var(--text-faint); font-size: 0.6rem; letter-spacing: 0
 .dcast.is-elim .dcast-dot { opacity: 0.35; }
 .dcast.is-elim .dcast-pts { color: var(--text-faint); }
 
-.tag-ai {
-  font-family: 'Barlow Semi Condensed', sans-serif;
-  font-size: 0.6rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: var(--foam);
-  border: 1px solid rgba(127,223,255,0.4);
-  border-radius: 999px;
-  padding: 0.05rem 0.35rem;
-  vertical-align: middle;
-  margin-left: 0.35rem;
+/* ===== WEEKLY POINTS TABLE ===== */
+#weekly-table { font-variant-numeric: tabular-nums; }
+#weekly-table thead th { padding: 0.7rem 0.7rem; }
+#weekly-table tbody td { padding: 0.6rem 0.7rem; white-space: nowrap; }
+
+#weekly-table th:nth-child(1), #weekly-table td:nth-child(1),
+#weekly-table th:nth-child(2), #weekly-table td:nth-child(2) {
+  position: sticky;
+  z-index: 1;
 }
+#weekly-table th:nth-child(1), #weekly-table td:nth-child(1) { left: 0; min-width: 40px; }
+#weekly-table th:nth-child(2), #weekly-table td:nth-child(2) {
+  left: 40px; min-width: 100px;
+  box-shadow: 6px 0 10px rgba(3,15,22,0.35);
+}
+#weekly-table tbody td:nth-child(1), #weekly-table tbody td:nth-child(2) { background: var(--surface); }
+#weekly-table thead th:nth-child(1), #weekly-table thead th:nth-child(2) { background: var(--surface-2); }
+
+#weekly-table td.c-total { font-weight: 700; color: var(--gold); }
+.wk-pts { color: var(--text); font-weight: 600; text-align: center; }
+.wk-ep, .wk-pts { text-align: center; }
+.wk-ep:not(.wk-latest) { color: var(--text-dim); }
+.wk-pts:not(.wk-latest) { color: var(--text-dim); font-weight: 500; }
+.wk-best { color: var(--gold) !important; font-weight: 800 !important; }
+
+#weekly-body tr.row-1 td:nth-child(1),
+#weekly-body tr.row-1 td:nth-child(2) { background: rgba(255,209,92,0.06); }
 
 /* ===== ROSTERS ===== */
 .active-castaways-card {
@@ -678,76 +690,6 @@ thead th.c-move { color: var(--text-faint); font-size: 0.6rem; letter-spacing: 0
 .mvp-star { font-size: 0.8rem; }
 .castaway-name { flex: 1; }
 
-/* ===== PAST SEASONS ===== */
-.past-season-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  overflow: hidden;
-}
-
-.past-season-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1.15rem 1.25rem;
-  background: linear-gradient(135deg, rgba(255,138,61,0.12), rgba(127,223,255,0.06));
-  border-bottom: 1px solid var(--border);
-}
-
-.past-season-eyebrow {
-  font-family: 'Barlow Semi Condensed', sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: var(--foam);
-}
-
-.past-season-title {
-  font-family: 'Barlow Semi Condensed', sans-serif;
-  font-size: 1.35rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--sand);
-  margin-top: 0.15rem;
-}
-
-.past-champion { text-align: right; }
-.champ-badge {
-  font-family: 'Barlow Semi Condensed', sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 0.66rem;
-  font-weight: 700;
-  color: var(--gold);
-}
-.champ-name {
-  font-family: 'Anton', sans-serif;
-  font-size: 1.9rem;
-  line-height: 1;
-  text-transform: uppercase;
-  color: var(--sand);
-  margin-top: 0.15rem;
-}
-.champ-score { font-size: 0.8rem; color: var(--text-dim); margin-top: 0.2rem; }
-
-.past-season-card .table-wrap {
-  border: none;
-  border-radius: 0;
-  background: transparent;
-}
-
-.past-season-foot {
-  padding: 0.9rem 1.25rem 1.1rem;
-  font-size: 0.8rem;
-  color: var(--text-faint);
-  border-top: 1px solid var(--border-soft);
-}
-
 /* ===== CLAIM BAR ("which one are you?") ===== */
 .claim-bar {
   display: flex;
@@ -817,9 +759,11 @@ thead th.c-move { color: var(--text-faint); font-size: 0.6rem; letter-spacing: 0
 .claim-dismiss:active { background: var(--surface-2); }
 
 /* ===== "YOUR ROW" TREATMENT ===== */
-tbody tr.st-row.is-me td { background: rgba(255,138,61,0.12); }
-tbody tr.st-row.is-me td.c-rank { box-shadow: inset 3px 0 0 var(--sun); }
-tbody tr.st-row.is-me td.col-player .st-name { color: var(--sun); font-weight: 700; }
+tbody tr.is-me td { background: rgba(255,138,61,0.12); }
+tbody tr.is-me td:first-child { box-shadow: inset 3px 0 0 var(--sun); }
+tbody tr.is-me td.col-player .st-name { color: var(--sun); font-weight: 700; }
+#weekly-body tr.is-me td:nth-child(1),
+#weekly-body tr.is-me td:nth-child(2) { background: #22333b; }
 
 .roster-card.is-me {
   border-color: var(--sun);
@@ -983,6 +927,6 @@ footer #me-status strong { color: var(--sand); }
   .c-total { width: 46px; }
   .detail-cast { grid-template-columns: 1fr; }
 
-  .past-season-head { flex-direction: column; align-items: flex-start; }
-  .past-champion { text-align: left; }
+  #weekly-table thead th, #weekly-table tbody td { padding: 0.55rem 0.55rem; font-size: 0.82rem; }
+  #weekly-table th:nth-child(2), #weekly-table td:nth-child(2) { min-width: 88px; }
 }

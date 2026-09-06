@@ -61,11 +61,11 @@
       </span>
       <span class="tab-label">Rosters</span>
     </button>
-    <button class="tab-btn" data-tab="past">
+    <button class="tab-btn" data-tab="weekly">
       <span class="tab-ico" aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 9v11"/></svg>
       </span>
-      <span class="tab-label">Past Seasons</span>
+      <span class="tab-label">Weekly</span>
     </button>
   </nav>
 
@@ -116,37 +116,23 @@
       <div id="rosters-grid" class="rosters-grid"></div>
     </section>
 
-    <!-- PAST SEASONS TAB -->
-    <section id="past" class="tab-section">
+    <!-- WEEKLY POINTS TAB -->
+    <section id="weekly" class="tab-section">
       <div class="section-header">
-        <h2>Past Seasons</h2>
-        <p class="section-note">The record book — how every pool has finished.</p>
+        <h2>Weekly Points</h2>
+        <p class="section-note">Every player's score, episode by episode. Best score each week in gold.</p>
       </div>
 
-      <div class="past-season-card">
-        <div class="past-season-head">
-          <div>
-            <p class="past-season-eyebrow">Season 50 · In the Hands of the Fans</p>
-            <h3 class="past-season-title">Final Standings</h3>
-          </div>
-          <div id="past-champion" class="past-champion"></div>
-        </div>
+      <div class="empty-note" id="weekly-empty" hidden>
+        <strong>No episodes scored yet.</strong>
+        Weekly points show up here once Episode 1 airs and the scores are in.
+      </div>
 
-        <div class="table-wrap">
-          <table id="past-table">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th class="col-player">Player</th>
-                <th>Total</th>
-                <th>Winning</th>
-              </tr>
-            </thead>
-            <tbody id="past-body"></tbody>
-          </table>
-        </div>
-
-        <p class="past-season-foot" id="past-foot"></p>
+      <div class="table-wrap weekly-wrap">
+        <table id="weekly-table">
+          <thead></thead>
+          <tbody id="weekly-body"></tbody>
+        </table>
       </div>
     </section>
   </main>

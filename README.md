@@ -10,12 +10,12 @@ Live standings, rosters, and episode breakdowns for the Survivor 51 fantasy pool
 
 ## Files
 
-- `index.html` — structure, tabs (Standings / Rosters / Past Seasons)
+- `index.html` — structure, tabs (Standings / Rosters / Weekly)
 - `app.js` — fetches `data/pool.json`, renders the UI
 - `standings.js` — pure derived selectors (`window.Standings`)
 - `style.css` — ocean/broadcast theme
 - `data/pool.json` — Season 51: cast, players, per-episode castaway points
-- `data/season50.json` — frozen Season 50 archive (Past Seasons tab)
+- `data/season50.json` — frozen Season 50 archive (kept for the record, not shown)
 - `data/season51-cast.md` — cast reference
 - `WEEKLY_UPDATE.md` — how to record an episode
 

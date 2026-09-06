@@ -70,14 +70,10 @@ fetch('data/pool.json')
     poolData = data;
     buildStandings(data);
     buildRosters(data);
+    buildWeekly(data);
     initClaim();
   })
   .catch(err => console.error('Failed to load pool data:', err));
-
-fetch('data/season50.json')
-  .then(r => r.json())
-  .then(data => buildPastSeason(data))
-  .catch(err => console.error('Failed to load Season 50 data:', err));
 
 // ===== HELPERS =====
 function sortByTotal(players, totals) {
@@ -95,12 +91,6 @@ function computePayouts(players, totals) {
     if (i < slots.length) i += 1;
   });
   return map;
-}
-
-function rankCell(rank, ranked) {
-  return ranked && rank <= 3
-    ? `<span class="rank-badge rank-${rank}">${rank}</span>`
-    : `<span class="rank-other">${rank}</span>`;
 }
 
 // ===== STANDINGS =====
@@ -393,40 +383,64 @@ function maybePlaySnuffs() {
   });
 }
 
-// ===== PAST SEASONS =====
-function buildPastSeason(data) {
-  const totals = data.totals || {};
+// ===== WEEKLY POINTS =====
+// Every player's score, episode by episode (the old spreadsheet grid).
+function buildWeekly(data) {
   const players = data.players || [];
+  const totals = Standings.totalsByName(data);
+  const eps = Standings.scoredEpisodes(data).map(e => e.episode).sort((a, b) => b - a);
+  const started = eps.length > 0;
+
+  document.getElementById('weekly-empty').hidden = started;
+  document.querySelector('.weekly-wrap').hidden = !started;
+  if (!started) return;
+
   const sorted = sortByTotal(players, totals);
-  const payouts = computePayouts(players, totals);
-  const champ = sorted[0];
+  const ranks = started
+    ? Standings.rankByTotal(players.map(p => ({ key: p.id, total: totals[p.name] || 0 })))
+    : {};
 
-  if (champ) {
-    document.getElementById('past-champion').innerHTML = `
-      <div class="champ-badge">Champion</div>
-      <div class="champ-name">${champ.name}</div>
-      <div class="champ-score">${totals[champ.name]} pts · won $80</div>
-    `;
-  }
+  // Best score each episode, to highlight it.
+  const bestByEp = {};
+  eps.forEach(ep => {
+    bestByEp[ep] = players.reduce((m, p) =>
+      Math.max(m, Standings.playerEpisodePoints(data, p, ep)), 0);
+  });
 
-  const tbody = document.getElementById('past-body');
+  const hr = document.createElement('tr');
+  hr.innerHTML =
+    `<th>#</th><th class="col-player">Player</th><th class="c-total">Total</th>` +
+    eps.map((ep, i) => `<th class="wk-ep${i === 0 ? ' wk-latest' : ''}">Ep ${ep}</th>`).join('');
+  document.querySelector('#weekly-table thead').replaceChildren(hr);
+
+  const tbody = document.getElementById('weekly-body');
   tbody.replaceChildren();
+
   sorted.forEach((player, idx) => {
-    const rank = idx + 1;
+    const info = started ? ranks[player.id] : null;
+    const rank = info ? info.rank : idx + 1;
+    const rankLabel = info ? info.rankLabel : String(idx + 1);
+
     const tr = document.createElement('tr');
-    if (rank === 1) tr.classList.add('row-1');
-    const aiTag = player.name === 'Claude' ? '<span class="tag-ai">AI</span>' : '';
+    if (player.id) tr.dataset.playerId = player.id;
+    if (started && rank === 1) tr.classList.add('row-1');
+
+    const cells = eps.map((ep, i) => {
+      const pts = Standings.playerEpisodePoints(data, player, ep);
+      const best = pts > 0 && pts === bestByEp[ep];
+      const cls = ['wk-pts', i === 0 ? 'wk-latest' : '', best ? 'wk-best' : ''].filter(Boolean).join(' ');
+      return `<td class="${cls}">${pts}</td>`;
+    }).join('');
+
     tr.innerHTML = `
-      <td>${rankCell(rank, true)}</td>
-      <td class="col-player">${player.name}${aiTag}</td>
-      <td class="total-pts">${totals[player.name] || 0}</td>
-      <td class="winning-pts">${payouts[player.name] || '—'}</td>
-    `;
+      <td>${started ? badgeFor(rankLabel, rank) : `<span class="rank-other">${idx + 1}</span>`}</td>
+      <td class="col-player"><span class="st-name">${player.name}</span></td>
+      <td class="c-total">${totals[player.name] || 0}</td>
+      ${cells}`;
     tbody.appendChild(tr);
   });
 
-  document.getElementById('past-foot').textContent =
-    'Payouts: $80 / $30 / $10 to the top three eligible finishers. Claude (AI) plays for pride only.';
+  applyMe();
 }
 
 // ===== CLAIM FLOW ("this is me", no auth) =====
@@ -533,8 +547,9 @@ function applyMe() {
   meRowEl = document.querySelector(`#standings-body tr.st-row[data-player-id="${me}"]`);
   if (meRowEl) meRowEl.classList.add('is-me');
 
-  const rosterCard = document.querySelector(`#rosters-grid .roster-card[data-player-id="${me}"]`);
-  if (rosterCard) rosterCard.classList.add('is-me');
+  document
+    .querySelectorAll(`#rosters-grid .roster-card[data-player-id="${me}"], #weekly-body tr[data-player-id="${me}"]`)
+    .forEach(el => el.classList.add('is-me'));
 
   refreshMeCard();
 }

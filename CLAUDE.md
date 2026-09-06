@@ -3,7 +3,7 @@
 ## What this is
 A weekly fantasy pool website. 13 players each draft 9 castaways + 1 MVP at the start of a season; points are scored each episode based on castaway performance.
 
-**Currently: Season 51.** The site was rebranded from Season 50 on 2026-09-05 (ocean/broadcast theme — keep it). Season 50's final results live in the "Past Seasons" tab (`data/season50.json`). Season 51 rosters/scoring are cleared pending the new cast + draft. There's a phased mobile-first build spec in progress (Phase 1 "claim flow" is done). The Google Sheet is being retired as the scoring source — a weekly job will pull from the official site + a Reddit episode thread instead.
+**Currently: Season 51.** Rebranded from Season 50 on 2026-09-05 (ocean/broadcast theme — keep it). Tabs: **Standings · Rosters · Weekly** (the Weekly tab is the per-player episode-by-episode points grid; it replaced a "Past Seasons" tab). The 21-castaway cast is loaded; tribes + the draft (picks/MVPs) are still pending. Scoring is per-castaway-per-episode in `data/pool.json` — no spreadsheet, no stored totals. `data/season50.json` is a frozen archive, no longer shown on the site.
 
 ## Key links
 - **Live site:** https://survivor50-pool-gules.vercel.app/
@@ -15,12 +15,12 @@ A weekly fantasy pool website. 13 players each draft 9 castaways + 1 MVP at the 
 
 ## Stack
 Plain HTML/JS/CSS → GitHub → Vercel (auto-deploys on push). No build step.
-- `index.html` — structure and tabs (Standings, Rosters)
+- `index.html` — structure and tabs (Standings, Rosters, Weekly)
 - `app.js` — fetches `data/pool.json` and renders all tabs
 - `style.css` — dark Survivor theme (ocean/broadcast)
 - `standings.js` — pure derived selectors (`window.Standings`); everything cumulative is computed from per-episode castaway points
 - `data/pool.json` — the season: cast, players, per-episode castaway points. Totals/ranks/movement are all derived at render time, never stored.
-- `data/season50.json` — frozen Season 50 archive (old per-player `scores` format), feeds the Past Seasons tab
+- `data/season50.json` — frozen Season 50 archive (old per-player `scores` format); kept for the record, not shown on the site
 - `data/season51-cast.md` — cast reference
 
 ## Scoring model
