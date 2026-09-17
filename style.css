@@ -43,7 +43,9 @@ body {
   color: var(--text);
   font-family: 'Barlow', system-ui, sans-serif;
   min-height: 100vh;
-  overscroll-behavior-y: contain;
+  /* Left as `auto` on purpose: `contain` here kills pull-to-refresh, which is
+     exactly the gesture people use to check for new scores on episode night. */
+  overscroll-behavior-y: auto;
   background-image:
     radial-gradient(120% 75% at 50% -12%, rgba(255,138,61,0.20), transparent 55%),
     radial-gradient(100% 55% at 50% 0%, rgba(127,223,255,0.10), transparent 60%),
@@ -359,10 +361,14 @@ main {
 
 .table-wrap {
   overflow-x: auto;
+  overflow-y: hidden;
+  /* Contain only the axis this box actually scrolls, so a vertical drag still
+     chains to the page instead of dying here. */
+  overscroll-behavior-x: contain;
+  overscroll-behavior-y: auto;
   border-radius: 12px;
   border: 1px solid var(--border);
   background: var(--surface);
-  -webkit-overflow-scrolling: touch;
 }
 
 table {
@@ -415,7 +421,14 @@ tr.row-1 { background: rgba(255,209,92,0.07); }
 .rank-other { color: var(--text-faint); font-size: 0.9rem; }
 
 /* ===== STANDINGS TABLE ===== */
-.standings-wrap { overflow-x: hidden; overscroll-behavior: contain; }
+/* `overflow` must never be `hidden`/`auto` on one axis only here: per spec that
+   forces the other axis to compute to `auto`, making this a vertical scroll
+   container with nothing to scroll — which swallows touch drags over the table.
+   `clip` clips without creating a scroll container. */
+.standings-wrap {
+  overflow: hidden;  /* fallback */
+  overflow: clip;
+}
 #standings-table { table-layout: fixed; }
 #standings-table tbody td { height: 48px; padding-top: 0.45rem; padding-bottom: 0.45rem; }
 .c-rank   { width: 38px; }
@@ -521,14 +534,26 @@ thead th.c-move { color: var(--text-faint); font-size: 0.6rem; letter-spacing: 0
 #weekly-table thead th { padding: 0.7rem 0.7rem; }
 #weekly-table tbody td { padding: 0.6rem 0.7rem; white-space: nowrap; }
 
+/* The rank column's width and the name column's sticky offset must be the same
+   number or the two sticky columns overlap while scrolled — drive both from one
+   variable. Rank cells get tight, fixed padding so the column can't outgrow it
+   (widest label is a tied rank like "T14"). */
+#weekly-table { --wk-rank-w: 46px; }
+
 #weekly-table th:nth-child(1), #weekly-table td:nth-child(1),
 #weekly-table th:nth-child(2), #weekly-table td:nth-child(2) {
   position: sticky;
   z-index: 1;
 }
-#weekly-table th:nth-child(1), #weekly-table td:nth-child(1) { left: 0; min-width: 40px; }
+#weekly-table th:nth-child(1), #weekly-table td:nth-child(1) {
+  left: 0;
+  width: var(--wk-rank-w);
+  min-width: var(--wk-rank-w);
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
+}
 #weekly-table th:nth-child(2), #weekly-table td:nth-child(2) {
-  left: 40px; min-width: 100px;
+  left: var(--wk-rank-w); min-width: 100px;
   box-shadow: 6px 0 10px rgba(3,15,22,0.35);
 }
 #weekly-table tbody td:nth-child(1), #weekly-table tbody td:nth-child(2) { background: var(--surface); }
@@ -714,8 +739,10 @@ thead th.c-move { color: var(--text-faint); font-size: 0.6rem; letter-spacing: 0
   display: flex;
   gap: 0.4rem;
   overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  overscroll-behavior-y: auto;
   scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
   padding-bottom: 2px;
 }
 .claim-chips::-webkit-scrollbar { display: none; }
