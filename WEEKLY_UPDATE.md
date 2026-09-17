@@ -1,7 +1,7 @@
 # Survivor 51 Pool — Weekly Update Process
 
 ## About the project
-A weekly fantasy pool tracking Survivor 51 (US). 13 players each draft 9 castaways + 1 MVP
+A weekly fantasy pool tracking Survivor 51 (US). Each player drafts 9 castaways + 1 MVP
 (a pick for who wins it all). Points are scored each episode based on castaway performance.
 
 ## Links

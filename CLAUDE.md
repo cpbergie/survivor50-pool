@@ -1,7 +1,7 @@
 # Survivor Fantasy Pool — Project Context
 
 ## What this is
-A weekly fantasy pool website. 13 players each draft 9 castaways + 1 MVP at the start of a season; points are scored each episode based on castaway performance.
+A weekly fantasy pool website. Each player drafts 9 castaways + 1 MVP at the start of a season; points are scored each episode based on castaway performance.
 
 **Currently: Season 51.** Rebranded from Season 50 on 2026-09-05 (ocean/broadcast theme — keep it). Tabs: **Standings · Rosters · Weekly** (the Weekly tab is the per-player episode-by-episode points grid; it replaced a "Past Seasons" tab). The 21-castaway cast is loaded; tribes + the draft (picks/MVPs) are still pending. Scoring is per-castaway-per-episode in `data/pool.json` — no spreadsheet, no stored totals. `data/season50.json` is a frozen archive, no longer shown on the site.
 
@@ -72,7 +72,7 @@ Always stop and get explicit user confirmation before:
 ```
 
 ## Players (in order)
-Clay, Amy, Dan, Chris, Bryany, Julie, Mark, Kogi-pops, Kogi - Sandy, Lynne, Brenden, Woody, Claude
+Clay, Amy, Dan, Chris, Bryany, Julie, Mark, Kogi-pops, Kogi - Sandy, Lynne, Brenden, Woody, Vinny, Claude
 
 ## Castaways
 Season 51 cast (21) is in `data/pool.json` and detailed in `data/season51-cast.md`. Tribes not yet announced. Draft (picks + MVPs) hasn't happened.
