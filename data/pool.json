@@ -6,7 +6,7 @@
   "tribes": { "Toka": "#f2c230", "Savu": "#9d7bff" },
   "placements": {},
   "castaways": [
-    { "name": "Aaliyah", "tribe": null, "eliminatedEp": 1 },
+    { "name": "Aaliyah", "tribe": "Toka", "eliminatedEp": 1 },
     { "name": "Alexis", "tribe": "Savu", "eliminatedEp": null },
     { "name": "Thien An", "aliases": ["An", "An Thien An"], "tribe": "Toka", "eliminatedEp": null },
     { "name": "Ana", "tribe": "Savu", "eliminatedEp": null },

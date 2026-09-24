@@ -80,4 +80,4 @@ Always stop and get explicit user confirmation before:
 Clay, Amy, Dan, Chris, Bryany, Julie, Mark, Kogi-pops, Kogi - Sandy, Lynne, Brenden, Woody, Vinny, Claude
 
 ## Castaways
-Season 51 cast (21) is in `data/pool.json` (bios in `data/season51-cast.md`). Tribes: **Toka (Yellow)** — Brady, Devin, Jelly, Jenna, Kilby, Lewis, Maggie, Mike, Patt, Thien An; **Savu (Purple)** — Alexis, Ana, Carter, Cristian, Eric, Kristin, Linnea, Ori, Rob, Sharonda. Aaliyah was voted out in Episode 1 (not on the official pick list; confirmed by a Reddit comment — ask the user if in doubt). Draft (picks + MVPs) hasn't happened yet.
+Season 51 cast (21) is in `data/pool.json` (bios in `data/season51-cast.md`). Tribes: **Toka (Yellow)** — Brady, Devin, Jelly, Jenna, Kilby, Lewis, Maggie, Mike, Patt, Thien An; **Savu (Purple)** — Alexis, Ana, Carter, Cristian, Eric, Kristin, Linnea, Ori, Rob, Sharonda. Aaliyah (Toka) was voted out in Episode 1 — absent from the official pick list, marked "VOTED OUT" in a Reddit confessional tally (Toka lost immunity, Savu won), and mentioned in post-episode comments. Draft (picks + MVPs) hasn't happened yet.
