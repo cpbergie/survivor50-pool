@@ -598,17 +598,72 @@ thead th.c-move { color: var(--text-faint); font-size: 0.6rem; letter-spacing: 0
 
 .active-castaways-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
+/* Tribe grouping. --tribe / --tribe-bg / --tribe-bd are set per group from pool.json. */
+.tribe-group + .tribe-group { margin-top: 1rem; }
+.tribe-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.55rem;
+  font-family: 'Barlow Semi Condensed', sans-serif;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.tribe-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--tribe, var(--foam-dim));
+  box-shadow: 0 0 8px var(--tribe-bd, transparent);
+}
+.tribe-name { color: var(--tribe, var(--text-dim)); }
+.tribe-count { margin-left: auto; color: var(--text-faint); letter-spacing: 0.06em; }
+
 .active-castaway-pill {
+  position: relative;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
+  gap: 0.45rem;
   padding: 0.38rem 0.8rem;
-  border: 1px solid rgba(127,223,255,0.25);
+  border: 1px solid var(--tribe-bd, rgba(127,223,255,0.25));
   border-radius: 999px;
-  background: rgba(127,223,255,0.08);
+  background: var(--tribe-bg, rgba(127,223,255,0.08));
   color: var(--text);
   font-size: 0.86rem;
   white-space: nowrap;
 }
+.active-castaway-pill .pill-name::before {       /* small tribe-coloured dot */
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 0.45rem;
+  border-radius: 50%;
+  background: var(--tribe, var(--foam-dim));
+  vertical-align: 1px;
+}
+
+/* Voted out: stays in the list, crossed out and dimmed. */
+.active-castaway-pill.is-out { opacity: 0.65; }
+.active-castaway-pill.is-out .pill-name {
+  color: var(--elim-text);
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+}
+.active-castaway-pill.is-out .pill-name::before { opacity: 0.4; }
+.pill-ep {
+  font-family: 'Barlow Semi Condensed', sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--elim-text);
+}
+
+/* Tribe dot on a roster pick */
+.pick-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
 .rosters-grid {
   display: grid;
@@ -698,8 +753,31 @@ thead th.c-move { color: var(--text-faint); font-size: 0.6rem; letter-spacing: 0
 @keyframes snuff-wave {
   to { transform: translateX(120%); }
 }
+
+/* Same reveal on the crossed-out "Still in the game" pill; it settles back to the
+   pill's own tribe tint rather than to transparent. */
+.active-castaway-pill.snuff {
+  animation: snuff-pill 0.85s ease-out both;
+  animation-delay: var(--snuff-delay, 0s);
+}
+.active-castaway-pill.snuff::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(127,223,255,0.55), transparent);
+  transform: translateX(-120%);
+  animation: snuff-wave 0.85s ease-out both;
+  animation-delay: var(--snuff-delay, 0s);
+}
+@keyframes snuff-pill {
+  0%   { background: rgba(127,223,255,0.35); filter: brightness(1.7); }
+  30%  { background: rgba(127,223,255,0.2);  filter: brightness(1.25); }
+  100% { background: var(--tribe-bg, rgba(127,223,255,0.08)); filter: brightness(1); }
+}
 @media (prefers-reduced-motion: reduce) {
-  .roster-picks li.snuff, .roster-picks li.snuff::after { animation: none; }
+  .roster-picks li.snuff, .roster-picks li.snuff::after,
+  .active-castaway-pill.snuff, .active-castaway-pill.snuff::after { animation: none; }
 }
 
 .added-badge {

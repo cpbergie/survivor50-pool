@@ -266,32 +266,93 @@ function toggleDetail(id) {
 }
 
 // ===== ROSTERS =====
+function hexToRgba(hex, alpha) {
+  const m = /^#?([0-9a-f]{6})$/i.exec(hex || '');
+  if (!m) return null;
+  const n = parseInt(m[1], 16);
+  return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${alpha})`;
+}
+
+// Expose a tribe's colour to CSS as --tribe / --tribe-bg / --tribe-bd on an element.
+function applyTribeColor(el, hex) {
+  const bg = hexToRgba(hex, 0.16), bd = hexToRgba(hex, 0.6);
+  if (!bg) return;
+  el.style.setProperty('--tribe', hex);
+  el.style.setProperty('--tribe-bg', bg);
+  el.style.setProperty('--tribe-bd', bd);
+}
+
+// "Still in the game": every castaway, grouped by starting tribe and tinted with the
+// tribe's colour. Eliminated castaways stay in the list, crossed out, with the episode.
+function renderCastawayBoard(el, data) {
+  const castaways = data.castaways || [];
+  if (!castaways.length) { el.hidden = true; return; }
+  el.hidden = false;
+
+  const tribes = data.tribes || {};
+  const isOut = c => Standings.isEliminated(c);
+  const order = (a, b) => (isOut(a) - isOut(b)) || a.name.localeCompare(b.name);   // active first, A–Z
+  const groups = Object.keys(tribes)
+    .map(name => ({ name, hex: tribes[name], list: castaways.filter(c => c.tribe === name).sort(order) }))
+    .filter(g => g.list.length);
+  const rest = castaways.filter(c => !tribes[c.tribe]).sort(order);
+  if (rest.length) groups.push({ name: groups.length ? 'Other' : null, hex: null, list: rest });
+
+  const activeCount = list => list.filter(c => !isOut(c)).length;
+
+  el.replaceChildren();
+  const head = document.createElement('div');
+  head.className = 'active-castaways-header';
+  head.innerHTML = `<span class="active-castaways-title">Still in the game</span>
+    <span class="active-castaways-count">${activeCount(castaways)} left</span>`;
+  el.appendChild(head);
+
+  groups.forEach(g => {
+    const section = document.createElement('div');
+    section.className = 'tribe-group';
+    if (g.hex) applyTribeColor(section, g.hex);
+    if (g.name) {
+      const label = document.createElement('div');
+      label.className = 'tribe-label';
+      label.innerHTML = '<span class="tribe-dot"></span><span class="tribe-name"></span><span class="tribe-count"></span>';
+      label.querySelector('.tribe-name').textContent = g.name;
+      label.querySelector('.tribe-count').textContent = `${activeCount(g.list)} left`;
+      section.appendChild(label);
+    }
+    const list = document.createElement('div');
+    list.className = 'active-castaways-list';
+    g.list.forEach(c => {
+      const pill = document.createElement('span');
+      pill.className = 'active-castaway-pill' + (isOut(c) ? ' is-out' : '');
+      pill.dataset.castaway = c.name;
+      const name = document.createElement('span');
+      name.className = 'pill-name';
+      name.textContent = c.name;
+      pill.appendChild(name);
+      if (isOut(c)) {
+        const ep = document.createElement('span');
+        ep.className = 'pill-ep';
+        ep.textContent = c.eliminatedEp ? `Ep ${c.eliminatedEp}` : 'out';
+        pill.appendChild(ep);
+        pill.title = c.eliminatedEp ? `${c.name} — voted out in episode ${c.eliminatedEp}` : `${c.name} — out`;
+      }
+      list.appendChild(pill);
+    });
+    section.appendChild(list);
+    el.appendChild(section);
+  });
+}
+
 function buildRosters(data) {
   const castaways = data.castaways || [];
   const players = data.players || [];
   const totals = Standings.totalsByName(data);
 
   const elimSet = Standings.eliminatedNames(data);
-  const activeCastaways = castaways
-    .filter(c => !Standings.isEliminated(c))
-    .map(c => c.name)
-    .sort((a, b) => a.localeCompare(b));
+  const cInfo = Object.fromEntries(castaways.map(c => [c.name, c]));
+  const tribeHex = name => (data.tribes || {})[(cInfo[name] || {}).tribe] || null;
 
-  const acEl = document.getElementById('active-castaways');
-  if (castaways.length > 0) {
-    acEl.hidden = false;
-    acEl.innerHTML = `
-      <div class="active-castaways-header">
-        <span class="active-castaways-title">Still in the game</span>
-        <span class="active-castaways-count">${activeCastaways.length} left</span>
-      </div>
-      <div class="active-castaways-list">
-        ${activeCastaways.map(n => `<span class="active-castaway-pill">${n}</span>`).join('')}
-      </div>
-    `;
-  } else {
-    acEl.hidden = true;
-  }
+  renderCastawayBoard(document.getElementById('active-castaways'), data);
 
   const anyPicks = players.some(p => (p.picks || []).length || (p.addedPicks || []).length);
   document.getElementById('rosters-empty').hidden = anyPicks;
@@ -336,7 +397,9 @@ function buildRosters(data) {
             ? '<span class="mvp-star">⭐</span>'
             : '<span class="mvp-star" style="opacity:0">⭐</span>';
           const badge = isAdded ? '<span class="added-badge">NEW</span>' : '';
-          return `<li class="${classes}">${star}<span class="castaway-name">${castaway}</span>${badge}</li>`;
+          const hex = tribeHex(castaway);
+          const dot = hex ? `<span class="pick-dot" style="background:${hex}"></span>` : '';
+          return `<li class="${classes}">${star}${dot}<span class="castaway-name">${castaway}</span>${badge}</li>`;
         }).join('')}
       </ul>
     `;
@@ -373,13 +436,15 @@ function maybePlaySnuffs() {
   if (fresh.size === 0 || fresh.size > 2 || REDUCED_MOTION) return;
 
   let i = 0;
-  document.querySelectorAll('#rosters-grid .roster-picks li.eliminated').forEach(li => {
-    const name = li.querySelector('.castaway-name');
-    if (!name || !fresh.has(name.textContent)) return;
-    li.style.setProperty('--snuff-delay', Math.min(i++ * 0.06, 0.5).toFixed(2) + 's');
-    li.classList.remove('snuff');
-    void li.offsetWidth;               // restart the animation
-    li.classList.add('snuff');
+  document.querySelectorAll(
+    '#active-castaways .active-castaway-pill.is-out, #rosters-grid .roster-picks li.eliminated'
+  ).forEach(el => {
+    const name = el.dataset.castaway || (el.querySelector('.castaway-name') || {}).textContent;
+    if (!name || !fresh.has(name)) return;
+    el.style.setProperty('--snuff-delay', Math.min(i++ * 0.06, 0.5).toFixed(2) + 's');
+    el.classList.remove('snuff');
+    void el.offsetWidth;               // restart the animation
+    el.classList.add('snuff');
   });
 }
 
