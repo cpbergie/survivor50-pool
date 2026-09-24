@@ -334,7 +334,14 @@ function renderCastawayBoard(el, data) {
         ep.className = 'pill-ep';
         ep.textContent = c.eliminatedEp ? `Ep ${c.eliminatedEp}` : 'out';
         pill.appendChild(ep);
-        pill.title = c.eliminatedEp ? `${c.name} — voted out in episode ${c.eliminatedEp}` : `${c.name} — out`;
+        pill.title = (c.eliminatedEp ? `${c.name} — voted out in episode ${c.eliminatedEp}` : `${c.name} — out`) + '. Tap to replay.';
+        pill.tabIndex = 0;
+        pill.setAttribute('role', 'button');
+        pill.setAttribute('aria-label', `Replay ${c.name}'s exit`);
+        pill.addEventListener('click', () => playSnuff(pill));
+        pill.addEventListener('keydown', ev => {
+          if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); playSnuff(pill); }
+        });
       }
       list.appendChild(pill);
     });
@@ -411,15 +418,32 @@ function buildRosters(data) {
 }
 
 // ===== ELIMINATION "SNUFF" =====
-// Play a one-time reveal on roster entries for castaways the viewer hasn't yet
-// seen eliminated. Fires when the Rosters tab is first shown.
+// A one-time reveal per castaway per device. It plays when the crossed-out entry is
+// actually ON SCREEN (not merely when the tab opens — the list is often below the fold),
+// and a castaway only counts as "seen" once it has really played. Tapping a crossed-out
+// pill replays it whenever you like, so the moment is never lost — and never nags.
 function getSeenElims() {
   try { return new Set(JSON.parse(lsGet(SEEN_ELIMS_KEY) || '[]')); }
   catch { return new Set(); }
 }
 
-function markElimsSeen(season) {
-  lsSet(SEEN_ELIMS_KEY, JSON.stringify([...Standings.eliminatedNames(season)]));
+function markSeen(name) {
+  const seen = getSeenElims();
+  if (seen.has(name)) return;
+  seen.add(name);
+  lsSet(SEEN_ELIMS_KEY, JSON.stringify([...seen]));
+}
+
+function playSnuff(el, delay = 0) {
+  if (REDUCED_MOTION) return;
+  el.style.setProperty('--snuff-delay', delay.toFixed(2) + 's');
+  el.classList.remove('snuff');
+  void el.offsetWidth;                 // restart the animation
+  el.classList.add('snuff');
+}
+
+function snuffName(el) {
+  return el.dataset.castaway || (el.querySelector('.castaway-name') || {}).textContent;
 }
 
 function maybePlaySnuffs() {
@@ -429,23 +453,29 @@ function maybePlaySnuffs() {
 
   const seen = getSeenElims();
   const fresh = new Set([...Standings.eliminatedNames(poolData)].filter(n => !seen.has(n)));
-  markElimsSeen(poolData);
+  if (fresh.size === 0) return;
 
-  // Only animate a fresh result the viewer is "seeing happen" — a normal episode
-  // votes out one (occasionally two). A big backlog just renders in its final state.
-  if (fresh.size === 0 || fresh.size > 2 || REDUCED_MOTION) return;
+  // A normal episode votes out one (sometimes two). A bigger backlog — someone who missed
+  // several weeks — just renders in its final state instead of a wall of animation.
+  if (fresh.size > 2 || REDUCED_MOTION) { fresh.forEach(markSeen); return; }
 
-  let i = 0;
-  document.querySelectorAll(
+  const targets = [...document.querySelectorAll(
     '#active-castaways .active-castaway-pill.is-out, #rosters-grid .roster-picks li.eliminated'
-  ).forEach(el => {
-    const name = el.dataset.castaway || (el.querySelector('.castaway-name') || {}).textContent;
-    if (!name || !fresh.has(name)) return;
-    el.style.setProperty('--snuff-delay', Math.min(i++ * 0.06, 0.5).toFixed(2) + 's');
-    el.classList.remove('snuff');
-    void el.offsetWidth;               // restart the animation
-    el.classList.add('snuff');
-  });
+  )].filter(el => fresh.has(snuffName(el)));
+  if (!targets.length) return;
+
+  if (!('IntersectionObserver' in window)) {
+    targets.forEach((el, i) => { playSnuff(el, Math.min(i * 0.06, 0.5)); markSeen(snuffName(el)); });
+    return;
+  }
+  const io = new IntersectionObserver(entries => {
+    entries.filter(e => e.isIntersecting).forEach((e, i) => {
+      io.unobserve(e.target);
+      playSnuff(e.target, Math.min(i * 0.06, 0.5));
+      markSeen(snuffName(e.target));
+    });
+  }, { threshold: 0.9, rootMargin: '0px 0px -72px 0px' });      // -72px keeps clear of the bottom nav
+  targets.forEach(el => io.observe(el));
 }
 
 // ===== WEEKLY POINTS =====
