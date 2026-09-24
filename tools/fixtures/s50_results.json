@@ -1,0 +1,111 @@
+{
+ "note": "Real GlobalTV Survivor 50 results (alt text + file name per heading). Season 50 merged at episode 6.",
+ "mergeEp": 6,
+ "episodes": [
+  {
+   "heading": 2,
+   "file": "survivor-50-episode-2-points.jpg",
+   "alt": "Angelina total points: 6; Aubry total points: 21; Charlie total points: 11; Chrissy total points: 11; Christian total points: 41; Cirie total points: 11; Coach total points: 16; Colby total points: 6; Dee total points: 11; Emily total points: 6; Genevieve total points: 21; Joe total points: 11; Jonathan total points: 21; Kamilla total points: 16; Mike total points: 11; Ozzy total points: 6; Q total points: 21; Rick total points: 26; Rizo total points: 6; Savannah total points: 40; Stephenie total points: 6; Tiffany total points: 11"
+  },
+  {
+   "heading": 3,
+   "file": "survivor-50-episode-3-points.jpg",
+   "alt": "Angelina total points: 6; Aubry total points: 16; Charlie total points: 11; Chrissy total points: 16; Christian total points: 6; Cirie total points: 11; Coach total points: 16; Colby total points: 11; Dee total points: 11; Emily total points: 6; Genevieve total points: 11; Joe total points: 16; Jonathan total points: 11; Kamilla total points: 16; Mike total points: 1; Ozzy total points: 1; Q total points: 15; Rick total points: 11; Rizo total points: 11; Stephenie total points: 1; Tiffany total points: 11"
+  },
+  {
+   "heading": 4,
+   "file": "survivor-50-episode-4-points_v2.jpg",
+   "alt": "Angelina total points: 1; Aubry total points: 11; Charlie total points: 6; Chrissy total points: 6; Christian total points: 11; Cirie total points: 6; Coach total points: 16; Colby total points: 11; Dee total points: 11; Emily total points: 1; Genevieve total points: 36; Joe total points: 11; Jonathan total points: 6; Kamilla total points: 6; Mike total points: 10; Ozzy total points: 16; Rick total points: 6; Rizo total points: 21; Stephenie total points: 6; Tiffany total points: 11"
+  },
+  {
+   "heading": 5,
+   "file": "survivor-50-episode-5-points_v3.jpg",
+   "alt": "Angelina total points: 20; Aubry total points: 6; Charlie total points: 10; Chrissy total points: 6; Christian total points: 1; Cirie total points: 1; Coach total points: 6; Colby total points: 11; Dee total points: 1; Emily total points: 1; Genevieve total points: 6; Joe total points: 1; Jonathan total points: 1; Kamilla total points: 1; Ozzy total points: 6; Rick total points: 1; Rizo total points: 6; Stephenie total points: 1; Tiffany total points: 6"
+  },
+  {
+   "heading": 6,
+   "file": "survivor-50-episode-6-points.jpg",
+   "alt": "Aubry total points: 8; Chrissy total points: 8; Christian total points: 23; Cirie total points: 8; Coach total points: 8; Colby total points: 15; Dee total points: 23; Emily total points: 3; Genevieve total points: 25; Joe total points: 3; Jonathan total points: 8; Kamilla total points: 15; Ozzy total points: 8; Rick total points: 3; Rizo total points: 8; Stephenie total points: 23; Tiffany total points: 8"
+  },
+  {
+   "heading": 7,
+   "file": "survivor-50-episode-7-points_v2.jpg",
+   "alt": "Aubry total points: 8; Chrissy total points: 3; Christian total points: 8; Cirie total points: 3; Coach total points: 8; Dee total points: 20; Emily total points: 13; Joe total points: 8; Jonathan total points: 3; Ozzy total points: 23; Rick total points: 13; Rizo total points: 3; Stephenie total points: 23; Tiffany total points: 3"
+  },
+  {
+   "heading": 8,
+   "file": "survivor-50-episode-9-points_v2.jpg",
+   "alt": "Aubry total points: 3; Chrissy total points: 5; Christian total points: 3; Cirie total points: 13; Coach total points: 10; Emily total points: 3; Joe total points: 13; Jonathan total points: 3; Ozzy total points: 3; Rick total points: 8; Rizo total points: 8; Stephenie total points: 3; Tiffany total points: 18"
+  },
+  {
+   "heading": 9,
+   "file": "survivor-50-episode-9-points-1.jpg",
+   "alt": "Aubry total points: 3; Christian total points: 20; Cirie total points: 3; Emily total points: 3; Joe total points: 23; Jonathan total points: 3; Ozzy total points: 8; Rick total points: 8; Rizo total points: 3; Stephenie total points: 8; Tiffany total points: 3"
+  },
+  {
+   "heading": 10,
+   "file": "survivor-50-episode-10-points_v3.jpg",
+   "alt": "Aubry total points: 8; Cirie total points: 8; Emily total points: 8; Joe total points: 3; Jonathan total points: 3; Ozzy total points: 8; Rick total points: 33; Rizo total points: 3; Stephenie total points: 20; Tiffany total points: 23"
+  },
+  {
+   "heading": 11,
+   "file": "survivor-50-episode-11-points.jpg",
+   "alt": "Aubry total points: 3; Cirie total points: 8; Emily total points: 5; Joe total points: 3; Jonathan total points: 23; Ozzy total points: 40; Rick total points: 13; Rizo total points: 3; Tiffany total points: 3"
+  },
+  {
+   "heading": 12,
+   "file": "survivor-50-episode-12-points_v2.jpg",
+   "alt": "Aubry total points: 13; Cirie total points: 15; Joe total points: 28; Jonathan total points: 3; Rick total points: 25; Rizo total points: 8; Tiffany total points: 23"
+  },
+  {
+   "heading": 13,
+   "file": "survivor-50-episode-13-points_v2.jpg",
+   "alt": "Aubry total points: 58; Joe total points: 23; Jonathan total points: 53; Rizo total points: 15; Tiffany total points: 15"
+  }
+ ],
+ "left_by_raw_name": {
+  "2": [
+   "Savannah"
+  ],
+  "3": [
+   "Q"
+  ],
+  "4": [
+   "Mike"
+  ],
+  "5": [
+   "Angelina",
+   "Charlie"
+  ],
+  "6": [
+   "Colby",
+   "Genevieve",
+   "Kamilla"
+  ],
+  "7": [
+   "Dee"
+  ],
+  "8": [
+   "Coach",
+   "Chrissy"
+  ],
+  "9": [
+   "Christian"
+  ],
+  "10": [
+   "Stephenie"
+  ],
+  "11": [
+   "Emily",
+   "Ozzy"
+  ],
+  "12": [
+   "Cirie",
+   "Rick"
+  ],
+  "13": [
+   "Rizo",
+   "Tiffany"
+  ]
+ }
+}

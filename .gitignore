@@ -1,1 +1,6 @@
 .DS_Store
+
+# local tool cache (mirrored Reddit threads, etc.)
+tools/.cache/
+__pycache__/
+*.pyc
