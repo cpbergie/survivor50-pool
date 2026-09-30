@@ -39,7 +39,7 @@
     { "id": "kogi-pops", "name": "Kogi-pops", "mvp": "Ori", "picks": ["Lewis", "Mike", "Jenna", "Maggie", "Ori", "Eric", "Linnea", "Alexis"], "addedPicks": [] },
     { "id": "kogi-sandy", "name": "Kogi - Sandy", "mvp": "Kristin", "picks": ["Jelly", "Lewis", "Devin", "Thien An", "Kristin", "Rob", "Carter", "Alexis"], "addedPicks": [] },
     { "id": "lynne", "name": "Lynne", "mvp": "Devin", "picks": ["Patt", "Devin", "Mike", "Kilby", "Kristin", "Carter", "Linnea", "Eric"], "addedPicks": [] },
-    { "id": "brenden", "name": "Brenden", "mvp": null, "picks": ["Mike", "Brady", "Maggie", "Jenna", "Carter", "Rob", "Ori", "Kristin"], "addedPicks": [] },
+    { "id": "brenden", "name": "Brenden", "mvp": "Mike", "picks": ["Mike", "Brady", "Maggie", "Jenna", "Carter", "Rob", "Ori", "Kristin"], "addedPicks": [] },
     { "id": "woody", "name": "Woody", "mvp": "Carter", "picks": ["Devin", "Kilby", "Mike", "Jenna", "Ori", "Carter", "Cristian", "Kristin"], "addedPicks": [] },
     { "id": "vinny", "name": "Vinny", "mvp": "Brady", "picks": ["Devin", "Thien An", "Brady", "Kilby", "Ana", "Alexis", "Carter", "Linnea"], "addedPicks": [] }
   ],
