@@ -1,7 +1,7 @@
 {
   "season": 51,
   "premiere": "2026-09-23",
-  "lastUpdated": "Episode 1 · Aaliyah out",
+  "lastUpdated": "Picks loaded (10 of 13)",
   "mergeEp": null,
   "tribes": { "Toka": "#f2c230", "Savu": "#9d7bff" },
   "placements": {},
@@ -29,20 +29,19 @@
     { "name": "Sharonda", "tribe": "Savu", "eliminatedEp": null }
   ],
   "players": [
-    { "id": "clay", "name": "Clay", "mvp": null, "picks": [], "addedPicks": [] },
-    { "id": "amy", "name": "Amy", "mvp": null, "picks": [], "addedPicks": [] },
+    { "id": "clay", "name": "Clay", "mvp": "Ori", "picks": ["Kilby", "Maggie", "Brady", "Mike", "Ana", "Eric", "Ori", "Carter"], "addedPicks": [] },
+    { "id": "amy", "name": "Amy", "mvp": "Carter", "picks": ["Lewis", "Jelly", "Brady", "Patt", "Ori", "Carter", "Alexis", "Eric"], "addedPicks": [] },
     { "id": "dan", "name": "Dan", "mvp": null, "picks": [], "addedPicks": [] },
-    { "id": "chris", "name": "Chris", "mvp": null, "picks": [], "addedPicks": [] },
-    { "id": "bryany", "name": "Bryany", "mvp": null, "picks": [], "addedPicks": [] },
-    { "id": "julie", "name": "Julie", "mvp": null, "picks": [], "addedPicks": [] },
-    { "id": "mark", "name": "Mark", "mvp": null, "picks": [], "addedPicks": [] },
-    { "id": "kogi-pops", "name": "Kogi-pops", "mvp": null, "picks": [], "addedPicks": [] },
-    { "id": "kogi-sandy", "name": "Kogi - Sandy", "mvp": null, "picks": [], "addedPicks": [] },
-    { "id": "lynne", "name": "Lynne", "mvp": null, "picks": [], "addedPicks": [] },
+    { "id": "chris", "name": "Chris", "mvp": "Patt", "picks": ["Patt", "Devin", "Lewis", "Mike", "Kristin", "Rob", "Linnea", "Carter"], "addedPicks": [] },
+    { "id": "bryany", "name": "Bryany", "mvp": "Kristin", "picks": ["Jenna", "Patt", "Brady", "Mike", "Kristin", "Sharonda", "Ori", "Alexis"], "addedPicks": [] },
+    { "id": "julie", "name": "Julie", "mvp": "Kristin", "picks": ["Devin", "Jelly", "Brady", "Maggie", "Kristin", "Ori", "Cristian", "Rob"], "addedPicks": [] },
+    { "id": "mark", "name": "Mark", "mvp": "Alexis", "picks": ["Thien An", "Devin", "Jenna", "Mike", "Carter", "Alexis", "Linnea", "Ori"], "addedPicks": [] },
+    { "id": "kogi-pops", "name": "Kogi-pops", "mvp": "Ori", "picks": ["Lewis", "Mike", "Jenna", "Maggie", "Ori", "Eric", "Linnea", "Alexis"], "addedPicks": [] },
+    { "id": "kogi-sandy", "name": "Kogi - Sandy", "mvp": "Kristin", "picks": ["Jelly", "Lewis", "Devin", "Thien An", "Kristin", "Rob", "Carter", "Alexis"], "addedPicks": [] },
+    { "id": "lynne", "name": "Lynne", "mvp": "Devin", "picks": ["Patt", "Devin", "Mike", "Kilby", "Kristin", "Carter", "Linnea", "Eric"], "addedPicks": [] },
     { "id": "brenden", "name": "Brenden", "mvp": null, "picks": [], "addedPicks": [] },
     { "id": "woody", "name": "Woody", "mvp": null, "picks": [], "addedPicks": [] },
-    { "id": "vinny", "name": "Vinny", "mvp": null, "picks": [], "addedPicks": [] },
-    { "id": "claude", "name": "Claude", "mvp": null, "picks": [], "addedPicks": [] }
+    { "id": "vinny", "name": "Vinny", "mvp": "Brady", "picks": ["Devin", "Thien An", "Brady", "Kilby", "Ana", "Alexis", "Carter", "Linnea"], "addedPicks": [] }
   ],
   "episodes": []
 }

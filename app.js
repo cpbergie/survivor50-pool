@@ -68,6 +68,8 @@ fetch('data/pool.json')
   .then(r => r.json())
   .then(data => {
     poolData = data;
+    const sub = document.querySelector('.subtitle');
+    if (sub) sub.textContent = `Season Pool · ${(data.players || []).length} Players · One Sole Survivor`;
     buildStandings(data);
     buildRosters(data);
     buildWeekly(data);
@@ -80,16 +82,11 @@ function sortByTotal(players, totals) {
   return [...players].sort((a, b) => (totals[b.name] || 0) - (totals[a.name] || 0));
 }
 
-// Payout slots, awarded in finishing order; the AI player (Claude) is not eligible.
+// Payout slots, awarded in finishing order.
 function computePayouts(players, totals) {
   const slots = ['$80', '$30', '$10'];
   const map = {};
-  let i = 0;
-  sortByTotal(players, totals).forEach(p => {
-    if (p.name === 'Claude') { map[p.name] = '—'; return; }
-    map[p.name] = slots[i] || '—';
-    if (i < slots.length) i += 1;
-  });
+  sortByTotal(players, totals).forEach((p, i) => { map[p.name] = slots[i] || '—'; });
   return map;
 }
 

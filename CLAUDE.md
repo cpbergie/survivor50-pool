@@ -3,7 +3,7 @@
 ## What this is
 A weekly fantasy pool website. Each player drafts castaways + 1 MVP at the start of a season; points are scored each episode based on castaway performance. **Season 51 official format (GlobalTV): 2 tribes (Toka/Yellow, Savu/Purple), 4 picks from each = 8 picks, MVP is one of them.**
 
-**Currently: Season 51.** Rebranded from Season 50 on 2026-09-05 (ocean/broadcast theme — keep it). Tabs: **Standings · Rosters · Weekly** (the Weekly tab is the per-player episode-by-episode points grid; it replaced a "Past Seasons" tab). The 21-castaway cast and both tribes are loaded (Aaliyah was the Episode 1 boot); the draft (picks/MVPs) is still pending — picks are due before Episode 2 (Wed Sept 30). Scoring is per-castaway-per-episode in `data/pool.json` — no spreadsheet, no stored totals. `data/season50.json` is a frozen archive, no longer shown on the site.
+**Currently: Season 51.** Rebranded from Season 50 on 2026-09-05 (ocean/broadcast theme — keep it). Tabs: **Standings · Rosters · Weekly** (the Weekly tab is the per-player episode-by-episode points grid; it replaced a "Past Seasons" tab). The 21-castaway cast and both tribes are loaded (Aaliyah was the Episode 1 boot); picks are loaded for 10 of 13 players (see Castaways) and were due before Episode 2 (Wed Sept 30). Scoring is per-castaway-per-episode in `data/pool.json` — no spreadsheet, no stored totals. `data/season50.json` is a frozen archive, no longer shown on the site.
 
 ## Key links
 - **Live site:** https://survivor50-pool-gules.vercel.app/
@@ -77,7 +77,7 @@ Always stop and get explicit user confirmation before:
 ```
 
 ## Players (in order)
-Clay, Amy, Dan, Chris, Bryany, Julie, Mark, Kogi-pops, Kogi - Sandy, Lynne, Brenden, Woody, Vinny, Claude
+Clay, Amy, Dan, Chris, Bryany, Julie, Mark, Kogi-pops, Kogi - Sandy, Lynne, Brenden, Woody, Vinny (13; the former AI player "Claude" was removed for Season 51)
 
 ## Castaways
-Season 51 cast (21) is in `data/pool.json` (bios in `data/season51-cast.md`). Tribes: **Toka (Yellow)** — Brady, Devin, Jelly, Jenna, Kilby, Lewis, Maggie, Mike, Patt, Thien An; **Savu (Purple)** — Alexis, Ana, Carter, Cristian, Eric, Kristin, Linnea, Ori, Rob, Sharonda. Aaliyah (Toka) was voted out in Episode 1 — absent from the official pick list, marked "VOTED OUT" in a Reddit confessional tally (Toka lost immunity, Savu won), and mentioned in post-episode comments. Draft (picks + MVPs) hasn't happened yet.
+Season 51 cast (21) is in `data/pool.json` (bios in `data/season51-cast.md`). Tribes: **Toka (Yellow)** — Brady, Devin, Jelly, Jenna, Kilby, Lewis, Maggie, Mike, Patt, Thien An; **Savu (Purple)** — Alexis, Ana, Carter, Cristian, Eric, Kristin, Linnea, Ori, Rob, Sharonda. Aaliyah (Toka) was voted out in Episode 1 — absent from the official pick list, marked "VOTED OUT" in a Reddit confessional tally (Toka lost immunity, Savu won), and mentioned in post-episode comments. Picks are loaded for 10 players (Clay, Amy, Chris, Bryany, Julie, Mark, Kogi-pops, Kogi - Sandy, Lynne, Vinny); still outstanding: **Woody** (his Toka list had Alexis, who is on Savu — he's one Toka pick short), **Brenden** and **Dan** (nothing submitted). All 13 have paid the $10 buy-in (to Clay).
