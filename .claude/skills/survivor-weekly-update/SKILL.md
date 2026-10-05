@@ -52,14 +52,25 @@ python3 tools/pool_tools.py globaltv --episode N --out "$TMPDIR/survivor/gt.json
 - Each castaway's `eventPoints` (total minus survival) is what GlobalTV already credited beyond survival.
   You need it in step 3.
 
-### 2. Get the Reddit threads
-Ask the user for the episode's discussion thread URLs (the live "Eastern Time Discussion" and "Post-Episode
-Discussion" are the big ones; "Day After Discussion & Survey" is small but thoughtful), unless they gave them.
+### 2. Get the Reddit thread
+The subreddit names its threads `Survivor 51 | E<N> | <kind>`, so you only need the episode number:
 ```bash
-python3 tools/pool_tools.py reddit fetch --thread <id-or-url> --thread <id-or-url>   # background it
-python3 tools/pool_tools.py reddit scan  --thread <id> --thread <id> --out "$TMPDIR/survivor/reddit.json"
+python3 tools/pool_tools.py reddit find --episode N     # lists every thread + the archive's comment count
+python3 tools/pool_tools.py reddit fetch --episode N    # mirrors the live "Eastern Time Discussion" (background it)
+python3 tools/pool_tools.py reddit scan  --episode N --out "$TMPDIR/survivor/reddit.json"
 ```
-The archive lags a little and stores scores as of ingestion, so **don't rank by upvotes**.
+- **Default to the live Eastern Time thread.** It's where on-screen moments (arguments, kisses, idol finds,
+  Exile/journeys) are called out as they happen, with timestamps; that's how Ep 2's one candidate was found. The
+  Post-Episode thread (`--post-episode`) is ~1/6 the size and adds explanations and the vote count, but little a
+  scorekeeper can't already infer. Use it only to resolve a specific question (e.g. "was the vote unanimous?").
+  The user may instead hand you a thread URL (`--thread`).
+- **Check the mirror is complete.** `fetch` prints `✓ complete` or `⚠ INCOMPLETE` against the archive's own
+  count. The archive answers HTTP 422 ("timeout") now and then; just re-run `fetch` and it resumes. An episode
+  runs ~90 min, so a mirror that stops early silently misses the Tribal Council. Check the last timestamp.
+- A 6K-comment thread takes ~15 min at the polite pace. Start it as soon as the episode has aired, in the
+  background, so it is ready by the time GlobalTV posts (Thursday evening).
+- The archive lags a little and stores scores as of ingestion, so **don't rank by upvotes**. If `find` says
+  nothing is found yet, wait and retry. `--thread` still works with a URL.
 
 ### 3. Judge the candidates (this is your job, not the script's)
 The scan is keyword-based and noisy on purpose. Read the per-castaway matrix first, then the hits.

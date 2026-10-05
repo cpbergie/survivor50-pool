@@ -18,8 +18,8 @@ Nothing Reddit-based is ever applied without your approval.
 - GlobalTV sometimes **re-uploads corrected results**; Claude re-checks and shows you any change.
 
 ## What you give Claude
-- The episode number, and (for the Reddit scan) the URLs of the episode's discussion threads on r/survivor —
-  the live "Eastern Time Discussion" and the "Post-Episode Discussion" are the big ones.
+- The episode number — that's all. Claude finds the live "Survivor 51 | E<N> | Eastern Time Discussion" thread
+  itself (they're named the same way every week). A thread URL works too, if you'd rather.
 - Any house-rule rulings (e.g. "a blurred tattoo doesn't count").
 
 ## Data
@@ -42,7 +42,7 @@ Never add `totals`, `lastEpisode`, or per-player scores — the site derives tho
 |---|---|
 | `globaltv --episode N` | official per-castaway points, with arithmetic self-checks and who-left inference |
 | `tribes [--apply]` | tribe rosters + pick rules from the same page |
-| `reddit fetch/scan --thread …` | mirror an archived thread once, then scan it offline |
+| `reddit find/fetch/scan --episode N` | find the episode's threads by name, mirror the live one once (checked for completeness), scan it offline; `--thread` also works |
 | `apply --episode N …` | write the episode into `pool.json` (canonical formatting, `--dry-run`, `--replace`) |
 | `check` | validate `pool.json` |
 

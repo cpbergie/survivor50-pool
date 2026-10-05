@@ -306,5 +306,74 @@ class ThreadMirror(unittest.TestCase):
                 t.arctic_get, t.thread_path, t.CACHE = orig, orig_path, orig_cache
 
 
+class ThreadDiscovery(unittest.TestCase):
+    def posts(self):
+        mk = lambda i, title, n=10, ts=1: {"id": i, "title": title, "num_comments": n, "created_utc": ts}
+        return [mk("a1", "Survivor 51 | E2 | Eastern Time Discussion", 5981),
+                mk("a2", "Survivor 51 | E2 | Post-Episode Discussion", 909),
+                mk("a3", "Survivor 51 | E1 | Eastern Time Discussion", 9089),       # other episode
+                mk("a4", "Survivor 50 | E2 | Eastern Time Discussion", 7000),       # other season
+                mk("a5", "Survivor 51 | E22 | Eastern Time Discussion", 1),         # E22 is not E2
+                mk("a6", "who do you think wins Survivor 51?", 3)]
+
+    def test_matches_only_this_episode_and_season(self):
+        orig = t.arctic_posts
+        t.arctic_posts = lambda params, tries=4: self.posts()
+        try:
+            found = t.find_threads(mini_pool(), 2, season=51)
+        finally:
+            t.arctic_posts = orig
+        self.assertEqual({k: v["id"] for k, v in found.items()},
+                         {"Eastern Time Discussion": "a1", "Post-Episode Discussion": "a2"})
+        self.assertEqual(found["Eastern Time Discussion"]["comments"], 5981)
+
+    def test_air_date_and_window(self):
+        pool = mini_pool()                          # premiere 2026-09-23 (a Wednesday)
+        self.assertEqual(str(t.episode_date(pool, 1)), "2026-09-23")
+        self.assertEqual(str(t.episode_date(pool, 2)), "2026-09-30")
+        seen = {}
+        orig = t.arctic_posts
+        t.arctic_posts = lambda params, tries=4: seen.update(params) or []
+        try:
+            t.find_threads(pool, 2)
+        finally:
+            t.arctic_posts = orig
+        self.assertEqual(seen["after"], "2026-09-28")                          # air date - 2 days
+
+    def test_default_is_the_live_thread_and_unknown_episode_fails_cleanly(self):
+        orig, p = t.arctic_posts, Path(tempfile.mkdtemp()) / "pool.json"
+        t.save_pool(mini_pool(), p)
+        t.arctic_posts = lambda params, tries=4: self.posts()
+        try:
+            self.assertEqual(run("--pool", str(p), "reddit", "find", "--episode", "2")[0], 0)
+            t.arctic_posts = lambda params, tries=4: []
+            code, err = run("--pool", str(p), "reddit", "find", "--episode", "9")
+            self.assertEqual(code, 3)
+            self.assertIn("E9", err)
+            code, err = run("--pool", str(p), "reddit", "fetch", "--episode", "9")
+            self.assertEqual(code, 1)                                           # no live thread to mirror
+            self.assertIn("pass --thread", err)
+        finally:
+            t.arctic_posts = orig
+
+    def test_episode_flag_mirrors_the_live_thread_by_default(self):
+        orig_posts, orig_fetch, p = t.arctic_posts, t.fetch_thread, Path(tempfile.mkdtemp()) / "pool.json"
+        t.save_pool(mini_pool(), p)
+        used = []
+        t.arctic_posts = lambda params, tries=4: self.posts()
+        t.fetch_thread = lambda tid, max_requests, sleep=3.2, fresh=False: (
+            used.append(tid) or {"comments": {f"c{i}": {} for i in range(6000)}})
+        try:
+            self.assertEqual(run("--pool", str(p), "reddit", "fetch", "--episode", "2")[0], 0)
+            self.assertEqual(used, ["a1"])                                     # Eastern Time only
+            used.clear()
+            code, err = run("--pool", str(p), "reddit", "fetch", "--episode", "2", "--post-episode")
+            self.assertEqual(code, 0)
+            self.assertEqual(used, ["a1", "a2"])                               # + Post-Episode on request
+            self.assertIn("complete", err)                                     # 6000 mirrored vs 5981 archived
+        finally:
+            t.arctic_posts, t.fetch_thread = orig_posts, orig_fetch
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=1)

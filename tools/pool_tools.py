@@ -592,8 +592,11 @@ def thread_id(s: str) -> str:
     return m.group(1) if m else s.strip()
 
 
-def arctic_get(params: dict, tries: int = 4) -> list[dict]:
-    url = ARCTIC + "?" + urllib.parse.urlencode(params)
+ARCTIC_POSTS = "https://arctic-shift.photon-reddit.com/api/posts/search"
+
+
+def arctic_get(params: dict, tries: int = 4, base: str = ARCTIC) -> list[dict]:
+    url = base + "?" + urllib.parse.urlencode(params)
     last = ""
     for i in range(tries):
         try:
@@ -610,6 +613,51 @@ def arctic_get(params: dict, tries: int = 4) -> list[dict]:
             last = str(e)
         time.sleep(6 * (i + 1))
     raise ToolError(f"archive request failed after {tries} tries: {last}")
+
+
+def arctic_posts(params: dict, tries: int = 4) -> list[dict]:
+    return arctic_get(params, tries, base=ARCTIC_POSTS)
+
+
+def episode_date(pool: dict, ep: int) -> dt.date:
+    """Air date of episode `ep`: the premiere plus a week per episode (Wednesdays)."""
+    premiere = dt.date.fromisoformat(pool["premiere"])
+    return premiere + dt.timedelta(days=7 * (ep - 1))
+
+
+def find_threads(pool: dict, ep: int, season: int | None = None) -> dict[str, dict]:
+    """The subreddit names its discussion threads "Survivor 51 | E2 | Eastern Time Discussion",
+    so list the posts around the air date and match on title (the archive's own title search
+    times out, so we filter here). Returns {kind: {id, title, comments}}."""
+    season = season or pool.get("season", 51)
+    air = episode_date(pool, ep)
+    lo, hi = air - dt.timedelta(days=2), air + dt.timedelta(days=5)
+    rx = re.compile(rf"Survivor\s+{season}\s*\|\s*E{ep}\s*\|\s*(?P<kind>.+?)\s*$", re.I)
+    found, cursor = {}, int(dt.datetime.combine(hi, dt.time(), dt.timezone.utc).timestamp())
+    after = lo.isoformat()
+    for _ in range(8):
+        rows = arctic_posts({"subreddit": "survivor", "after": after, "before": cursor,
+                             "limit": 100, "sort": "desc"})
+        for r in rows:
+            m = rx.match((r.get("title") or "").strip())
+            if m:
+                found[m["kind"].strip()] = {"id": r["id"], "title": r["title"],
+                                            "comments": r.get("num_comments")}
+        if len(rows) < 100:
+            break
+        cursor = min(r["created_utc"] for r in rows)
+        time.sleep(3.2)
+    return found
+
+
+LIVE_KIND, POST_KIND = "Eastern Time Discussion", "Post-Episode Discussion"
+
+
+def kind_lookup(found: dict[str, dict], wanted: str) -> dict | None:
+    for k, v in found.items():
+        if k.lower() == wanted.lower():
+            return v
+    return None
 
 
 def thread_path(tid: str) -> Path:
@@ -697,9 +745,39 @@ def scan_comments(comments: list[dict], castaways: list[dict], thread: str) -> d
 
 def cmd_reddit(args) -> int:
     pool = load_pool(args.pool)
+    if args.action == "find":
+        if not args.episode:
+            raise ToolError("find needs --episode N")
+        found = find_threads(pool, args.episode)
+        if not found:
+            log(f"No 'Survivor {pool.get('season', 51)} | E{args.episode} | …' threads found "
+                f"(archive lag, or not posted yet).")
+            return 3
+        log(f"Episode {args.episode} threads (aired {episode_date(pool, args.episode)}):")
+        for kind, v in sorted(found.items()):
+            tag = "  <- default" if kind.lower() == LIVE_KIND.lower() else ""
+            log(f"  {v['id']}  {v['comments']!s:>6} comments at archive time  {kind}{tag}")
+        print(json.dumps(found, indent=2))
+        return 0
     threads = [thread_id(t) for t in args.thread]
+    archive_counts: dict[str, int] = {}
+    if not threads and args.episode:
+        found = find_threads(pool, args.episode)
+        archive_counts = {v["id"]: v["comments"] for v in found.values() if v.get("comments") is not None}
+        live = kind_lookup(found, LIVE_KIND)
+        if not live:
+            raise ToolError(f"couldn't find the episode {args.episode} '{LIVE_KIND}' thread "
+                            f"(found: {sorted(found) or 'nothing'}); pass --thread explicitly")
+        threads = [live["id"]]
+        if args.post_episode:
+            post = kind_lookup(found, POST_KIND)
+            if post:
+                threads.append(post["id"])
+        for t in threads:
+            log(f"using thread {t} ({next((k for k, v in found.items() if v['id'] == t), '?')}, "
+                f"{next((v['comments'] for v in found.values() if v['id'] == t), '?')} comments at archive time)")
     if not threads:
-        raise ToolError("give at least one --thread (id or URL)")
+        raise ToolError("give --episode N or at least one --thread (id or URL)")
     mirrors = {}
     for t in threads:
         if args.action == "fetch" or not thread_path(t).exists() or args.refresh:
@@ -709,7 +787,12 @@ def cmd_reddit(args) -> int:
             mirrors[t] = json.loads(thread_path(t).read_text(encoding="utf-8"))
     if args.action == "fetch":
         for t, m in mirrors.items():
-            log(f"{t}: {len(m['comments'])} comments mirrored to {thread_path(t)}")
+            n, want = len(m["comments"]), archive_counts.get(t)
+            note = ""
+            if want:
+                note = ("  ✓ complete" if n >= want * 0.97 else
+                        f"  ⚠ INCOMPLETE — archive had {want}; re-run `reddit fetch` to resume")
+            log(f"{t}: {n} comments mirrored{note}")
         return 0
 
     merged = {}
@@ -986,8 +1069,10 @@ def main(argv=None) -> int:
     t.add_argument("--apply", action="store_true", help="write tribes + castaway.tribe into the pool")
     t.set_defaults(fn=cmd_tribes)
 
-    r = sub.add_parser("reddit", help="mirror + scan archived episode threads")
-    r.add_argument("action", choices=["fetch", "scan"])
+    r = sub.add_parser("reddit", help="find, mirror + scan archived episode threads")
+    r.add_argument("action", choices=["find", "fetch", "scan"])
+    r.add_argument("--episode", type=int, help="find/use that episode's threads (live Eastern Time thread by default)")
+    r.add_argument("--post-episode", action="store_true", help="with --episode: also use the Post-Episode thread")
     r.add_argument("--thread", action="append", default=[], help="thread id or URL (repeatable)")
     r.add_argument("--max-requests", type=int, default=150)
     r.add_argument("--refresh", action="store_true", help="scan: top up the mirror first")
