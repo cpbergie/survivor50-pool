@@ -143,11 +143,14 @@
     })));
   }
 
-  // Rank change per player id between `ep` and `ep - 1`. Positive = moved up.
+  // Rank change per player id between `ep` and the previous SCORED episode. Positive =
+  // moved up. Empty when there is no earlier scored episode (the first scored week has
+  // nothing to compare against — points start at Episode 2, so Episode 1 is never scored).
   function movement(season, ep) {
-    if (!ep || ep < 2) return {};
+    const earlier = scoredEpisodes(season).map(e => e.episode).filter(n => n < ep);
+    if (!ep || !earlier.length) return {};
     const cur = standingsAt(season, ep);
-    const prev = standingsAt(season, ep - 1);
+    const prev = standingsAt(season, Math.max.apply(null, earlier));
     const out = {};
     Object.keys(cur).forEach(id => {
       const before = prev[id] ? prev[id].rank : null;

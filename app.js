@@ -118,9 +118,12 @@ function buildStandings(data) {
   const lastEp = Standings.lastScoredEpisode(data);
   const started = lastEp > 0;
 
+  // lastUpdated is free text ("Episode 2 · Ana out"); the page already says which episode,
+  // so drop a leading "Episode N" from it rather than repeating it.
+  const note = (data.lastUpdated || '').replace(/^\s*Episode\s+\d+\s*(?:·\s*)?/i, '').trim();
   document.getElementById('last-updated').textContent = started
     ? `Updated after Episode ${lastEp}` +
-      (data.lastUpdated && !/pre-?season|not started/i.test(data.lastUpdated) ? ` · ${data.lastUpdated}` : '')
+      (note && !/pre-?season|not started|picks loaded/i.test(note) ? ` · ${note}` : '')
     : 'Season 51 · pre-season';
   document.getElementById('standings-empty').hidden = started;
   document.getElementById('standings-hint').hidden = !started;
