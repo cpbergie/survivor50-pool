@@ -6,7 +6,7 @@ A weekly fantasy pool website. Each player drafts castaways + 1 MVP at the start
 **Currently: Season 51.** Rebranded from Season 50 on 2026-09-05 (ocean/broadcast theme — keep it). Tabs: **Standings · Rosters · Weekly** (the Weekly tab is the per-player episode-by-episode points grid; it replaced a "Past Seasons" tab). The 21-castaway cast and both tribes are loaded (Aaliyah was the Episode 1 boot); Episode 2 is recorded; picks are loaded for 12 of 13 players (Dan never submitted — he stays with an empty roster, 0 pts). Scoring is per-castaway-per-episode in `data/pool.json` — no spreadsheet, no stored totals. `data/season50.json` is a frozen archive, no longer shown on the site.
 
 ## Key links
-- **Live site:** https://survivor50-pool-gules.vercel.app/
+- **Live site:** https://ob-survivor-pool.vercel.app/
 - **GitHub:** https://github.com/cpbergie/survivor50-pool
 
 ## Local repo
