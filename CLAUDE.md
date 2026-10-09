@@ -28,13 +28,15 @@ Plain HTML/JS/CSS → GitHub → Vercel (auto-deploys on push). No build step.
 ## Scoring model
 Full rules: `data/scoring-rules.md`. Points are entered **once per castaway per episode** in `episodes[].castawayPoints` — that number is the castaway's whole week (survival: +1 pre-merge / +3 post-merge, plus 5/10/15-pt event bonuses). A player's episode score = the sum of their active roster's castaway points. Added picks count from their `fromEp`; a swapped-out pick carries `untilEp`; an eliminated castaway scores in their elimination episode but not after. End-of-season placement (+30/+20/+10 for winner/2nd/3rd) and MVP (+30 if your MVP wins) bonuses are applied by `standings.js` once `placements` is set. Everything cumulative is derived — never stored.
 
-Base per-castaway numbers come from the GlobalTV Survivor Fantasy Tribe weekly results; house adjustments (things GlobalTV missed, from the Reddit episode threads) are recorded separately as `adjustments` and added on top — see the skill.
+The per-castaway numbers come from the GlobalTV Survivor Fantasy Tribe weekly results and are used as-is. (The data model still supports a separate `adjustments` list for hand corrections, but it isn't used.)
 
 ## Weekly update workflow
-Use the **`survivor-weekly-update` skill** (`.claude/skills/survivor-weekly-update/SKILL.md`). In short: GlobalTV's
-per-castaway points are the base (`tools/pool_tools.py globaltv`); the r/survivor episode threads are scanned
-for events GlobalTV missed (`tools/pool_tools.py reddit`); Reddit-based changes are *proposed to the user and
-only applied after approval*; then `tools/pool_tools.py apply`, `check`, commit, push.
+Use the **`survivor-weekly-update` skill** (`.claude/skills/survivor-weekly-update/SKILL.md`). In short: take
+GlobalTV's per-castaway points (`tools/pool_tools.py globaltv`), verify them against the results image, record who
+left, then `tools/pool_tools.py apply`, `check`, commit, push. **GlobalTV's numbers are used as-is** — the user
+decided (2026-10-09) to skip the Reddit scan and hand adjustments; don't run or offer them unless asked. The
+Reddit tooling (`tools/pool_tools.py reddit …`) remains available for a one-off check; anything Reddit-based
+would be proposed to the user first.
 
 Do NOT add `totals`, `lastEpisode`, or per-player `scores` — those are derived. Never let an unknown castaway
 name pass silently (add an alias instead) — a silent mismatch would score someone zero.

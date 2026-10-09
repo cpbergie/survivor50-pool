@@ -1,13 +1,17 @@
 ---
 name: survivor-weekly-update
-description: Record a Survivor episode in the fantasy pool. Pulls the official per-castaway points from GlobalTV, scans the r/survivor episode threads for events GlobalTV missed, proposes adjustments for the user's approval, then writes data/pool.json and deploys. Use when the user says an episode is done, or asks to score/update/verify a week, check GlobalTV results, re-check a revised results image, or scan Reddit for an episode.
+description: Record a Survivor episode in the fantasy pool. Pulls the official per-castaway points from GlobalTV, verifies them against the results image, records who left, then writes data/pool.json and deploys. GlobalTV's numbers are used as-is (the Reddit scan is optional, off by default). Use when the user says an episode is done or its points are posted, or asks to score/update/verify a week, check GlobalTV results, or re-check a revised results image.
 ---
 
 # Survivor weekly update
 
-You are the scorekeeper's assistant. GlobalTV's published numbers are the **base**. Reddit is only for
-things GlobalTV **missed**, and every Reddit-based change is a *proposal the user approves* — never
-applied on your own. Money is on the line (small, but people care), so the numbers must be explainable.
+You are the scorekeeper's assistant. **GlobalTV's published numbers are the score — use them as-is.**
+(2026-10-09, user decision: no Reddit scan or hand adjustments. They were tried for Episodes 2–3 and
+never changed a number; the archive that proxies Reddit is also unreliable.) Money is on the line (small,
+but people care), so the numbers must be explainable and checked.
+
+**Do not run or offer the Reddit steps (step 2–4) unless the user explicitly asks for a Reddit check.** If they
+do, the tooling is intact: everything Reddit-based is a *proposal the user approves*, never applied on your own.
 
 Tools live in `tools/pool_tools.py` (stdlib Python, no install). Rules: `data/scoring-rules.md`.
 Data model + file layout: `CLAUDE.md`. Run `python3 tools/pool_tools.py --help` for every flag.
@@ -52,7 +56,7 @@ python3 tools/pool_tools.py globaltv --episode N --out "$TMPDIR/survivor/gt.json
 - Each castaway's `eventPoints` (total minus survival) is what GlobalTV already credited beyond survival.
   You need it in step 3.
 
-### 2. Get the Reddit thread
+### 2. (OPTIONAL — skip unless the user asks) Get the Reddit thread
 The subreddit names its threads `Survivor 51 | E<N> | <kind>`, so you only need the episode number:
 ```bash
 python3 tools/pool_tools.py reddit find --episode N     # lists every thread + the archive's comment count
@@ -72,7 +76,7 @@ python3 tools/pool_tools.py reddit scan  --episode N --out "$TMPDIR/survivor/red
 - The archive lags a little and stores scores as of ingestion, so **don't rank by upvotes**. If `find` says
   nothing is found yet, wait and retry. `--thread` still works with a URL.
 
-### 3. Judge the candidates (this is your job, not the script's)
+### 3. (OPTIONAL) Judge the candidates (this is your job, not the script's)
 The scan is keyword-based and noisy on purpose. Read the per-castaway matrix first, then the hits.
 Propose an adjustment only when **all** of these hold:
 - It's a category in `data/scoring-rules.md`, attributable to one named castaway, worth `pts` from that list.
@@ -88,14 +92,16 @@ Propose an adjustment only when **all** of these hold:
 Rank **high / medium / low**. Propose high and medium; list low ones separately as "not proposed".
 Rules questions the user hasn't ruled on (e.g. does a blurred tattoo count?) go to the user.
 
-### 4. Present, then WAIT for approval
-Show: (a) the base table (castaway, total, stayed/left, events); (b) who left — numbers vs user vs Reddit —
-and merge status; (c) **proposed adjustments**: castaway | +pts | category | evidence links | confidence |
-why GlobalTV likely missed it; (d) low-confidence items not proposed; (e) any warnings; (f) the standings
-preview from `apply --dry-run`. Then stop and ask. Don't write anything yet.
+### 4. Present (and confirm, unless the user already said to go ahead)
+Default (GlobalTV only): show (a) the base table (castaway, total, stayed/left, events), (b) who left — what the
+numbers say vs what the user said — plus merge status, (c) any warnings, (d) the standings preview from
+`apply --dry-run`. If the user has already said the points are posted / to update the site and nothing looks
+off, just apply and report. If you ran the optional Reddit steps, also list each proposed adjustment (castaway |
++pts | category | evidence links | confidence | why GlobalTV likely missed it) and any low-confidence items not
+proposed, then stop and ask before writing.
 
-### 5. Apply (after approval)
-Write the approved adjustments to `$TMPDIR/survivor/adj.json`:
+### 5. Apply
+Only if the user approved Reddit-based adjustments, write them to `$TMPDIR/survivor/adj.json`:
 `[{"castaway":"Rob","pts":10,"reason":"Found a hidden immunity idol","source":["https://www.reddit.com/…"]}]`
 ```bash
 python3 tools/pool_tools.py apply --episode N --from-globaltv "$TMPDIR/survivor/gt.json" \

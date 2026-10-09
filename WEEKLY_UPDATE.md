@@ -1,16 +1,17 @@
 # Survivor 51 Pool — Weekly Update Process
 
 ## The short version
-Tell Claude: **"Episode N is done."** Claude runs the `survivor-weekly-update` skill
+Tell Claude: **"Episode N points are posted."** Claude runs the `survivor-weekly-update` skill
 (`.claude/skills/survivor-weekly-update/SKILL.md`), which:
 
-1. Reads the official per-castaway points for that episode from **GlobalTV** (the base) and checks them
-   against the results image.
-2. Scans the **r/survivor episode threads** for things GlobalTV missed (kisses, bleeped language, tears, …).
-3. Shows you the base numbers, who left, and any **proposed adjustments with links** — and waits for your OK.
-4. Writes `data/pool.json`, runs the checks, commits and pushes. Vercel deploys.
+1. Reads the official per-castaway points for that episode from **GlobalTV**, and checks them against the
+   results image (the image is the source; the text version behind it is hand-typed).
+2. Works out who left from the numbers (a castaway who left that week gets no survival point) and checks it
+   against what you tell it.
+3. Writes `data/pool.json`, validates it, commits and pushes. Vercel deploys.
 
-Nothing Reddit-based is ever applied without your approval.
+**GlobalTV's numbers are used as-is.** (Decided 2026-10-09: no Reddit scan or hand adjustments. The Reddit
+tooling still exists in `tools/` if you ever want a one-off check, but nothing is applied without your OK.)
 
 ## When things happen
 - **Episodes air Wednesday.** Points start at **Episode 2** (Ep 1 scores nothing).
@@ -18,8 +19,7 @@ Nothing Reddit-based is ever applied without your approval.
 - GlobalTV sometimes **re-uploads corrected results**; Claude re-checks and shows you any change.
 
 ## What you give Claude
-- The episode number — that's all. Claude finds the live "Survivor 51 | E<N> | Eastern Time Discussion" thread
-  itself (they're named the same way every week). A thread URL works too, if you'd rather.
+- The episode number, and who left if you know it (Claude also infers it from the numbers).
 - Any house-rule rulings (e.g. "a blurred tattoo doesn't count").
 
 ## Data
