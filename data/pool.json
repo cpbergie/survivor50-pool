@@ -1,7 +1,7 @@
 {
   "season": 51,
   "premiere": "2026-09-23",
-  "lastUpdated": "Episode 2 · Ana out",
+  "lastUpdated": "Episode 3 · Rob, Patt out",
   "mergeEp": null,
   "tribes": { "Toka": "#f2c230", "Savu": "#9d7bff" },
   "placements": {},
@@ -24,8 +24,8 @@
     { "name": "Maggie", "tribe": "Toka", "eliminatedEp": null },
     { "name": "Mike", "tribe": "Toka", "eliminatedEp": null },
     { "name": "Ori", "tribe": "Savu", "eliminatedEp": null },
-    { "name": "Patt", "tribe": "Toka", "eliminatedEp": null },
-    { "name": "Rob", "tribe": "Savu", "eliminatedEp": null },
+    { "name": "Patt", "tribe": "Toka", "eliminatedEp": 3 },
+    { "name": "Rob", "tribe": "Savu", "eliminatedEp": 3 },
     { "name": "Sharonda", "tribe": "Savu", "eliminatedEp": null }
   ],
   "players": [
@@ -90,6 +90,52 @@
         "Patt": 11,
         "Rob": 11,
         "Sharonda": 1
+      }
+    },
+    {
+      "episode": 3,
+      "source": { "globaltv": "survivor-51-episode-3-points.jpg" },
+      "base": {
+        "Alexis": 11,
+        "Thien An": 1,
+        "Jelly": 1,
+        "Brady": 11,
+        "Carter": 21,
+        "Cristian": 11,
+        "Kilby": 1,
+        "Devin": 16,
+        "Eric": 11,
+        "Jenna": 1,
+        "Kristin": 11,
+        "Lewis": 16,
+        "Linnea": 11,
+        "Maggie": 11,
+        "Mike": 1,
+        "Ori": 11,
+        "Patt": 10,
+        "Rob": 45,
+        "Sharonda": 11
+      },
+      "castawayPoints": {
+        "Alexis": 11,
+        "Thien An": 1,
+        "Jelly": 1,
+        "Brady": 11,
+        "Carter": 21,
+        "Cristian": 11,
+        "Kilby": 1,
+        "Devin": 16,
+        "Eric": 11,
+        "Jenna": 1,
+        "Kristin": 11,
+        "Lewis": 16,
+        "Linnea": 11,
+        "Maggie": 11,
+        "Mike": 1,
+        "Ori": 11,
+        "Patt": 10,
+        "Rob": 45,
+        "Sharonda": 11
       }
     }
   ]
