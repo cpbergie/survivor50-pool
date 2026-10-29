@@ -1,7 +1,7 @@
 {
   "season": 51,
   "premiere": "2026-09-23",
-  "lastUpdated": "Episode 5 · Alexis, Linnea out",
+  "lastUpdated": "Episode 6 · Ori out",
   "mergeEp": null,
   "tribes": { "Toka": "#f2c230", "Savu": "#9d7bff" },
   "placements": {},
@@ -23,7 +23,7 @@
     { "name": "Linnea", "tribe": "Savu", "eliminatedEp": 5 },
     { "name": "Maggie", "tribe": "Toka", "eliminatedEp": null },
     { "name": "Mike", "tribe": "Toka", "eliminatedEp": null },
-    { "name": "Ori", "tribe": "Savu", "eliminatedEp": null },
+    { "name": "Ori", "tribe": "Savu", "eliminatedEp": 6 },
     { "name": "Patt", "tribe": "Toka", "eliminatedEp": 3 },
     { "name": "Rob", "tribe": "Savu", "eliminatedEp": 3 },
     { "name": "Sharonda", "tribe": "Savu", "eliminatedEp": null }
@@ -218,6 +218,42 @@
         "Mike": 11,
         "Ori": 1,
         "Sharonda": 1
+      }
+    },
+    {
+      "episode": 6,
+      "source": { "globaltv": "survivor-51-episode-6-points.jpg" },
+      "base": {
+        "Thien An": 6,
+        "Jelly": 6,
+        "Brady": 6,
+        "Carter": 6,
+        "Cristian": 6,
+        "Kilby": 6,
+        "Devin": 6,
+        "Eric": 6,
+        "Kristin": 26,
+        "Lewis": 6,
+        "Maggie": 6,
+        "Mike": 11,
+        "Ori": 25,
+        "Sharonda": 16
+      },
+      "castawayPoints": {
+        "Thien An": 6,
+        "Jelly": 6,
+        "Brady": 6,
+        "Carter": 6,
+        "Cristian": 6,
+        "Kilby": 6,
+        "Devin": 6,
+        "Eric": 6,
+        "Kristin": 26,
+        "Lewis": 6,
+        "Maggie": 6,
+        "Mike": 11,
+        "Ori": 25,
+        "Sharonda": 16
       }
     }
   ]
