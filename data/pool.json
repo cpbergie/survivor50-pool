@@ -1,8 +1,8 @@
 {
   "season": 51,
   "premiere": "2026-09-23",
-  "lastUpdated": "Episode 6 · Ori out",
-  "mergeEp": null,
+  "lastUpdated": "Episode 7 · Brady out",
+  "mergeEp": 7,
   "tribes": { "Toka": "#f2c230", "Savu": "#9d7bff" },
   "placements": {},
   "castaways": [
@@ -11,7 +11,7 @@
     { "name": "Thien An", "aliases": ["An", "An Thien An"], "tribe": "Toka", "eliminatedEp": null },
     { "name": "Ana", "tribe": "Savu", "eliminatedEp": 2 },
     { "name": "Jelly", "aliases": ["Angelica"], "tribe": "Toka", "eliminatedEp": null },
-    { "name": "Brady", "tribe": "Toka", "eliminatedEp": null },
+    { "name": "Brady", "tribe": "Toka", "eliminatedEp": 7 },
     { "name": "Carter", "tribe": "Savu", "eliminatedEp": null },
     { "name": "Cristian", "tribe": "Savu", "eliminatedEp": null },
     { "name": "Kilby", "aliases": ["Danny", "Danny Kilby"], "tribe": "Toka", "eliminatedEp": null },
@@ -254,6 +254,40 @@
         "Mike": 11,
         "Ori": 25,
         "Sharonda": 16
+      }
+    },
+    {
+      "episode": 7,
+      "source": { "globaltv": "survivor-51-episode-7-points.jpg" },
+      "base": {
+        "Thien An": 8,
+        "Jelly": 8,
+        "Brady": 20,
+        "Carter": 8,
+        "Cristian": 3,
+        "Kilby": 8,
+        "Devin": 8,
+        "Eric": 8,
+        "Kristin": 23,
+        "Lewis": 8,
+        "Maggie": 8,
+        "Mike": 23,
+        "Sharonda": 8
+      },
+      "castawayPoints": {
+        "Thien An": 8,
+        "Jelly": 8,
+        "Brady": 20,
+        "Carter": 8,
+        "Cristian": 3,
+        "Kilby": 8,
+        "Devin": 8,
+        "Eric": 8,
+        "Kristin": 23,
+        "Lewis": 8,
+        "Maggie": 8,
+        "Mike": 23,
+        "Sharonda": 8
       }
     }
   ]
