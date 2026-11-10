@@ -435,8 +435,10 @@ tr.row-1 { background: rgba(255,209,92,0.07); }
 .c-move   { width: 44px; }
 .c-alive  { width: 34px; }
 .c-total  { width: 52px; }
+.c-wk     { width: 48px; }
 
 #standings-table td.c-total { font-weight: 700; font-size: 1.02rem; color: var(--gold); }
+#standings-table td.c-wk { color: var(--foam); font-weight: 600; font-variant-numeric: tabular-nums; }
 #standings-table td.c-alive { color: var(--text-dim); font-weight: 600; }
 #standings-table td.c-move  { padding-left: 0; padding-right: 0; }
 
@@ -1050,6 +1052,7 @@ footer #me-status strong { color: var(--sand); }
   .c-move { width: 38px; }
   .c-alive { width: 28px; }
   .c-total { width: 46px; }
+  .c-wk { width: 40px; }
   .detail-cast { grid-template-columns: 1fr; }
 
   #weekly-table thead th, #weekly-table tbody td { padding: 0.55rem 0.55rem; font-size: 0.82rem; }

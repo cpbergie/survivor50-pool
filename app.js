@@ -143,6 +143,7 @@ function buildStandings(data) {
       `<th class="col-player">Player</th>` +
       `<th class="c-alive"><span class="flame-ico" title="Castaways still in the game">${FLAME_SVG}</span>` +
         `<span class="sr-only">Castaways still in the game</span></th>` +
+      `<th class="c-wk">Ep ${lastEp}</th>` +
       `<th class="c-total">Total</th>`
     : `<th class="c-rank">#</th><th class="col-player">Player</th><th class="c-total">Total</th>`;
   document.querySelector('#standings-table thead').replaceChildren(hr);
@@ -150,7 +151,7 @@ function buildStandings(data) {
   // Body
   meIndex = {};
   openDetailId = null;
-  const colspan = started ? 5 : 3;
+  const colspan = started ? 6 : 3;
   const tbody = document.getElementById('standings-body');
   tbody.replaceChildren();
 
@@ -182,6 +183,7 @@ function buildStandings(data) {
          <td class="c-move">${movementCell(m)}</td>
          <td class="col-player"><span class="st-name">${player.name}</span>${canExpand ? '<span class="st-caret" aria-hidden="true">›</span>' : ''}</td>
          <td class="c-alive">${Standings.aliveCount(player, data)}</td>
+         <td class="c-wk">+${Standings.lastEpisodePoints(data, player)}</td>
          <td class="c-total">${total}</td>`
       : `<td class="c-rank"><span class="rank-other">${idx + 1}</span></td>
          <td class="col-player"><span class="st-name">${player.name}</span></td>
