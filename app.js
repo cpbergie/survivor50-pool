@@ -215,6 +215,8 @@ function detailHtml(player, season, payouts) {
   (season.castaways || []).forEach(c => { cInfo[c.name] = c; });
   const alive = roster.filter(n => !elim.has(n)).length;
   const pay = payouts[player.name];
+  const lastRow = (season.episodes || []).find(e => e.episode === lastEp);
+  const activeLast = new Set(Standings.rosterAt(player, lastEp));
 
   const cast = roster.map(name => {
     const c = cInfo[name] || {};
@@ -222,12 +224,14 @@ function detailHtml(player, season, payouts) {
     const color = c.tribe && tribes[c.tribe] ? tribes[c.tribe] : TRIBE_FALLBACK;
     const tag = isElim ? (c.eliminatedEp ? `Ep ${c.eliminatedEp}` : 'out') : '';
     const pts = Standings.castawayContribution(season, player, name);
+    const wkPts = lastRow && activeLast.has(name) ? Standings.castawayEpisodePoints(season, lastRow, name) : null;
     return `<li class="dcast${isElim ? ' is-elim' : ''}">
       <span class="dcast-dot" style="background:${color}"></span>
       <span class="dcast-name">${name}</span>
       ${name === player.mvp ? '<span class="dcast-mvp">MVP</span>' : ''}
       ${tag ? `<span class="dcast-ep">${tag}</span>` : ''}
-      <span class="dcast-pts">${pts}</span>
+      <span class="dcast-wk" title="Ep ${lastEp} points">${wkPts === null ? '—' : '+' + wkPts}</span>
+      <span class="dcast-pts" title="Season total">${pts}</span>
     </li>`;
   }).join('');
 
@@ -240,6 +244,7 @@ function detailHtml(player, season, payouts) {
       ${mvpHit ? `<span class="detail-pay">MVP hit +${mvpHit}</span>` : ''}
       ${pay && pay !== '—' ? `<span class="detail-pay">Winning ${pay}</span>` : ''}
     </div>
+    <div class="detail-legend"><span>Ep ${lastEp}</span><span>Total</span></div>
     <ul class="detail-cast">${cast}</ul>`;
 }
 
