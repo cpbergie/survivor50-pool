@@ -219,6 +219,7 @@ function detailHtml(player, season, payouts) {
   const pay = payouts[player.name];
   const lastRow = (season.episodes || []).find(e => e.episode === lastEp);
   const activeLast = new Set(Standings.rosterAt(player, lastEp));
+  const addedSet = new Set((player.addedPicks || []).map(Standings.pickName));
 
   const cast = roster.map(name => {
     const c = cInfo[name] || {};
@@ -231,6 +232,7 @@ function detailHtml(player, season, payouts) {
       <span class="dcast-dot" style="background:${color}"></span>
       <span class="dcast-name">${name}</span>
       ${name === player.mvp ? '<span class="dcast-mvp">MVP</span>' : ''}
+      ${addedSet.has(name) ? '<span class="added-badge">NEW</span>' : ''}
       ${tag ? `<span class="dcast-ep">${tag}</span>` : ''}
       <span class="dcast-wk" title="Ep ${lastEp} points">${wkPts === null ? '—' : '+' + wkPts}</span>
       <span class="dcast-pts" title="Season total">${pts}</span>
